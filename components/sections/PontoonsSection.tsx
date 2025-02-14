@@ -8,7 +8,7 @@ import Image from "next/image";
 
 const PontoonsSection = () => {
   return (
-    <section className="relative min-h-screen pb-52"> {/* Ajustado el padding bottom */}
+    <section className="relative min-h-screen pb-52">
       <div className="absolute inset-0">
         <Image
           src="/images/atardecer-1.jpg"
@@ -27,29 +27,19 @@ const PontoonsSection = () => {
           </span>
         </h2>
 
-        {/* Botón reubicado antes del grid */}
-        <div className="text-center mb-12">
-          <Button 
-            className="bg-[#ff0054] text-[#fefefe] hover:bg-[#fbe40b] font-bebas text-3xl px-16 py-8"
-            asChild
-          >
-            <Link href="/booking">Read More</Link>
-          </Button>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-32">
           {/* Silverwave Pontoon */}
           <div className="relative group z-20">
-            {/* Tarjeta de información */}
-            <div className="absolute top-[100%] left-0 right-0 w-full opacity-0 group-hover:opacity-100 
-                          bg-gradient-to-r from-[#ff0054] to-[#fbe40b] p-6 rounded-xl 
+            {/* Tarjeta de información - Reducida al 60% */}
+            <div className="absolute top-[100%] left-[20%] right-[20%] w-[60%] opacity-0 group-hover:opacity-100 
+                          bg-gradient-to-r from-[#ff0054] to-[#fbe40b] p-4 rounded-xl 
                           transition-all duration-300 shadow-xl transform translate-y-2 
                           group-hover:translate-y-4 z-50 mt-4">
-              <h4 className="text-[#060404] text-2xl font-bebas mb-4">SILVERWAVE</h4>
-              <ul className="text-[#060404] space-y-2">
+              <h4 className="text-[#060404] text-lg font-bebas mb-2">SILVERWAVE</h4>
+              <ul className="text-[#060404] space-y-1 text-sm">
                 <li>Capacity: Up to 12 Passengers</li>
                 <li>Perfect for: Family gatherings, celebrations & water activities</li>
-                <li>Features: Bluetooth Premium audio sound system, LED lighting package, deluxe seating, double bimini</li>
+                <li>Features: Bluetooth Premium audio sound system, LED lighting package</li>
                 <li>150HP Yamaha Engine for optimal performance</li>
                 <li>Luxury trim package</li>
                 <li>Superior handling & stability</li>
@@ -76,16 +66,16 @@ const PontoonsSection = () => {
 
           {/* Qwest Pontoon */}
           <div className="relative group z-20">
-            {/* Tarjeta de información */}
-            <div className="absolute top-[100%] left-0 right-0 w-full opacity-0 group-hover:opacity-100 
-                          bg-gradient-to-r from-[#ff0054] to-[#fbe40b] p-6 rounded-xl 
+            {/* Tarjeta de información - Reducida al 60% */}
+            <div className="absolute top-[100%] left-[20%] right-[20%] w-[60%] opacity-0 group-hover:opacity-100 
+                          bg-gradient-to-r from-[#ff0054] to-[#fbe40b] p-4 rounded-xl 
                           transition-all duration-300 shadow-xl transform translate-y-2 
                           group-hover:translate-y-4 z-50 mt-4">
-              <h4 className="text-[#060404] text-2xl font-bebas mb-4">QWEST</h4>
-              <ul className="text-[#060404] space-y-2">
+              <h4 className="text-[#060404] text-lg font-bebas mb-2">QWEST</h4>
+              <ul className="text-[#060404] space-y-1 text-sm">
                 <li>Capacity: Up to 13 Passengers</li>
                 <li>Perfect for: Family gatherings, celebrations & water activities</li>
-                <li>Features: Bluetooth Premium audio sound system, LED lighting package, deluxe seating, double bimini</li>
+                <li>Features: Bluetooth Premium audio sound system, LED lighting package</li>
                 <li>150HP Yamaha Engine for optimal performance</li>
                 <li>Luxury trim package</li>
                 <li>Superior handling & stability</li>
@@ -112,6 +102,16 @@ const PontoonsSection = () => {
               </div>
             </div>
           </div>
+        </div>
+
+        {/* Botón movido debajo de las tarjetas */}
+        <div className="text-center">
+          <Button 
+            className="bg-[#ff0054] text-[#fefefe] hover:bg-[#fbe40b] font-bebas text-3xl px-16 py-8"
+            asChild
+          >
+            <Link href="/barco">Read More</Link>
+          </Button>
         </div>
       </div>
     </section>

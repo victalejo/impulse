@@ -59,6 +59,12 @@
   box-sizing: border-box;
 }
 
+/* Configuración de scroll suave */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 2rem; /* Esta propiedad ayuda con el scroll cuando hay una navbar fija */
+}
+
 /* Aplicación de fuentes con fallbacks */
 body {
   font-family: "AcuminPro", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -78,4 +84,27 @@ h1, h2, h3, h4, h5, h6 {
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* Estilos para el scroll suave en elementos con scroll */
+* {
+  scroll-margin-top: 100px; /* Ajusta este valor según la altura de tu navbar */
+}
+
+/* Personalización de la barra de desplazamiento */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #060404;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #ff0054;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #fbe40b;
 }

@@ -244,7 +244,7 @@ export default function ServicesPage() {
   </div>
 </Card>
           {/* Foam Party */}
-<Card className="bg-[#fefefe]/5 backdrop-blur-sm border-[#ff0054]/20 hover:border-[#ff0054] transition-all duration-300">
+<Card id="foam-party-section" className="bg-[#fefefe]/5 backdrop-blur-sm border-[#ff0054]/20 hover:border-[#ff0054] transition-all duration-300">
   <div className="p-8 space-y-8">
     <h2 className="text-5xl font-bebas">
       <span className="bg-gradient-to-r from-[#fbe40b] to-[#ff0054] text-transparent bg-clip-text">

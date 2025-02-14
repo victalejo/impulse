@@ -25,9 +25,9 @@ const FoamSection = () => {
           src="/images/fondo-espuma.jpg"
           alt="Fondo Foam Party"
           fill
-          className="object-cover opacity-20"
+          className="object-cover opacity-40"
         />
-        <div className="absolute inset-0 bg-[#060404]/30" />
+        <div className="absolute inset-0 bg-[#060404]/20" />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 flex flex-col items-center">
@@ -86,7 +86,7 @@ const FoamSection = () => {
           className="bg-[#ff0054] hover:bg-[#ff0054]/90 text-[#fefefe] font-bebas text-3xl px-16 py-8 transform hover:scale-105 transition-all duration-300"
           asChild
         >
-          <Link href="/booking">Read More</Link>
+          <Link href="/services#foam-party-section">Read More</Link>
         </Button>
       </div>
 

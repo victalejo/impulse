@@ -86,10 +86,10 @@ const BouncesSection = () => {
                 size="lg" 
                 className="bg-gradient-to-r from-[#ff0054] to-[#fbe40b] hover:from-[#fbe40b] hover:to-[#ff0054] 
                          text-[#fefefe] font-bebas text-3xl px-16 py-8 transform hover:scale-105 
-                         transition-all duration-300 shadow-lg hover:shadow-[#ff0054]/50 w-full"
+                         transition-all duration-300 shadow-lg hover:shadow-[#ff0054]/50 w-fit mx-auto"
                 asChild
               >
-                <Link href="/booking">Read More</Link>
+                <Link href="/bounce">Read More</Link>
               </Button>
             </div>
           </div>

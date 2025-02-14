@@ -3,7 +3,6 @@ import Hero from "@/components/sections/Hero"
 import AboutSection from "@/components/sections/AboutSection"
 import Services from "@/components/sections/Services"
 import PontoonsSection from "@/components/sections/PontoonsSection"
-import Contact from "@/components/sections/Contact"
 import BouncesSection from "@/components/sections/BouncesSection"
 import FoamSection from "@/components/sections/FoamSection"
 
@@ -29,9 +28,6 @@ export default function Home() {
       </div>
       <div className="flex-none">
         <FoamSection />
-      </div>
-      <div className="flex-none">
-        <Contact />
       </div>
     </div>
   )

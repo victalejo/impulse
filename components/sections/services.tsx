@@ -7,13 +7,17 @@ import Image from "next/image";
 import { Car, Users, Gauge, Star, Activity, Shield } from 'lucide-react';
 
 const LuxuryTransport = () => {
-  const [currentImageYukon, setCurrentImageYukon] = useState(0);
-  const [currentImageSuburban, setCurrentImageSuburban] = useState(0);
-  const [currentImageBMW, setCurrentImageBMW] = useState(0);
+  const [currentImageIndex, setCurrentImageIndex] = useState({
+    yukon: 0,
+    suburban: 0,
+    bmw: 0
+  });
 
   const yukonImages = [
     '/images/Gmc/1.jpg',
-    '/images/Gmc/2.jpg'
+    '/images/Gmc/2.jpg',
+    '/images/Gmc/3.jpg',
+    '/images/Gmc/4.jpg'
   ];
 
   const suburbanImages = [
@@ -30,29 +34,36 @@ const LuxuryTransport = () => {
   ];
 
   useEffect(() => {
-    const timerYukon = setInterval(() => {
-      setCurrentImageYukon((prev) => (prev + 1) % yukonImages.length);
-    }, 4000);
-
-    const timerSuburban = setInterval(() => {
-      setCurrentImageSuburban((prev) => (prev + 1) % suburbanImages.length);
-    }, 4000);
-
-    const timerBMW = setInterval(() => {
-      setCurrentImageBMW((prev) => (prev + 1) % bmwImages.length);
-    }, 4000);
+    const intervals = {
+      yukon: setInterval(() => {
+        setCurrentImageIndex(prev => ({
+          ...prev,
+          yukon: (prev.yukon + 1) % yukonImages.length
+        }));
+      }, 3000),
+      suburban: setInterval(() => {
+        setCurrentImageIndex(prev => ({
+          ...prev,
+          suburban: (prev.suburban + 1) % suburbanImages.length
+        }));
+      }, 3000),
+      bmw: setInterval(() => {
+        setCurrentImageIndex(prev => ({
+          ...prev,
+          bmw: (prev.bmw + 1) % bmwImages.length
+        }));
+      }, 3000)
+    };
 
     return () => {
-      clearInterval(timerYukon);
-      clearInterval(timerSuburban);
-      clearInterval(timerBMW);
+      Object.values(intervals).forEach(clearInterval);
     };
   }, []);
 
   const features = {
     yukon: [
       { icon: Car, text: "Powerful 6.2L V8 Engine" },
-      { icon: Users, text: "7 Premium Leather Seats" },
+      { icon: Users, text: "6-8 Premium Leather Seats" },
       { icon: Gauge, text: "420 Horsepower" },
       { icon: Star, text: "Premium Entertainment System" },
       { icon: Shield, text: "Advanced Safety Features" },
@@ -60,7 +71,7 @@ const LuxuryTransport = () => {
     ],
     suburban: [
       { icon: Car, text: "Robust 5.3L V8 Engine" },
-      { icon: Users, text: "8 Comfortable Seats" },
+      { icon: Users, text: "6-8 Comfortable Seats" },
       { icon: Gauge, text: "355 Horsepower" },
       { icon: Star, text: "Premium Sound System" },
       { icon: Shield, text: "Enhanced Safety Suite" },
@@ -68,7 +79,7 @@ const LuxuryTransport = () => {
     ],
     bmw: [
       { icon: Car, text: "Twin-Turbo 4.4L V8" },
-      { icon: Users, text: "7 Luxury Seats" },
+      { icon: Users, text: "4-5 Luxury Seats" },
       { icon: Gauge, text: "523 Horsepower" },
       { icon: Star, text: "BMW Live Cockpit Pro" },
       { icon: Shield, text: "BMW Driving Assistant Pro" },
@@ -170,9 +181,9 @@ const LuxuryTransport = () => {
       </div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {renderVehicleCard("GMC Yukon AT4 XL", yukonImages, currentImageYukon, features.yukon)}
-        {renderVehicleCard("Chevrolet Suburban", suburbanImages, currentImageSuburban, features.suburban)}
-        {renderVehicleCard("BMW X7 M60i", bmwImages, currentImageBMW, features.bmw)}
+        {renderVehicleCard("GMC Yukon AT4 XL", yukonImages, currentImageIndex.yukon, features.yukon)}
+        {renderVehicleCard("Chevrolet Suburban", suburbanImages, currentImageIndex.suburban, features.suburban)}
+        {renderVehicleCard("BMW X7 M60i", bmwImages, currentImageIndex.bmw, features.bmw)}
 
         <div className="text-center mt-24 space-y-10">
           <h3 className="text-3xl md:text-5xl font-acumin text-[#fefefe]">
@@ -187,7 +198,7 @@ const LuxuryTransport = () => {
                      shadow-lg hover:shadow-[#ff0054]/50"
             asChild
           >
-            <Link href="/booking">Book Now</Link>
+            <Link href="/services">Read More</Link>
           </Button>
         </div>
       </div>
