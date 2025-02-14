@@ -8,7 +8,7 @@ import Image from "next/image";
 
 const PontoonsSection = () => {
   return (
-    <section className="relative min-h-screen">
+    <section className="relative min-h-screen pb-52"> {/* Ajustado el padding bottom */}
       <div className="absolute inset-0">
         <Image
           src="/images/atardecer-1.jpg"
@@ -27,20 +27,36 @@ const PontoonsSection = () => {
           </span>
         </h2>
 
+        {/* Botón reubicado antes del grid */}
+        <div className="text-center mb-12">
+          <Button 
+            className="bg-[#ff0054] text-[#fefefe] hover:bg-[#fbe40b] font-bebas text-3xl px-16 py-8"
+            asChild
+          >
+            <Link href="/booking">Read More</Link>
+          </Button>
+        </div>
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Silverwave Pontoon */}
-<div className="relative group z-20">
-  {/* Esta es la tarjeta de información que necesita mayor z-index */}
-  <div className="absolute top-0 -right-[340px] w-80 opacity-0 group-hover:opacity-100 bg-gradient-to-r from-[#ff0054] to-[#fbe40b] p-6 rounded-xl transition-all duration-300 shadow-xl transform translate-x-10 group-hover:translate-x-0 z-50">
-    <h4 className="text-[#060404] text-2xl font-bebas mb-4">SILVERWAVE PONTOON</h4>
-    <ul className="text-[#060404] space-y-2">
-      <li>Capacity: 10-12 passengers</li>
-      <li>Perfect for: Family gatherings, celebrations & water activities</li>
-      <li>Features: Bluetooth sound system, sunshade cover, cooler storage</li>
-      <li>Easy to operate - great for beginners!</li>
-      <li>All safety equipment included</li>
-    </ul>
-  </div>
+          <div className="relative group z-20">
+            {/* Tarjeta de información */}
+            <div className="absolute top-[100%] left-0 right-0 w-full opacity-0 group-hover:opacity-100 
+                          bg-gradient-to-r from-[#ff0054] to-[#fbe40b] p-6 rounded-xl 
+                          transition-all duration-300 shadow-xl transform translate-y-2 
+                          group-hover:translate-y-4 z-50 mt-4">
+              <h4 className="text-[#060404] text-2xl font-bebas mb-4">SILVERWAVE</h4>
+              <ul className="text-[#060404] space-y-2">
+                <li>Capacity: Up to 12 Passengers</li>
+                <li>Perfect for: Family gatherings, celebrations & water activities</li>
+                <li>Features: Bluetooth Premium audio sound system, LED lighting package, deluxe seating, double bimini</li>
+                <li>150HP Yamaha Engine for optimal performance</li>
+                <li>Luxury trim package</li>
+                <li>Superior handling & stability</li>
+                <li>Easy to operate - great for beginners</li>
+                <li>All safety equipment included</li>
+              </ul>
+            </div>
 
             <div className="h-[500px] rounded-xl overflow-hidden shadow-2xl cursor-pointer">
               <div className="relative w-full h-full">
@@ -60,14 +76,21 @@ const PontoonsSection = () => {
 
           {/* Qwest Pontoon */}
           <div className="relative group z-20">
-            <div className="absolute top-0 -left-[340px] w-80 opacity-0 group-hover:opacity-100 bg-gradient-to-r from-[#ff0054] to-[#fbe40b] p-6 rounded-xl transition-all duration-300 shadow-xl transform -translate-x-10 group-hover:translate-x-0 z-30">
-              <h4 className="text-[#060404] text-2xl font-bebas mb-4">QWEST PONTOON</h4>
+            {/* Tarjeta de información */}
+            <div className="absolute top-[100%] left-0 right-0 w-full opacity-0 group-hover:opacity-100 
+                          bg-gradient-to-r from-[#ff0054] to-[#fbe40b] p-6 rounded-xl 
+                          transition-all duration-300 shadow-xl transform translate-y-2 
+                          group-hover:translate-y-4 z-50 mt-4">
+              <h4 className="text-[#060404] text-2xl font-bebas mb-4">QWEST</h4>
               <ul className="text-[#060404] space-y-2">
-                <li>Capacity: Up to 12 passengers</li>
-                <li>Features: Premium audio, LED lighting package, deluxe seating</li>
-                <li>Twin engine performance</li>
+                <li>Capacity: Up to 13 Passengers</li>
+                <li>Perfect for: Family gatherings, celebrations & water activities</li>
+                <li>Features: Bluetooth Premium audio sound system, LED lighting package, deluxe seating, double bimini</li>
+                <li>150HP Yamaha Engine for optimal performance</li>
                 <li>Luxury trim package</li>
                 <li>Superior handling & stability</li>
+                <li>Easy to operate - great for beginners</li>
+                <li>All safety equipment included</li>
               </ul>
             </div>
 
@@ -89,15 +112,6 @@ const PontoonsSection = () => {
               </div>
             </div>
           </div>
-        </div>
-
-        <div className="mt-16 text-center">
-          <Button 
-            className="bg-[#ff0054] text-[#fefefe] hover:bg-[#fbe40b] font-bebas text-3xl px-16 py-8"
-            asChild
-          >
-            <Link href="/booking">Read More</Link>
-          </Button>
         </div>
       </div>
     </section>

@@ -170,9 +170,9 @@ const LuxuryTransport = () => {
       </div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {renderVehicleCard("2024 GMC Yukon AT4 XL", yukonImages, currentImageYukon, features.yukon)}
-        {renderVehicleCard("2025 Chevrolet Suburban", suburbanImages, currentImageSuburban, features.suburban)}
-        {renderVehicleCard("2024 BMW X7 M60i", bmwImages, currentImageBMW, features.bmw)}
+        {renderVehicleCard("GMC Yukon AT4 XL", yukonImages, currentImageYukon, features.yukon)}
+        {renderVehicleCard("Chevrolet Suburban", suburbanImages, currentImageSuburban, features.suburban)}
+        {renderVehicleCard("BMW X7 M60i", bmwImages, currentImageBMW, features.bmw)}
 
         <div className="text-center mt-24 space-y-10">
           <h3 className="text-3xl md:text-5xl font-acumin text-[#fefefe]">

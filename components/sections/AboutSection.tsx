@@ -55,13 +55,12 @@ export default function AboutSection() {
             
             <div className="space-y-6">
               <p className="text-[#fefefe] text-xl md:text-2xl font-acumin leading-relaxed">
-              Welcome to Impulse Rentals, your premier destination for all your outdoor entertainment needs! We are thrilled to offer an unbeatable combination of boat and bounce house rentals, ensuring that your next event or outing is filled with excitement and unforgettable memories. What truly sets us apart from the competition is our passion for creating memorable experiences. Every moment is an opportunity for adventure and celebration. Whether planning a family outing, a corporate team-building event, or a community gathering, our boat and bounce house rentals will take your experience to the next level. Our goal is to exceed your expectations and leave you with memories that will be cherished for years.
+                Welcome to Impulse Rentals, your premier destination for all your outdoor entertainment needs! We are thrilled to offer an extensive range of services, including car services, Djs service, boat rentals, foam party services, bounce house rentals, and much more. This variety ensures that your next event or outing is filled with excitement and unforgettable memories. What truly sets us apart is our passion for creating memorable experiences. Every moment is an opportunity for adventure and celebration. Whether planning a family outing, a corporate team-building event, or a community gathering, our boat and bounce house rentals will take your experience to the next level. Our goal is to exceed your expectations and leave you with memories that will be cherished for years.
               </p>
-              
             </div>
           </div>
           
-          {/* Video container - Nótese el cambio en el sombreado y el botón de audio */}
+          {/* Video container */}
           <div className="relative h-[710px] rounded-2xl overflow-hidden 
                           transform hover:scale-105 transition-transform duration-500
                           shadow-[0_0_30px_rgba(255,0,84,0.3)]">
@@ -78,7 +77,7 @@ export default function AboutSection() {
               Your browser does not support the video tag.
             </video>
             
-            {/* Audio control button - Cambiado a la parte superior */}
+            {/* Audio control button */}
             <Button
               onClick={toggleAudio}
               className="absolute top-4 right-4 z-30 bg-[#060404]/70 hover:bg-[#060404] 
