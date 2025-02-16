@@ -6,13 +6,6 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
-import {
   Card,
   CardContent,
   CardDescription,
@@ -30,8 +23,6 @@ import { MapPin, Phone, Mail, Clock, MousePointerClick } from "lucide-react"
 import Image from "next/image"
 
 export default function LocationPage() {
-  const [selectedService, setSelectedService] = useState("")
-
   return (
     <div className="min-h-screen bg-[#060404] pt-32 pb-16 relative overflow-hidden">
       {/* Animated background effects */}
@@ -89,7 +80,7 @@ export default function LocationPage() {
           {/* Information and Carousel */}
           <div className="space-y-8">
             {/* Image Carousel */}
-            <Card className="bg-[#fefefe]/5 border-[#ff0054]/20 hover:border-[#ff0054] transition-all duration-300 group">
+            <Card className="bg-[#060404] border-[#ff0054]/20 hover:border-[#ff0054] transition-all duration-300 group shadow-lg">
               <CardContent className="p-6">
                 <Carousel className="w-full">
                   <CarouselContent>
@@ -110,41 +101,49 @@ export default function LocationPage() {
 
             {/* Contact Information Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <Card className="bg-[#fefefe]/5 border-[#ff0054]/20 hover:border-[#ff0054] transition-all duration-300">
+              <Card className="bg-[#060404] border-2 border-[#ff0054]/20 hover:border-[#ff0054] transition-all duration-300 shadow-lg">
                 <CardContent className="p-6 flex items-center space-x-4">
-                  <MapPin className="h-6 w-6 text-[#ff0054]" />
+                  <div className="bg-gradient-to-br from-[#ff0054] to-[#fbe40b] p-3 rounded-lg">
+                    <MapPin className="h-6 w-6 text-[#fefefe]" />
+                  </div>
                   <div>
-                    <p className="text-[#fefefe]">Dallas, Texas</p>
+                    <p className="text-[#fefefe] font-semibold">Dallas, Texas</p>
                     <p className="text-[#fefefe]/60 text-sm">Main Location</p>
                   </div>
                 </CardContent>
               </Card>
 
-              <Card className="bg-[#fefefe]/5 border-[#ff0054]/20 hover:border-[#ff0054] transition-all duration-300">
+              <Card className="bg-[#060404] border-2 border-[#ff0054]/20 hover:border-[#ff0054] transition-all duration-300 shadow-lg">
                 <CardContent className="p-6 flex items-center space-x-4">
-                  <Phone className="h-6 w-6 text-[#ff0054]" />
+                  <div className="bg-gradient-to-br from-[#ff0054] to-[#fbe40b] p-3 rounded-lg">
+                    <Phone className="h-6 w-6 text-[#fefefe]" />
+                  </div>
                   <div>
-                    <p className="text-[#fefefe]">862.686.5129</p>
+                    <p className="text-[#fefefe] font-semibold">862.686.5129</p>
                     <p className="text-[#fefefe]/60 text-sm">Call Us</p>
                   </div>
                 </CardContent>
               </Card>
 
-              <Card className="bg-[#fefefe]/5 border-[#ff0054]/20 hover:border-[#ff0054] transition-all duration-300">
+              <Card className="bg-[#060404] border-2 border-[#ff0054]/20 hover:border-[#ff0054] transition-all duration-300 shadow-lg">
                 <CardContent className="p-6 flex items-center space-x-4">
-                  <Mail className="h-6 w-6 text-[#ff0054]" />
+                  <div className="bg-gradient-to-br from-[#ff0054] to-[#fbe40b] p-3 rounded-lg">
+                    <Mail className="h-6 w-6 text-[#fefefe]" />
+                  </div>
                   <div>
-                    <p className="text-[#fefefe]">info@impulserentals.org</p>
+                    <p className="text-[#fefefe] font-semibold">info@impulserentals.org</p>
                     <p className="text-[#fefefe]/60 text-sm">Email Us</p>
                   </div>
                 </CardContent>
               </Card>
 
-              <Card className="bg-[#fefefe]/5 border-[#ff0054]/20 hover:border-[#ff0054] transition-all duration-300">
+              <Card className="bg-[#060404] border-2 border-[#ff0054]/20 hover:border-[#ff0054] transition-all duration-300 shadow-lg">
                 <CardContent className="p-6 flex items-center space-x-4">
-                  <Clock className="h-6 w-6 text-[#ff0054]" />
+                  <div className="bg-gradient-to-br from-[#ff0054] to-[#fbe40b] p-3 rounded-lg">
+                    <Clock className="h-6 w-6 text-[#fefefe]" />
+                  </div>
                   <div>
-                    <p className="text-[#fefefe]">24/7</p>
+                    <p className="text-[#fefefe] font-semibold">24/7</p>
                     <p className="text-[#fefefe]/60 text-sm">Operating Hours</p>
                   </div>
                 </CardContent>
@@ -153,76 +152,92 @@ export default function LocationPage() {
           </div>
 
           {/* Contact Form */}
-          <Card className="bg-[#fefefe]/5 border-[#ff0054]/20 hover:border-[#ff0054] transition-all duration-300">
-            <CardHeader>
-              <CardTitle className="text-[#fefefe] text-2xl">Get in Touch</CardTitle>
-              <CardDescription className="text-[#fefefe]/60">
-                Fill out the form and we'll get back to you
-              </CardDescription>
+          <Card className="bg-[#060404] border-2 border-[#fbe40b]/50 hover:border-[#fbe40b] transition-all duration-300 
+                        shadow-[0_0_15px_rgba(251,228,11,0.3)] hover:shadow-[0_0_20px_rgba(251,228,11,0.4)] group">
+            <CardHeader className="border-b border-[#ff0054]/20 pb-6">
+              <div className="flex flex-col items-center text-center mb-2">
+                <CardTitle className="text-4xl font-bebas mb-2 bg-gradient-to-r from-[#ff0054] to-[#fbe40b] text-transparent bg-clip-text">
+                  Get in Touch
+                </CardTitle>
+                <CardDescription className="text-[#fefefe]/60">
+                  Fill out the form and we'll get back to you
+                </CardDescription>
+              </div>
             </CardHeader>
-            <CardContent>
+            <CardContent className="pt-8">
               <form className="space-y-6">
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label className="text-[#fefefe]">First Name</Label>
+                    <Label className="text-[#fefefe] font-semibold">First Name</Label>
                     <Input 
-                      className="bg-[#060404] border-[#ff0054]/20 text-[#fefefe]"
+                      className="bg-[#fefefe] border-2 border-[#fbe40b]/20 text-[#060404] 
+                               focus:border-[#fbe40b] hover:border-[#fbe40b]/50 
+                               transition-colors duration-200 placeholder:text-[#060404]/40"
                       placeholder="Your first name"
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label className="text-[#fefefe]">Last Name</Label>
+                    <Label className="text-[#060404] font-semibold">Last Name</Label>
                     <Input 
-                      className="bg-[#060404] border-[#ff0054]/20 text-[#fefefe]"
+                      className="bg-[#fefefe] border-2 border-[#060404]/10 text-[#060404] 
+                               focus:border-[#ff0054] hover:border-[#ff0054]/50 
+                               transition-colors duration-200 placeholder:text-[#060404]/40"
                       placeholder="Your last name"
                     />
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <Label className="text-[#fefefe]">Email</Label>
+                  <Label className="text-[#060404] font-semibold">Email</Label>
                   <Input 
                     type="email"
-                    className="bg-[#060404] border-[#ff0054]/20 text-[#fefefe]"
+                    className="bg-[#fefefe] border-2 border-[#060404]/10 text-[#060404] 
+                             focus:border-[#ff0054] hover:border-[#ff0054]/50 
+                             transition-colors duration-200 placeholder:text-[#060404]/40"
                     placeholder="you@example.com"
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <Label className="text-[#fefefe]">Phone</Label>
+                  <Label className="text-[#060404] font-semibold">Phone</Label>
                   <Input 
                     type="tel"
-                    className="bg-[#060404] border-[#ff0054]/20 text-[#fefefe]"
+                    className="bg-[#fefefe] border-2 border-[#060404]/10 text-[#060404] 
+                             focus:border-[#ff0054] hover:border-[#ff0054]/50 
+                             transition-colors duration-200 placeholder:text-[#060404]/40"
                     placeholder="Your phone number"
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <Label className="text-[#fefefe]">Service of Interest</Label>
-                  <Select onValueChange={setSelectedService}>
-                    <SelectTrigger className="bg-[#060404] border-[#ff0054]/20 text-[#fefefe]">
-                      <SelectValue placeholder="Select a service" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="boats">Pontoons</SelectItem>
-                      <SelectItem value="bounce">Bounce Houses</SelectItem>
-                      <SelectItem value="cars">Luxury Transport</SelectItem>
-                      <SelectItem value="foam">Foam Party</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <Label className="text-[#060404] font-semibold">Service of Interest</Label>
+                  <select 
+                    className="w-full bg-[#fefefe] border-2 border-[#060404]/10 text-[#060404] rounded-md px-3 py-2
+                             focus:outline-none focus:border-[#ff0054] hover:border-[#ff0054]/50
+                             transition-colors duration-200"
+                  >
+                    <option value="" disabled selected className="text-[#060404]/40">Select a service</option>
+                    <option value="boats">Pontoons</option>
+                    <option value="bounce">Bounce Houses</option>
+                    <option value="cars">Luxury Transport</option>
+                    <option value="foam">Foam Party</option>
+                  </select>
                 </div>
 
                 <div className="space-y-2">
-                  <Label className="text-[#fefefe]">Message</Label>
+                  <Label className="text-[#060404] font-semibold">Message</Label>
                   <Textarea 
-                    className="bg-[#060404] border-[#ff0054]/20 text-[#fefefe] min-h-[100px]"
+                    className="bg-[#fefefe] border-2 border-[#060404]/10 text-[#060404] 
+                             focus:border-[#ff0054] hover:border-[#ff0054]/50 
+                             transition-colors duration-200 min-h-[100px] placeholder:text-[#060404]/40"
                     placeholder="Type your message here..."
                   />
                 </div>
 
                 <Button 
-                  className="w-full bg-gradient-to-r from-[#ff0054] to-[#fbe40b] hover:from-[#fbe40b] hover:to-[#ff0054] text-[#fefefe]
-                           transform hover:scale-105 transition-all duration-300"
+                  className="w-full bg-[#060404] hover:bg-[#ff0054] text-[#fefefe] 
+                           transform hover:scale-105 transition-all duration-300 shadow-lg
+                           border-2 border-transparent hover:border-[#ff0054]"
                   size="lg"
                 >
                   Send Message
@@ -235,8 +250,10 @@ export default function LocationPage() {
 
         {/* Map Section */}
         <div className="w-full">
-          <h2 className="text-4xl font-bebas text-[#fefefe] mb-8">Visit Us</h2>
-          <div className="w-full h-[500px] rounded-xl overflow-hidden shadow-lg hover:shadow-[#ff0054]/50 transition-all duration-300">
+          <h2 className="text-4xl font-bebas text-[#fefefe] mb-8 bg-gradient-to-r from-[#ff0054] to-[#fbe40b] text-transparent bg-clip-text">
+            Visit Us
+          </h2>
+          <div className="w-full h-[500px] rounded-xl overflow-hidden shadow-lg hover:shadow-[#ff0054]/50 transition-all duration-300 border-2 border-[#ff0054]/20">
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3345.5786831456515!2d-96.82222208429537!3d33.01442068501848!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzPCsDAwJzUxLjkiTiA5NsKwNDknMTIuMSJX!5e0!3m2!1sen!2sus!4v1642086400000!5m2!1sen!2sus"
               width="100%"
