@@ -1,3 +1,5 @@
+// components/navbar.tsx
+
 "use client"
 
 import { useState, useEffect } from "react"
@@ -26,7 +28,7 @@ export default function Navbar() {
   }, [])
 
   const navigation = [
-    { name: "Book Now", href: "/booking" },
+    { name: "Book Now", href: "/book-now" },
     { name: "Impulse Services", href: "/services" },
     { name: "Impulse Wear", href: "/wear" },
     { name: "Location", href: "/location", icon: MapPin },

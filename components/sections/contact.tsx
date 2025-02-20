@@ -1,3 +1,5 @@
+// components/sections/contact.tsx
+
 // /components/sections/Contact.tsx
 import { Button } from "@/components/ui/button"
 import Link from "next/link"

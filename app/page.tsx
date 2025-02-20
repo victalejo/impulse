@@ -1,3 +1,5 @@
+// app/page.tsx
+
 // /app/page.tsx
 import Hero from "@/components/sections/Hero"
 import AboutSection from "@/components/sections/AboutSection"
