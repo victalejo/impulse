@@ -1,3 +1,5 @@
+// components/footer.tsx
+
 // /components/footer.tsx
 
 import Link from "next/link"

@@ -1,3 +1,5 @@
+// app/bounce/page.tsx
+
 "use client"
 
 import { useRef } from "react"
