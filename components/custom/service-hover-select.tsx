@@ -1,5 +1,4 @@
 // components/custom/service-hover-select.tsx
-
 import {
   Select,
   SelectContent,
@@ -7,7 +6,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import Image from "next/image"
 import { useState } from "react"
 
 export const ServiceHoverSelect = ({ 
@@ -25,12 +23,12 @@ export const ServiceHoverSelect = ({
 }) => {
   const getImageSource = (option: string) => {
     const imageMap: { [key: string]: string } = {
-      "Silverwave Pontoon": "/images/silver-1.jpg",
-      "Qwest Pontoon": "/images/quest-2.jpg",
-      "Ice Pops Mega Front Loader": "/images/fotobounce.png",
+      "Silverwave Pontoon": "/images/silverwave-fondo.png",
+      "Qwest Pontoon": "/images/Qwest-fondo.png",
+      "Ice Pops Mega Front Loader": "/images/bounce.PNG",
       "Foam Party Package": "/images/foam-party.JPG",
       "Color Foam Party Package": "/images/foamcolor.JPG",
-      "Glow in the Dark Foam Party Package": "/images/foam-night.jpg",
+      "Glow in the Dark Foam Party Package": "/images/fotofoamnoche.jpg",
       "Foam Pit Package": "/images/foampit.png",
       "GMC Yukon AT4 XL 2024": "/images/Gmc/1.jpg",
       "Chevrolet Suburban 2025": "/images/camioneta-1.png",
@@ -51,7 +49,7 @@ export const ServiceHoverSelect = ({
       }}
     >
       <SelectTrigger className="bg-[#fefefe] border-[#ff0054]/20 text-[#060404] text-lg">
-        <SelectValue placeholder="Selecciona un paquete" />
+        <SelectValue placeholder="Select a package" />
       </SelectTrigger>
       <SelectContent>
         {options.map(option => (

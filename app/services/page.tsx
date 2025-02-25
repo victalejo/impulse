@@ -57,16 +57,19 @@ export default function ServicesPage() {
         </h1>
 
         <div className="space-y-24">
-         {/* Car Services */}
-<Card className="bg-[#fefefe]/5 backdrop-blur-sm border-[#ff0054]/20 hover:border-[#ff0054] transition-all duration-300">
+ {/* Car Services */}
+<Card className="bg-[#fefefe]/5 backdrop-blur-sm border-[#ff0054]/20 hover:border-[#ff0054] transition-all duration-300 max-w-[85vw] mx-auto rounded-2xl">
   <div className="grid md:grid-cols-2 gap-8 p-8">
-    <div className="relative h-[500px]">
-      <Image
-        src="/images/car-services.png"
-        alt="Luxury Cars"
-        fill
-        className="object-cover rounded-lg"
-      />
+    <div className="relative h-[500px] w-full rounded-xl overflow-hidden">
+      <video
+        className="w-full h-full object-cover rounded-xl"
+        autoPlay
+        muted
+        playsInline
+        loop
+      >
+        <source src="/videos/cars.mp4" type="video/mp4" />
+      </video>
     </div>
     <div className="space-y-8">
       <h2 className="text-6xl md:text-7xl font-bebas mb-6">

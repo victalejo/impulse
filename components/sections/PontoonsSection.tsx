@@ -1,6 +1,5 @@
 // components/sections/PontoonsSection.tsx
 
-// /components/sections/PontoonsSection.tsx
 "use client";
 
 import React from 'react';
@@ -54,7 +53,7 @@ const PontoonsSection = () => {
               <div className="relative w-full h-full">
                 <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-100 transition-all duration-300" />
                 <Image
-                  src="/images/silverwave-fondo.jpg"
+                  src="/images/silver-3.jpg"
                   alt="Silverwave Pontoon"
                   fill
                   className="object-contain group-hover:scale-110 transition-transform duration-300"
@@ -90,13 +89,10 @@ const PontoonsSection = () => {
               <div className="relative w-full h-full">
                 <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-100 transition-all duration-300" />
                 <Image
-                  src="/images/qwest-fondo.jpg"
+                  src="/images/quest-1.jpg"
                   alt="Qwest Pontoon"
                   fill
-                  className="object-cover scale-[1.7] group-hover:scale-[1.9] transition-transform duration-300"
-                  style={{ 
-                    objectPosition: '90% 40%'
-                  }}
+                  className="object-contain group-hover:scale-110 transition-transform duration-300"
                 />
                 <h3 className="absolute top-0 left-0 right-0 p-8 text-[#060404] text-4xl font-bebas text-center transition-colors duration-300 group-hover:text-white">
                   Qwest Pontoon
