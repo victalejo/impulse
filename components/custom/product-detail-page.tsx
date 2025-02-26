@@ -7,12 +7,56 @@ import { Loader2, ShoppingCart, ArrowLeft, Tag } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
-const ProductDetailPage = ({ params }) => {
-    const [product, setProduct] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-    const [selectedVariant, setSelectedVariant] = useState(null);
-    const [selectedImage, setSelectedImage] = useState(null);
+// Definir interfaces para tipar correctamente
+interface ProductVariant {
+    id: number | string;
+    title?: string;
+    price: number;
+    cost?: number;
+    is_default?: boolean;
+    options?: Array<number | string>;
+}
+
+interface ProductImage {
+    id?: number | string;
+    src: string;
+    is_default?: boolean;
+    position?: string;
+    variant_ids?: Array<number | string>;
+}
+
+interface ProductOption {
+    name: string;
+    type: string;
+    values: Array<{
+        id: number | string;
+        title: string;
+    }>;
+}
+
+interface Product {
+    id: string;
+    title: string;
+    description: string;
+    variants: ProductVariant[];
+    images: ProductImage[];
+    tags?: string[];
+    options?: ProductOption[];
+    safety_information?: string;
+}
+
+interface ProductDetailPageProps {
+    params: {
+        productId: string;
+    };
+}
+
+const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ params }) => {
+    const [product, setProduct] = useState<Product | null>(null);
+    const [loading, setLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string | null>(null);
+    const [selectedVariant, setSelectedVariant] = useState<ProductVariant | null>(null);
+    const [selectedImage, setSelectedImage] = useState<ProductImage | null>(null);
 
     useEffect(() => {
         const fetchProduct = async () => {
@@ -32,10 +76,10 @@ const ProductDetailPage = ({ params }) => {
                 setProduct(data);
 
                 // Configurar la variante e imagen predeterminadas
-                const defaultVariant = data.variants.find(v => v.is_default) || data.variants[0];
+                const defaultVariant = data.variants.find((v: ProductVariant) => v.is_default) || data.variants[0];
                 setSelectedVariant(defaultVariant);
 
-                const defaultImage = data.images.find(img => img.is_default) || data.images[0];
+                const defaultImage = data.images.find((img: ProductImage) => img.is_default) || data.images[0];
                 setSelectedImage(defaultImage);
 
             } catch (err) {
@@ -43,7 +87,7 @@ const ProductDetailPage = ({ params }) => {
                 setError('No se pudo cargar el producto. Por favor, inténtalo de nuevo más tarde.');
 
                 // En desarrollo, usamos datos de ejemplo
-                const sampleProduct = {
+                const sampleProduct: Product = {
                     id: "sample1",
                     title: "Camiseta Impulse",
                     description: "Camiseta de alta calidad con logo de Impulse Rentals. Perfecta para mostrar tu apoyo a nuestra marca y ser parte de la comunidad Impulse. Fabricada con materiales duraderos y cómodos para usar en cualquier ocasión.",
@@ -82,18 +126,20 @@ const ProductDetailPage = ({ params }) => {
     }, [params]);
 
     // Formatear precio
-    const formatPrice = (price) => {
+    const formatPrice = (price: number): string => {
         return `$${(price / 100).toFixed(2)}`;
     };
 
     // Cambiar variante seleccionada
-    const handleVariantChange = (variantId) => {
-        const variant = product.variants.find(v => v.id === variantId);
+    const handleVariantChange = (variantId: number | string): void => {
+        if (!product) return;
+
+        const variant = product.variants.find((v: ProductVariant) => v.id === variantId);
         if (variant) {
             setSelectedVariant(variant);
 
             // Si hay imágenes asociadas específicamente a esta variante, seleccionar la primera
-            const variantImages = product.images.filter(img =>
+            const variantImages = product.images.filter((img: ProductImage) =>
                 img.variant_ids && img.variant_ids.includes(variantId)
             );
 

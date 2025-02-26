@@ -1,9 +1,9 @@
 // app/page.tsx
 
 // /app/page.tsx
-import Hero from "@/components/sections/Hero"
+import Hero from "@/components/sections/hero"
 import AboutSection from "@/components/sections/AboutSection"
-import Services from "@/components/sections/Services"
+import Services from "@/components/sections/services"
 import PontoonsSection from "@/components/sections/PontoonsSection"
 import BouncesSection from "@/components/sections/BouncesSection"
 import FoamSection from "@/components/sections/FoamSection"

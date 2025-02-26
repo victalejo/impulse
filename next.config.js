@@ -23,10 +23,6 @@ const nextConfig = {
         pathname: '/**',
       }
     ]
-  },
-  // Esta configuración es necesaria si usas App Router con API Routes en Next.js
-  experimental: {
-    appDir: true,
   }
 };
 

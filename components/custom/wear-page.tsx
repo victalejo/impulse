@@ -6,10 +6,28 @@ import Image from "next/image";
 import Link from "next/link";
 import { Loader2 } from "lucide-react";
 
+// Definimos la interfaz del producto
+interface Product {
+    id: string;
+    title: string;
+    description: string;
+    variants: Array<{
+        price: number;
+        cost: number;
+        is_default?: boolean;
+    }>;
+    images: Array<{
+        src: string;
+        is_default?: boolean;
+    }>;
+    tags: string[];
+}
+
 const WearPage = () => {
-    const [products, setProducts] = useState([]);
+    // Usamos el tipo Product[] para el estado products
+    const [products, setProducts] = useState<Product[]>([]);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const [error, setError] = useState<string | null>(null);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
 
@@ -70,7 +88,7 @@ const WearPage = () => {
     };
 
     // Formatear precio
-    const formatPrice = (price) => {
+    const formatPrice = (price: number) => {
         return `$${(price / 100).toFixed(2)}`;
     };
 
@@ -137,13 +155,13 @@ const WearPage = () => {
                                                 </p>
                                                 {product.tags && product.tags.length > 0 && (
                                                     <span className="text-sm text-[#fefefe]/60">
-                            {product.tags[0]}
-                          </span>
+                                                        {product.tags[0]}
+                                                    </span>
                                                 )}
                                             </div>
                                             <Button
                                                 className="w-full bg-gradient-to-r from-[#ff0054] to-[#fbe40b] hover:from-[#fbe40b] hover:to-[#ff0054]
-                                text-[#fefefe] font-bebas text-lg"
+                                                text-[#fefefe] font-bebas text-lg"
                                                 asChild
                                             >
                                                 <Link href={`/wear/${product.id}`}>Ver Detalles</Link>
@@ -165,8 +183,8 @@ const WearPage = () => {
                                     Anterior
                                 </Button>
                                 <span className="flex items-center text-[#fefefe] px-4">
-                  Página {currentPage} de {totalPages}
-                </span>
+                                    Página {currentPage} de {totalPages}
+                                </span>
                                 <Button
                                     onClick={handleNextPage}
                                     disabled={currentPage === totalPages}
