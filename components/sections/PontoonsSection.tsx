@@ -53,7 +53,7 @@ const PontoonsSection = () => {
               <div className="relative w-full h-full">
                 <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-100 transition-all duration-300" />
                 <Image
-                  src="/images/silver-3.jpg"
+                  src="/images/silver-1c.jpg"
                   alt="Silverwave Pontoon"
                   fill
                   className="object-contain group-hover:scale-110 transition-transform duration-300"
@@ -89,7 +89,7 @@ const PontoonsSection = () => {
               <div className="relative w-full h-full">
                 <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-100 transition-all duration-300" />
                 <Image
-                  src="/images/quest-1.jpg"
+                  src="/images/quest-c.jpg"
                   alt="Qwest Pontoon"
                   fill
                   className="object-contain group-hover:scale-110 transition-transform duration-300"

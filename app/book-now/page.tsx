@@ -56,7 +56,7 @@ const services = [
 // Mapeo de imágenes para las opciones de servicio
 const serviceImageMap: Record<string, string> = {
   "Silverwave Pontoon": "/images/silver-1.jpg",
-  "Qwest Pontoon": "/images/quest-1.jpg",
+  "Qwest Pontoon": "/images/quest-c.jpg",
   "Ice Pops Mega Front Loader": "/images/bounce.PNG",
   "Foam Party Package": "/images/foam-party.JPG",
   "Color Foam Party Package": "/images/foamcolor.JPG",

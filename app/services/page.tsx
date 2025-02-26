@@ -68,6 +68,210 @@ export default function ServicesPage() {
         </h1>
 
         <div className="space-y-24">
+          {/* Pontoons - Tarjeta Interactiva */}
+<Card className="bg-[#fefefe]/5 backdrop-blur-sm border-[#ff0054]/20 hover:border-[#ff0054] transition-all duration-300">
+  <div className="p-8 space-y-8">
+    <h2 className="text-6xl font-bebas mb-8 text-center">
+      <span className="bg-gradient-to-r from-[#fbe40b] to-[#ff0054] text-transparent bg-clip-text">
+        Pontoon Rentals
+      </span>
+    </h2>
+    <div className="grid md:grid-cols-2 gap-12">
+      {/* Imagen o Selector de Pontoons */}
+      <div className="relative min-h-[500px]">
+        {selectedPontoon ? (
+          <div className="relative h-[500px] w-full">
+            <Carousel className="w-full h-full">
+              <CarouselContent>
+                {selectedPontoon === "silverwave" ? (
+                  // Silverwave Carousel Items
+                  <>
+                    <CarouselItem>
+                      <div className="relative h-[500px] rounded-lg overflow-hidden">
+                        <Image
+                          src="/images/silver-1.jpg"
+                          alt="Silverwave Pontoon"
+                          fill
+                          className="object-cover rounded-lg"
+                        />
+                      </div>
+                    </CarouselItem>
+                    <CarouselItem>
+                      <div className="relative h-[500px] rounded-lg overflow-hidden">
+                        <Image
+                          src="/images/silver-3.jpg"
+                          alt="Silverwave Pontoon"
+                          fill
+                          className="object-cover rounded-lg"
+                        />
+                      </div>
+                    </CarouselItem>
+                  </>
+                ) : (
+                  // Qwest Carousel Items
+                  <>
+                    <CarouselItem>
+                      <div className="relative h-[500px] rounded-lg overflow-hidden">
+                        <Image
+                          src="/images/quest-c.jpg"
+                          alt="Qwest Pontoon"
+                          fill
+                          className="object-cover rounded-lg"
+                        />
+                      </div>
+                    </CarouselItem>
+                    <CarouselItem>
+                      <div className="relative h-[500px] rounded-lg overflow-hidden">
+                        <Image
+                          src="/images/quest-3.jpg"
+                          alt="Qwest Pontoon"
+                          fill
+                          className="object-cover rounded-lg"
+                        />
+                      </div>
+                    </CarouselItem>
+                  </>
+                )}
+              </CarouselContent>
+              <CarouselPrevious className="text-[#fefefe] bg-[#ff0054]/50 hover:bg-[#ff0054]" />
+              <CarouselNext className="text-[#fefefe] bg-[#ff0054]/50 hover:bg-[#ff0054]" />
+            </Carousel>
+            
+            <Button
+              onClick={() => setSelectedPontoon(null)}
+              className="absolute top-4 right-4 bg-[#060404]/80 hover:bg-[#060404] 
+                      border border-[#ff0054] text-[#fefefe] rounded-full p-2
+                      transition-all duration-300"
+              size="icon"
+              variant="outline"
+            >
+              <X className="h-4 w-4" />
+            </Button>
+          </div>
+        ) : (
+          <div className="flex flex-col items-center justify-center h-full space-y-8 bg-[#060404]/50 rounded-lg p-8">
+            <h3 className="text-3xl font-bebas text-[#fefefe] text-center">
+              Click to View Images
+            </h3>
+            
+            <div className="space-y-6 w-full">
+              <Button 
+                onClick={() => setSelectedPontoon("silverwave")}
+                className="w-full bg-gradient-to-r from-[#ff0054] to-[#fbe40b] hover:from-[#fbe40b] hover:to-[#ff0054] 
+                         text-[#060404] font-bebas text-2xl py-8 
+                         transition-all duration-300 shadow-lg"
+              >
+                Silverwave Pontoon
+              </Button>
+              
+              <Button 
+                onClick={() => setSelectedPontoon("qwest")}
+                className="w-full bg-gradient-to-r from-[#ff0054] to-[#fbe40b] hover:from-[#fbe40b] hover:to-[#ff0054] 
+                         text-[#060404] font-bebas text-2xl py-8 
+                         transition-all duration-300 shadow-lg"
+              >
+                Qwest Pontoon
+              </Button>
+            </div>
+            
+            <div className="p-6 border border-[#ff0054]/30 rounded-lg bg-[#060404]/80 max-w-md mx-auto mt-8">
+              <p className="text-lg text-[#fefefe]/80 text-center italic">
+                "Experience the ultimate water adventure with our premium pontoon boats equipped with all the features you need for a perfect day on the water."
+              </p>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Contenido */}
+      <div className="space-y-8">
+        {/* Título de Precios */}
+        <div className="bg-gradient-to-r from-[#ff0054] to-[#fbe40b] p-[1px] rounded-lg">
+          <div className="bg-[#060404] rounded-lg p-4">
+            <h3 className="text-3xl font-bebas text-[#fefefe] text-center">Pontoon Rental Prices</h3>
+          </div>
+        </div>
+
+        {/* Lista de Precios en una sola tarjeta */}
+        <div className="bg-gradient-to-r from-[#ff0054] to-[#fbe40b] p-[1px] rounded-lg">
+          <div className="bg-[#060404] rounded-lg p-6">
+            <div className="grid grid-cols-2 gap-8">
+              {/* Columna izquierda */}
+              <div className="space-y-4">
+                <div className="text-center space-y-1">
+                  <p className="text-xl text-[#fefefe] font-bebas">2 Hours</p>
+                  <p className="text-2xl text-[#fbe40b] font-bebas">$265</p>
+                </div>
+                <div className="text-center space-y-1">
+                  <p className="text-xl text-[#fefefe] font-bebas">3 Hours</p>
+                  <p className="text-2xl text-[#fbe40b] font-bebas">$350</p>
+                </div>
+                <div className="text-center space-y-1">
+                  <p className="text-xl text-[#fefefe] font-bebas">4 Hours</p>
+                  <p className="text-2xl text-[#fbe40b] font-bebas">$450</p>
+                </div>
+              </div>
+              
+              {/* Columna derecha */}
+              <div className="space-y-4">
+                <div className="text-center space-y-1">
+                  <p className="text-xl text-[#fefefe] font-bebas">5 Hours</p>
+                  <p className="text-2xl text-[#fbe40b] font-bebas">$560</p>
+                </div>
+                <div className="text-center space-y-1">
+                  <p className="text-xl text-[#fefefe] font-bebas">6 Hours</p>
+                  <p className="text-2xl text-[#fbe40b] font-bebas">$675</p>
+                </div>
+                <div className="text-center space-y-1">
+                  <p className="text-xl text-[#fefefe] font-bebas">8 Hours</p>
+                  <p className="text-2xl text-[#fbe40b] font-bebas">$850</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {/* Botón antes de Sunset Cruise */}
+    <div className="flex justify-center pt-8 pb-8">
+      <div className="relative overflow-hidden rounded-lg p-[2px] bg-gradient-to-r from-[#ff0054] to-[#fbe40b] 
+                    transition-all duration-300 shadow-[0_0_15px_rgba(255,0,84,0.5)] w-[400px]">
+        <Button 
+          className="w-full bg-[#060404] hover:bg-[#060404]/90 text-[#fefefe] text-3xl px-12 py-6
+                   transition-transform duration-300 font-bebas relative z-10
+                   before:absolute before:inset-0 before:bg-gradient-to-r before:from-[#ff0054] 
+                   before:to-[#fbe40b] before:opacity-0 hover:before:opacity-100 
+                   before:transition-opacity before:-z-10
+                   flex items-center justify-center gap-3
+                   hover:scale-[1.02]"
+          asChild
+        >
+          <Link href="/barco">
+            MORE ABOUT PONTOONS
+            <MousePointerClick className="w-6 h-6" />
+          </Link>
+        </Button>
+      </div>
+    </div>
+
+    {/* Sunset Cruise */}
+    <div className="relative h-[400px] rounded-lg overflow-hidden">
+      <Image
+        src="/images/atardecer-1.jpg"
+        alt="Sunset Cruise"
+        fill
+        className="object-cover"
+      />
+      <div className="absolute inset-0 bg-[#060404]/50" />
+      <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-6">
+        <h3 className="text-4xl font-bebas text-[#ff0054] mb-4">Special Service</h3>
+        <p className="text-3xl text-[#fefefe] font-bebas mb-2">2 Hour Sunset Cruise w/Captain</p>
+        <p className="text-5xl text-[#fbe40b] font-bebas">$365</p>
+      </div>
+    </div>
+  </div>
+</Card>
  {/* Car Services */}
 <Card className="bg-[#fefefe]/5 backdrop-blur-sm border-[#ff0054]/20 hover:border-[#ff0054] transition-all duration-300 max-w-[85vw] mx-auto rounded-2xl">
   <div className="grid md:grid-cols-2 gap-8 p-8">
@@ -79,7 +283,7 @@ export default function ServicesPage() {
         playsInline
         loop
       >
-        <source src="/videos/cars.mp4" type="video/mp4" />
+        <source src="/videos/1.mp4" type="video/mp4" />
       </video>
     </div>
     <div className="space-y-8">
@@ -373,210 +577,7 @@ export default function ServicesPage() {
     </div>
   </div>
 </Card>
-    {/* Pontoons - Tarjeta Interactiva */}
-<Card className="bg-[#fefefe]/5 backdrop-blur-sm border-[#ff0054]/20 hover:border-[#ff0054] transition-all duration-300">
-  <div className="p-8 space-y-8">
-    <h2 className="text-6xl font-bebas mb-8 text-center">
-      <span className="bg-gradient-to-r from-[#fbe40b] to-[#ff0054] text-transparent bg-clip-text">
-        Pontoon Rentals
-      </span>
-    </h2>
-    <div className="grid md:grid-cols-2 gap-12">
-      {/* Imagen o Selector de Pontoons */}
-      <div className="relative min-h-[500px]">
-        {selectedPontoon ? (
-          <div className="relative h-[500px] w-full">
-            <Carousel className="w-full h-full">
-              <CarouselContent>
-                {selectedPontoon === "silverwave" ? (
-                  // Silverwave Carousel Items
-                  <>
-                    <CarouselItem>
-                      <div className="relative h-[500px] rounded-lg overflow-hidden">
-                        <Image
-                          src="/images/silver-1.jpg"
-                          alt="Silverwave Pontoon"
-                          fill
-                          className="object-cover rounded-lg"
-                        />
-                      </div>
-                    </CarouselItem>
-                    <CarouselItem>
-                      <div className="relative h-[500px] rounded-lg overflow-hidden">
-                        <Image
-                          src="/images/silver-3.jpg"
-                          alt="Silverwave Pontoon"
-                          fill
-                          className="object-cover rounded-lg"
-                        />
-                      </div>
-                    </CarouselItem>
-                  </>
-                ) : (
-                  // Qwest Carousel Items
-                  <>
-                    <CarouselItem>
-                      <div className="relative h-[500px] rounded-lg overflow-hidden">
-                        <Image
-                          src="/images/quest-2.jpg"
-                          alt="Qwest Pontoon"
-                          fill
-                          className="object-cover rounded-lg"
-                        />
-                      </div>
-                    </CarouselItem>
-                    <CarouselItem>
-                      <div className="relative h-[500px] rounded-lg overflow-hidden">
-                        <Image
-                          src="/images/quest-3.jpg"
-                          alt="Qwest Pontoon"
-                          fill
-                          className="object-cover rounded-lg"
-                        />
-                      </div>
-                    </CarouselItem>
-                  </>
-                )}
-              </CarouselContent>
-              <CarouselPrevious className="text-[#fefefe] bg-[#ff0054]/50 hover:bg-[#ff0054]" />
-              <CarouselNext className="text-[#fefefe] bg-[#ff0054]/50 hover:bg-[#ff0054]" />
-            </Carousel>
-            
-            <Button
-              onClick={() => setSelectedPontoon(null)}
-              className="absolute top-4 right-4 bg-[#060404]/80 hover:bg-[#060404] 
-                      border border-[#ff0054] text-[#fefefe] rounded-full p-2
-                      transition-all duration-300"
-              size="icon"
-              variant="outline"
-            >
-              <X className="h-4 w-4" />
-            </Button>
-          </div>
-        ) : (
-          <div className="flex flex-col items-center justify-center h-full space-y-8 bg-[#060404]/50 rounded-lg p-8">
-            <h3 className="text-3xl font-bebas text-[#fefefe] text-center">
-              Click to View Images
-            </h3>
-            
-            <div className="space-y-6 w-full">
-              <Button 
-                onClick={() => setSelectedPontoon("silverwave")}
-                className="w-full bg-gradient-to-r from-[#ff0054] to-[#fbe40b] hover:from-[#fbe40b] hover:to-[#ff0054] 
-                         text-[#060404] font-bebas text-2xl py-8 
-                         transition-all duration-300 shadow-lg"
-              >
-                Silverwave Pontoon
-              </Button>
-              
-              <Button 
-                onClick={() => setSelectedPontoon("qwest")}
-                className="w-full bg-gradient-to-r from-[#ff0054] to-[#fbe40b] hover:from-[#fbe40b] hover:to-[#ff0054] 
-                         text-[#060404] font-bebas text-2xl py-8 
-                         transition-all duration-300 shadow-lg"
-              >
-                Qwest Pontoon
-              </Button>
-            </div>
-            
-            <div className="p-6 border border-[#ff0054]/30 rounded-lg bg-[#060404]/80 max-w-md mx-auto mt-8">
-              <p className="text-lg text-[#fefefe]/80 text-center italic">
-                "Experience the ultimate water adventure with our premium pontoon boats equipped with all the features you need for a perfect day on the water."
-              </p>
-            </div>
-          </div>
-        )}
-      </div>
-
-      {/* Contenido */}
-      <div className="space-y-8">
-        {/* Título de Precios */}
-        <div className="bg-gradient-to-r from-[#ff0054] to-[#fbe40b] p-[1px] rounded-lg">
-          <div className="bg-[#060404] rounded-lg p-4">
-            <h3 className="text-3xl font-bebas text-[#fefefe] text-center">Pontoon Rental Prices</h3>
-          </div>
-        </div>
-
-        {/* Lista de Precios en una sola tarjeta */}
-        <div className="bg-gradient-to-r from-[#ff0054] to-[#fbe40b] p-[1px] rounded-lg">
-          <div className="bg-[#060404] rounded-lg p-6">
-            <div className="grid grid-cols-2 gap-8">
-              {/* Columna izquierda */}
-              <div className="space-y-4">
-                <div className="text-center space-y-1">
-                  <p className="text-xl text-[#fefefe] font-bebas">2 Hours</p>
-                  <p className="text-2xl text-[#fbe40b] font-bebas">$265</p>
-                </div>
-                <div className="text-center space-y-1">
-                  <p className="text-xl text-[#fefefe] font-bebas">3 Hours</p>
-                  <p className="text-2xl text-[#fbe40b] font-bebas">$350</p>
-                </div>
-                <div className="text-center space-y-1">
-                  <p className="text-xl text-[#fefefe] font-bebas">4 Hours</p>
-                  <p className="text-2xl text-[#fbe40b] font-bebas">$450</p>
-                </div>
-              </div>
-              
-              {/* Columna derecha */}
-              <div className="space-y-4">
-                <div className="text-center space-y-1">
-                  <p className="text-xl text-[#fefefe] font-bebas">5 Hours</p>
-                  <p className="text-2xl text-[#fbe40b] font-bebas">$560</p>
-                </div>
-                <div className="text-center space-y-1">
-                  <p className="text-xl text-[#fefefe] font-bebas">6 Hours</p>
-                  <p className="text-2xl text-[#fbe40b] font-bebas">$675</p>
-                </div>
-                <div className="text-center space-y-1">
-                  <p className="text-xl text-[#fefefe] font-bebas">8 Hours</p>
-                  <p className="text-2xl text-[#fbe40b] font-bebas">$850</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    {/* Botón antes de Sunset Cruise */}
-    <div className="flex justify-center pt-8 pb-8">
-      <div className="relative overflow-hidden rounded-lg p-[2px] bg-gradient-to-r from-[#ff0054] to-[#fbe40b] 
-                    transition-all duration-300 shadow-[0_0_15px_rgba(255,0,84,0.5)] w-[400px]">
-        <Button 
-          className="w-full bg-[#060404] hover:bg-[#060404]/90 text-[#fefefe] text-3xl px-12 py-6
-                   transition-transform duration-300 font-bebas relative z-10
-                   before:absolute before:inset-0 before:bg-gradient-to-r before:from-[#ff0054] 
-                   before:to-[#fbe40b] before:opacity-0 hover:before:opacity-100 
-                   before:transition-opacity before:-z-10
-                   flex items-center justify-center gap-3
-                   hover:scale-[1.02]"
-          asChild
-        >
-          <Link href="/barco">
-            MORE ABOUT PONTOONS
-            <MousePointerClick className="w-6 h-6" />
-          </Link>
-        </Button>
-      </div>
-    </div>
-
-    {/* Sunset Cruise */}
-    <div className="relative h-[400px] rounded-lg overflow-hidden">
-      <Image
-        src="/images/atardecer-1.jpg"
-        alt="Sunset Cruise"
-        fill
-        className="object-cover"
-      />
-      <div className="absolute inset-0 bg-[#060404]/50" />
-      <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-6">
-        <h3 className="text-4xl font-bebas text-[#ff0054] mb-4">Special Service</h3>
-        <p className="text-3xl text-[#fefefe] font-bebas mb-2">2 Hour Sunset Cruise w/Captain</p>
-        <p className="text-5xl text-[#fbe40b] font-bebas">$365</p>
-      </div>
-    </div>
-  </div>
-</Card>
+    
         </div>
       </div>
        {/* Estilos para la animación de burbujas */}

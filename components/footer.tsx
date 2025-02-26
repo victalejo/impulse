@@ -39,8 +39,27 @@ export default function Footer() {
             <h3 className="text-xl font-bebas mb-3 text-[#ff0054] text-center">Services</h3>
             
             <div className="flex gap-0">
-              {/* Columna 1: Car Services y Foam Party (con subtítulos) */}
+              {/* Columna 1: Pontoon Rentals, Bounce Houses y DJ Services */}
               <div className="flex-1 pr-1 text-sm border-r border-[#ff0054]/10">
+                <Link href="/barco" className="block hover:text-opacity-80 transition-colors duration-300">
+                  <span className="bg-gradient-to-r from-[#ff0054] to-[#fbe40b] text-transparent bg-clip-text">
+                    Pontoon Rentals
+                  </span>
+                </Link>
+                <Link href="/bounce" className="block hover:text-opacity-80 transition-colors duration-300 mt-2">
+                  <span className="bg-gradient-to-r from-[#ff0054] to-[#fbe40b] text-transparent bg-clip-text">
+                    Bounce Houses Package
+                  </span>
+                </Link>
+                <Link href="/contact" className="block hover:text-opacity-80 transition-colors duration-300 mt-2">
+                  <span className="bg-gradient-to-r from-[#ff0054] to-[#fbe40b] text-transparent bg-clip-text">
+                    DJ Services
+                  </span>
+                </Link>
+              </div>
+              
+              {/* Columna 2: Car Services y Foam Party (con subtítulos) */}
+              <div className="flex-1 pl-2 text-sm space-y-2">
                 {/* Car Services con sus subtítulos */}
                 <Link href="/services" className="block font-semibold hover:text-opacity-80 transition-colors duration-300">
                   <span className="bg-gradient-to-r from-[#ff0054] to-[#fbe40b] text-transparent bg-clip-text">
@@ -64,25 +83,6 @@ export default function Footer() {
                   <li>• <Link href="/foamnoche" className="text-[#060404] hover:text-[#ff0054] transition-colors duration-300">Glow in the Dark Foam Party</Link></li>
                 </ul>
               </div>
-              
-              {/* Columna 2: Bounce Houses, DJ Services y Pontoon Rentals */}
-              <div className="flex-1 pl-2 text-sm space-y-2">
-                <Link href="/bounce" className="block hover:text-opacity-80 transition-colors duration-300">
-                  <span className="bg-gradient-to-r from-[#ff0054] to-[#fbe40b] text-transparent bg-clip-text">
-                    Bounce Houses Package
-                  </span>
-                </Link>
-                <Link href="/contact" className="block hover:text-opacity-80 transition-colors duration-300">
-                  <span className="bg-gradient-to-r from-[#ff0054] to-[#fbe40b] text-transparent bg-clip-text">
-                    DJ Services
-                  </span>
-                </Link>
-                <Link href="/barco" className="block hover:text-opacity-80 transition-colors duration-300">
-                  <span className="bg-gradient-to-r from-[#ff0054] to-[#fbe40b] text-transparent bg-clip-text">
-                    Pontoon Rentals
-                  </span>
-                </Link>
-              </div>
             </div>
           </div>
           
@@ -96,8 +96,8 @@ export default function Footer() {
               </li>
               <li className="flex items-center">
                 <Mail className="h-6 w-6 mr-2 text-[#ff0054]" />
-                <a href="mailto:info@impulserentals.org" className="text-[#060404] hover:text-[#ff0054] transition-colors duration-300">
-                  info@impulserentals.org
+                <a href="mailto:impulsexperience.com" className="text-[#060404] hover:text-[#ff0054] transition-colors duration-300">
+                  impulsexperience.com
                 </a>
               </li>
               <li className="flex items-center">
@@ -117,7 +117,7 @@ export default function Footer() {
                 <Instagram className="h-6 w-6 text-[#fefefe]" />
               </a>
               <a 
-                href="#" 
+                href="https://web.facebook.com/ImpulseRentals/?_rdc=1&_rdr#" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="bg-gradient-to-r from-[#ff0054] to-[#fbe40b] p-2 rounded-full hover:scale-110 transition-transform duration-300"
