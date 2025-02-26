@@ -6,9 +6,20 @@ import { Card } from "@/components/ui/card"
 import Image from "next/image"
 import Link from "next/link"
 import { MousePointerClick } from "lucide-react"
+import { useState } from "react"
+import { X } from "lucide-react"
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel"
 
 export default function ServicesPage() {
+  const [selectedPontoon, setSelectedPontoon] = useState<string | null>(null)
   return (
+
     <div className="min-h-screen bg-[#060404] relative overflow-hidden">
       {/* Efectos de fondo mejorados */}
       <div className="absolute inset-0">
@@ -101,7 +112,7 @@ export default function ServicesPage() {
                      flex items-center justify-center gap-3"
             asChild
           >
-            <Link href="/booking">
+            <Link href="/suburban">
               Chevrolet Suburban
               <MousePointerClick className="w-6 h-6" />
             </Link>
@@ -362,39 +373,127 @@ export default function ServicesPage() {
     </div>
   </div>
 </Card>
-         {/* Pontoons */}
+    {/* Pontoons - Tarjeta Interactiva */}
 <Card className="bg-[#fefefe]/5 backdrop-blur-sm border-[#ff0054]/20 hover:border-[#ff0054] transition-all duration-300">
   <div className="p-8 space-y-8">
-    <h2 className="text-6xl font-bebas mb-8">
+    <h2 className="text-6xl font-bebas mb-8 text-center">
       <span className="bg-gradient-to-r from-[#fbe40b] to-[#ff0054] text-transparent bg-clip-text">
         Pontoon Rentals
       </span>
     </h2>
     <div className="grid md:grid-cols-2 gap-12">
-      {/* Imagen */}
-      <div className="relative h-[500px]">
-        <Image
-          src="/images/poonton.png"
-          alt="Pontoon"
-          fill
-          className="object-cover rounded-lg"
-          priority
-        />
+      {/* Imagen o Selector de Pontoons */}
+      <div className="relative min-h-[500px]">
+        {selectedPontoon ? (
+          <div className="relative h-[500px] w-full">
+            <Carousel className="w-full h-full">
+              <CarouselContent>
+                {selectedPontoon === "silverwave" ? (
+                  // Silverwave Carousel Items
+                  <>
+                    <CarouselItem>
+                      <div className="relative h-[500px] rounded-lg overflow-hidden">
+                        <Image
+                          src="/images/silver-1.jpg"
+                          alt="Silverwave Pontoon"
+                          fill
+                          className="object-cover rounded-lg"
+                        />
+                      </div>
+                    </CarouselItem>
+                    <CarouselItem>
+                      <div className="relative h-[500px] rounded-lg overflow-hidden">
+                        <Image
+                          src="/images/silver-3.jpg"
+                          alt="Silverwave Pontoon"
+                          fill
+                          className="object-cover rounded-lg"
+                        />
+                      </div>
+                    </CarouselItem>
+                  </>
+                ) : (
+                  // Qwest Carousel Items
+                  <>
+                    <CarouselItem>
+                      <div className="relative h-[500px] rounded-lg overflow-hidden">
+                        <Image
+                          src="/images/quest-2.jpg"
+                          alt="Qwest Pontoon"
+                          fill
+                          className="object-cover rounded-lg"
+                        />
+                      </div>
+                    </CarouselItem>
+                    <CarouselItem>
+                      <div className="relative h-[500px] rounded-lg overflow-hidden">
+                        <Image
+                          src="/images/quest-3.jpg"
+                          alt="Qwest Pontoon"
+                          fill
+                          className="object-cover rounded-lg"
+                        />
+                      </div>
+                    </CarouselItem>
+                  </>
+                )}
+              </CarouselContent>
+              <CarouselPrevious className="text-[#fefefe] bg-[#ff0054]/50 hover:bg-[#ff0054]" />
+              <CarouselNext className="text-[#fefefe] bg-[#ff0054]/50 hover:bg-[#ff0054]" />
+            </Carousel>
+            
+            <Button
+              onClick={() => setSelectedPontoon(null)}
+              className="absolute top-4 right-4 bg-[#060404]/80 hover:bg-[#060404] 
+                      border border-[#ff0054] text-[#fefefe] rounded-full p-2
+                      transition-all duration-300"
+              size="icon"
+              variant="outline"
+            >
+              <X className="h-4 w-4" />
+            </Button>
+          </div>
+        ) : (
+          <div className="flex flex-col items-center justify-center h-full space-y-8 bg-[#060404]/50 rounded-lg p-8">
+            <h3 className="text-3xl font-bebas text-[#fefefe] text-center">
+              Click to View Images
+            </h3>
+            
+            <div className="space-y-6 w-full">
+              <Button 
+                onClick={() => setSelectedPontoon("silverwave")}
+                className="w-full bg-gradient-to-r from-[#ff0054] to-[#fbe40b] hover:from-[#fbe40b] hover:to-[#ff0054] 
+                         text-[#060404] font-bebas text-2xl py-8 
+                         transition-all duration-300 shadow-lg"
+              >
+                Silverwave Pontoon
+              </Button>
+              
+              <Button 
+                onClick={() => setSelectedPontoon("qwest")}
+                className="w-full bg-gradient-to-r from-[#ff0054] to-[#fbe40b] hover:from-[#fbe40b] hover:to-[#ff0054] 
+                         text-[#060404] font-bebas text-2xl py-8 
+                         transition-all duration-300 shadow-lg"
+              >
+                Qwest Pontoon
+              </Button>
+            </div>
+            
+            <div className="p-6 border border-[#ff0054]/30 rounded-lg bg-[#060404]/80 max-w-md mx-auto mt-8">
+              <p className="text-lg text-[#fefefe]/80 text-center italic">
+                "Experience the ultimate water adventure with our premium pontoon boats equipped with all the features you need for a perfect day on the water."
+              </p>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Contenido */}
       <div className="space-y-8">
-        {/* Modelos */}
-        <div className="space-y-4">
-          <div className="bg-gradient-to-r from-[#ff0054] to-[#fbe40b] p-[1px] rounded-lg">
-            <div className="bg-[#060404] rounded-lg p-4">
-              <h3 className="text-3xl font-bebas text-[#fefefe] text-center">Silverwave Pontoon</h3>
-            </div>
-          </div>
-          <div className="bg-gradient-to-r from-[#ff0054] to-[#fbe40b] p-[1px] rounded-lg">
-            <div className="bg-[#060404] rounded-lg p-4">
-              <h3 className="text-3xl font-bebas text-[#fefefe] text-center">Qwest Pontoon</h3>
-            </div>
+        {/* Título de Precios */}
+        <div className="bg-gradient-to-r from-[#ff0054] to-[#fbe40b] p-[1px] rounded-lg">
+          <div className="bg-[#060404] rounded-lg p-4">
+            <h3 className="text-3xl font-bebas text-[#fefefe] text-center">Pontoon Rental Prices</h3>
           </div>
         </div>
 
@@ -439,24 +538,8 @@ export default function ServicesPage() {
       </div>
     </div>
 
-    {/* Sunset Cruise */}
-    <div className="relative h-[400px] mt-8 rounded-lg overflow-hidden">
-      <Image
-        src="/images/atardecer-1.jpg"
-        alt="Sunset Cruise"
-        fill
-        className="object-cover"
-      />
-      <div className="absolute inset-0 bg-[#060404]/50" />
-      <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-6">
-        <h3 className="text-4xl font-bebas text-[#ff0054] mb-4">Special Service</h3>
-        <p className="text-3xl text-[#fefefe] font-bebas mb-2">2 Hour Sunset Cruise w/Captain</p>
-        <p className="text-5xl text-[#fbe40b] font-bebas">$365</p>
-      </div>
-    </div>
-
-    {/* Botón */}
-    <div className="flex justify-center pt-12">
+    {/* Botón antes de Sunset Cruise */}
+    <div className="flex justify-center pt-8 pb-8">
       <div className="relative overflow-hidden rounded-lg p-[2px] bg-gradient-to-r from-[#ff0054] to-[#fbe40b] 
                     transition-all duration-300 shadow-[0_0_15px_rgba(255,0,84,0.5)] w-[400px]">
         <Button 
@@ -470,10 +553,26 @@ export default function ServicesPage() {
           asChild
         >
           <Link href="/barco">
-            PONTOONS
+            MORE ABOUT PONTOONS
             <MousePointerClick className="w-6 h-6" />
           </Link>
         </Button>
+      </div>
+    </div>
+
+    {/* Sunset Cruise */}
+    <div className="relative h-[400px] rounded-lg overflow-hidden">
+      <Image
+        src="/images/atardecer-1.jpg"
+        alt="Sunset Cruise"
+        fill
+        className="object-cover"
+      />
+      <div className="absolute inset-0 bg-[#060404]/50" />
+      <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-6">
+        <h3 className="text-4xl font-bebas text-[#ff0054] mb-4">Special Service</h3>
+        <p className="text-3xl text-[#fefefe] font-bebas mb-2">2 Hour Sunset Cruise w/Captain</p>
+        <p className="text-5xl text-[#fbe40b] font-bebas">$365</p>
       </div>
     </div>
   </div>

@@ -1,70 +1,148 @@
 // components/footer.tsx
 
-// /components/footer.tsx
-
 import Link from "next/link"
-import { Bot, Phone, Mail, MapPin } from "lucide-react"
+import { Bot, Phone, Mail, MapPin, Instagram, Facebook } from "lucide-react"
+import Image from "next/image"
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-900 text-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          <div>
-            <div className="flex items-center">
-              <Bot className="h-8 w-8" />
-              <span className="ml-2 text-xl font-bold">Impulse Rentals</span>
+    <footer className="bg-[#fefefe] text-[#060404] py-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-start">
+          {/* Logo principal a la izquierda */}
+          <div className="md:col-span-2 flex justify-center md:justify-start">
+            <div className="relative w-28 h-28">
+              <Image
+                src="/logo-sin-texto.png"
+                alt="Impulse Rentals Logo"
+                fill
+                className="object-contain"
+              />
             </div>
-            <p className="mt-4 text-gray-400">
-              Your premier destination for all your outdoor entertainment needs.
-            </p>
           </div>
-          
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
-            <ul className="space-y-2">
-              <li><Link href="/services" className="text-gray-400 hover:text-white">Services</Link></li>
-              <li><Link href="/shop" className="text-gray-400 hover:text-white">Shop</Link></li>
-              <li><Link href="/blog" className="text-gray-400 hover:text-white">Blog</Link></li>
-              <li><Link href="/contact" className="text-gray-400 hover:text-white">Contact</Link></li>
+
+          {/* Quick Links */}
+          <div className="md:col-span-2">
+            <h3 className="text-xl font-bebas mb-3 text-[#ff0054]">Quick Links</h3>
+            <ul className="space-y-1 text-sm">
+              <li><Link href="/book-now" className="text-[#060404] hover:text-[#ff0054] transition-colors duration-300">Book Now</Link></li>
+              <li><Link href="/services" className="text-[#060404] hover:text-[#ff0054] transition-colors duration-300">Impulse Services</Link></li>
+              <li><Link href="/wear" className="text-[#060404] hover:text-[#ff0054] transition-colors duration-300">Impulse Wear</Link></li>
+              <li><Link href="/location" className="text-[#060404] hover:text-[#ff0054] transition-colors duration-300">Location</Link></li>
+              <li><Link href="/about" className="text-[#060404] hover:text-[#ff0054] transition-colors duration-300">About Us</Link></li>
+              <li><Link href="/faq" className="text-[#060404] hover:text-[#ff0054] transition-colors duration-300">FAQ</Link></li>
             </ul>
           </div>
           
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Services</h3>
-            <ul className="space-y-2">
-              <li><Link href="/services/boat-rentals" className="text-gray-400 hover:text-white">Boat Rentals</Link></li>
-              <li><Link href="/services/bounce-houses" className="text-gray-400 hover:text-white">Bounce Houses</Link></li>
-              <li><Link href="/services/events" className="text-gray-400 hover:text-white">Event Planning</Link></li>
-              <li><Link href="/services/corporate" className="text-gray-400 hover:text-white">Corporate Events</Link></li>
-            </ul>
+          {/* Services */}
+          <div className="md:col-span-6">
+            <h3 className="text-xl font-bebas mb-3 text-[#ff0054] text-center">Services</h3>
+            
+            <div className="flex gap-0">
+              {/* Columna 1: Car Services y Foam Party (con subtítulos) */}
+              <div className="flex-1 pr-1 text-sm border-r border-[#ff0054]/10">
+                {/* Car Services con sus subtítulos */}
+                <Link href="/services" className="block font-semibold hover:text-opacity-80 transition-colors duration-300">
+                  <span className="bg-gradient-to-r from-[#ff0054] to-[#fbe40b] text-transparent bg-clip-text">
+                    Car Services
+                  </span>
+                </Link>
+                <ul className="pl-3 space-y-0.5 mb-2">
+                  <li>• <Link href="/gmc" className="text-[#060404] hover:text-[#ff0054] transition-colors duration-300">GMC Yukon AT4 XL</Link></li>
+                  <li>• <Link href="/suburban" className="text-[#060404] hover:text-[#ff0054] transition-colors duration-300">Chevrolet Suburban</Link></li>
+                  <li>• <Link href="/bmw" className="text-[#060404] hover:text-[#ff0054] transition-colors duration-300">BMW X7</Link></li>
+                </ul>
+
+                {/* Foam Party con sus subtítulos */}
+                <Link href="/services#foam-party-section" className="block font-semibold hover:text-opacity-80 transition-colors duration-300">
+                  <span className="bg-gradient-to-r from-[#ff0054] to-[#fbe40b] text-transparent bg-clip-text">
+                    Foam Party Packages
+                  </span>
+                </Link>
+                <ul className="pl-3 space-y-0.5">
+                  <li>• <Link href="/foamdia" className="text-[#060404] hover:text-[#ff0054] transition-colors duration-300">Foam Party Package</Link></li>
+                  <li>• <Link href="/foamnoche" className="text-[#060404] hover:text-[#ff0054] transition-colors duration-300">Glow in the Dark Foam Party</Link></li>
+                </ul>
+              </div>
+              
+              {/* Columna 2: Bounce Houses, DJ Services y Pontoon Rentals */}
+              <div className="flex-1 pl-2 text-sm space-y-2">
+                <Link href="/bounce" className="block hover:text-opacity-80 transition-colors duration-300">
+                  <span className="bg-gradient-to-r from-[#ff0054] to-[#fbe40b] text-transparent bg-clip-text">
+                    Bounce Houses Package
+                  </span>
+                </Link>
+                <Link href="/contact" className="block hover:text-opacity-80 transition-colors duration-300">
+                  <span className="bg-gradient-to-r from-[#ff0054] to-[#fbe40b] text-transparent bg-clip-text">
+                    DJ Services
+                  </span>
+                </Link>
+                <Link href="/barco" className="block hover:text-opacity-80 transition-colors duration-300">
+                  <span className="bg-gradient-to-r from-[#ff0054] to-[#fbe40b] text-transparent bg-clip-text">
+                    Pontoon Rentals
+                  </span>
+                </Link>
+              </div>
+            </div>
           </div>
           
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Contact Us</h3>
-            <ul className="space-y-2">
+          {/* Contact */}
+          <div className="md:col-span-2">
+            <h3 className="text-xl font-bebas mb-3 text-[#ff0054]">Contact</h3>
+            <ul className="space-y-3 text-sm">
               <li className="flex items-center">
-                <Phone className="h-5 w-5 mr-2" />
-                <span className="text-gray-400">862.686.5129</span>
+                <Phone className="h-6 w-6 mr-2 text-[#ff0054]" />
+                <span className="text-[#060404]">862.686.5129</span>
               </li>
               <li className="flex items-center">
-                <Mail className="h-5 w-5 mr-2" />
-                <a href="mailto:info@impulserentals.org" className="text-gray-400 hover:text-white">
+                <Mail className="h-6 w-6 mr-2 text-[#ff0054]" />
+                <a href="mailto:info@impulserentals.org" className="text-[#060404] hover:text-[#ff0054] transition-colors duration-300">
                   info@impulserentals.org
                 </a>
               </li>
               <li className="flex items-center">
-                <MapPin className="h-5 w-5 mr-2" />
-                <span className="text-gray-400">New Jersey, USA</span>
+                <MapPin className="h-6 w-6 mr-2 text-[#ff0054]" />
+                <span className="text-[#060404]">Dallas, Texas, EE. UU.</span>
               </li>
             </ul>
+
+            {/* Social Media Icons */}
+            <div className="mt-4 flex space-x-3">
+              <a 
+                href="https://www.instagram.com/impulse_rentals/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="bg-gradient-to-r from-[#ff0054] to-[#fbe40b] p-2 rounded-full hover:scale-110 transition-transform duration-300"
+              >
+                <Instagram className="h-6 w-6 text-[#fefefe]" />
+              </a>
+              <a 
+                href="#" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="bg-gradient-to-r from-[#ff0054] to-[#fbe40b] p-2 rounded-full hover:scale-110 transition-transform duration-300"
+              >
+                <Facebook className="h-6 w-6 text-[#fefefe]" />
+              </a>
+            </div>
           </div>
         </div>
         
-        <div className="mt-8 pt-8 border-t border-gray-800">
-          <p className="text-center text-gray-400">
+        {/* Footer Bottom */}
+        <div className="mt-6 pt-4 border-t border-[#ff0054]/20 flex justify-between items-center">
+          <p className="text-xs text-[#060404]/70">
             © {new Date().getFullYear()} Impulse Rentals. All rights reserved.
           </p>
+          
+          {/* Logo adicional más pequeño */}
+          <div className="relative w-28 h-16">
+            <Image
+              src="/images/logo-iaportafolio.png"
+              alt="IA Portafolio Logo"
+              fill
+              className="object-contain"
+            />
+          </div>
         </div>
       </div>
     </footer>

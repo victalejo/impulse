@@ -237,7 +237,7 @@ export default function LocationPage() {
                 </div>
 
                 <Button 
-                  className="w-full bg-[#060404] hover:bg-[#ff0054] text-[#fefefe] 
+                  className="w-full bg-[#ff0054] hover:bg-[#ff0054] text-[#fefefe] 
                            transform hover:scale-105 transition-all duration-300 shadow-lg
                            border-2 border-transparent hover:border-[#ff0054]"
                   size="lg"
