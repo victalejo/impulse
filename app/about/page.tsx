@@ -17,33 +17,30 @@ import {
 interface TeamMember {
   id: number
   name: string
-  role: string
   bio: string
-  imageUrl: string
+  imageUrl?: string
+  useIcon?: boolean
 }
 
 // Team members data
 const teamMembers: TeamMember[] = [
   {
     id: 1,
-    name: "Carlos Rodriguez",
-    role: "Founder & CEO",
-    bio: "With over 10 years of experience in entertainment and events, Carlos founded Impulse Rentals with the vision of creating unforgettable experiences for everyone.",
-    imageUrl: "/images/team/founder.jpg" // Make sure you have this image or replace it with an available one
+    name: "Adalberto Martin",
+    bio: "With over 10 years of experience in entertainment and events, Adalberto founded Impulse Rentals with the vision of creating unforgettable experiences for everyone.",
+    imageUrl: "/images/about1.png"
   },
   {
     id: 2,
-    name: "Marina Silva",
-    role: "Pontoon Specialist",
-    bio: "Marina is our boat expert, with nautical safety certification and unparalleled knowledge of our pontoons.",
-    imageUrl: "/images/team/marina.jpg" // Make sure you have this image or replace it with an available one
+    name: "Valentina Holguin",
+    bio: "Valentina is our boat expert, with nautical safety certification and unparalleled knowledge of our pontoons.",
+    useIcon: true
   },
   {
     id: 3,
-    name: "Alex Torres",
-    role: "Foam Party Manager",
-    bio: "Alex's creativity has taken our foam parties to another level, creating unique environments for every occasion.",
-    imageUrl: "/images/team/alex.jpg" // Make sure you have this image or replace it with an available one
+    name: "Miguel Molina",
+    bio: "Miguel's creativity has taken our foam parties to another level, creating unique environments for every occasion.",
+    imageUrl: "/images/about2.png"
   }
 ]
 
@@ -144,23 +141,41 @@ export default function AboutPage() {
                       
                       {/* Content */}
                       <div className="relative h-full flex flex-col items-center justify-center p-6 text-center">
-                        {/* Icon circle */}
-                        <div className="relative w-40 h-40 rounded-full 
+                        {/* Profile Image or Icon */}
+                        {member.useIcon ? (
+                          <div className="relative w-52 h-52 rounded-full 
                                       bg-gradient-to-br from-[#ff0054] to-[#fbe40b] 
                                       flex items-center justify-center mb-8
                                       shadow-lg shadow-[#ff0054]/30 group-hover:shadow-[#ff0054]/50 
                                       transition-all duration-300 transform group-hover:scale-110"
-                        >
-                          <Users className="w-20 h-20 text-[#060404]" />
-                          
-                          {/* Shine effect */}
-                          <div className="absolute inset-0 rounded-full 
-                                        bg-gradient-to-r from-transparent via-[#fefefe]/20 to-transparent 
-                                        opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-                        </div>
+                          >
+                            <Users className="w-28 h-28 text-[#060404]" />
+                            
+                            {/* Shine effect */}
+                            <div className="absolute inset-0 rounded-full 
+                                          bg-gradient-to-r from-transparent via-[#fefefe]/20 to-transparent 
+                                          opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                          </div>
+                        ) : (
+                          <div className="relative w-[260px] h-[260px] rounded-xl overflow-hidden 
+                                       shadow-lg shadow-[#ff0054]/30 group-hover:shadow-[#ff0054]/50 
+                                       transition-all duration-300 transform group-hover:scale-105 mb-8
+                                       border-2 border-[#ff0054]/30">
+                            <Image
+                              src={member.imageUrl || ""}
+                              alt={member.name}
+                              fill
+                              className="object-cover object-center"
+                              style={{ objectPosition: 'center top' }}
+                            />
+                            {/* Shine effect */}
+                            <div className="absolute inset-0 
+                                          bg-gradient-to-r from-transparent via-[#fefefe]/20 to-transparent 
+                                          opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                          </div>
+                        )}
                         
                         <h3 className="text-3xl font-bebas text-[#fefefe] mb-2 group-hover:text-[#fbe40b] transition-colors duration-300">{member.name}</h3>
-                        <p className="text-[#ff0054] font-bebas text-xl mb-4">{member.role}</p>
                         
                         {/* Flip text */}
                         <p className="text-[#fefefe]/70 text-sm mt-4">

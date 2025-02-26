@@ -324,13 +324,14 @@ export default function BookNowPage() {
                       />
                     </div>
                     
-                    {/* Botón Message */}
+                    {/* Botón Message que lleva a la aplicación de mensajes */}
                     <Button 
                       className="w-full bg-gradient-to-r from-[#ff0054] to-[#fbe40b] hover:from-[#fbe40b] hover:to-[#ff0054] 
                                text-[#fefefe] font-bebas text-2xl py-8 mt-6"
                       size="lg"
+                      asChild
                     >
-                      Message
+                      <a href="sms:+18626865129">Message</a>
                     </Button>
                   </div>
                 ) : (
