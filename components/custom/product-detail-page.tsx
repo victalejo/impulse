@@ -6,6 +6,7 @@ import { Separator } from "@/components/ui/separator";
 import { Loader2, ShoppingCart, ArrowLeft, Tag } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import AddToCartButton from "@/components/custom/add-to-cart-button";
 
 // Definir interfaces para tipar correctamente
 interface ProductVariant {
@@ -310,13 +311,17 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ params }) => {
 
                         {/* Botón de compra */}
                         <div className="pt-4">
-                            <Button
-                                className="w-full bg-gradient-to-r from-[#ff0054] to-[#fbe40b] hover:from-[#fbe40b] hover:to-[#ff0054]
-                         text-[#fefefe] font-bebas text-xl h-16"
-                            >
-                                <ShoppingCart className="mr-2 h-5 w-5" />
-                                Añadir al Carrito
-                            </Button>
+                            {selectedVariant && (
+                                <AddToCartButton
+                                    productId={product.id}
+                                    variantId={selectedVariant.id as number}
+                                    title={product.title}
+                                    price={selectedVariant.price}
+                                    image={selectedImage?.src || ''}
+                                    size={product.options && product.options.length > 0 ? selectedVariant.title : undefined}
+                                    disabled={!selectedVariant}
+                                />
+                            )}
                         </div>
 
                         {/* Información adicional */}
