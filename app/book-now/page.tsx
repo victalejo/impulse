@@ -19,6 +19,7 @@ import Image from "next/image"
 import Link from "next/link"
 import BookingSteps from "@/components/custom/booking-steps"
 import StripePaymentForm from "@/components/custom/stripe-payment-form"
+import StripeCheckout from '@/components/custom/stripe-payment-integration'
 
 // Lista de servicios disponibles
 const services = [
@@ -238,12 +239,6 @@ interface BookingState {
   paymentComplete: boolean;
 }
 
-// Función para generar un ID de reserva de ejemplo (simulado)
-// En una implementación real, esto vendría de la base de datos
-const generateBookingId = () => {
-  return `B${Math.floor(Math.random() * 10000).toString().padStart(4, '0')}`;
-};
-
 export default function BookNowPage() {
   // Estado para rastrear el proceso de reserva
   const [booking, setBooking] = useState<BookingState>({
@@ -357,10 +352,11 @@ export default function BookNowPage() {
   };
 
   // Finalizar el proceso de pago
-  const handlePaymentSuccess = () => {
-    // Simulamos la generación de un ID de reserva
-    // En una implementación real, esto vendría de la API
-    const bookingId = generateBookingId();
+  const handlePaymentSuccess = async () => {
+    // Obtenemos un ID válido de MongoDB del servidor
+    const response = await fetch('/api/generate-booking-id');
+    const data = await response.json();
+    const bookingId = data.bookingId;
 
     setBooking({
       ...booking,
@@ -368,7 +364,7 @@ export default function BookNowPage() {
       paymentComplete: true
     });
 
-    // Redireccionar a la página de confirmación después de 2 segundos
+    // Redireccionar a la página de confirmación
     setTimeout(() => {
       window.location.href = `/booking-confirmation/${bookingId}`;
     }, 2000);
@@ -737,9 +733,15 @@ export default function BookNowPage() {
 
                       {/* Formulario de Pago Stripe */}
                       <div>
-                        <StripePaymentForm
-                            amount={booking.selectedOptionPrice}
-                            serviceName={booking.selectedOption}
+                        <StripeCheckout
+                            bookingData={{
+                              amount: booking.selectedOptionPrice,
+                              serviceId: booking.serviceId,
+                              serviceName: booking.serviceName,
+                              optionName: booking.selectedOption,
+                              date: booking.date as Date,
+                              customerInfo: booking.personalInfo
+                            }}
                             onSuccess={handlePaymentSuccess}
                             onCancel={goToPreviousStep}
                         />
