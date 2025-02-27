@@ -104,7 +104,7 @@ export default function Footer() {
               </li>
               <li className="flex items-center">
                 <MapPin className="h-6 w-6 mr-2 text-[#ff0054]" />
-                <span className="text-[#060404]">Dallas, Texas, EE. UU.</span>
+                <span className="text-[#060404]">Dallas, Texas.</span>
               </li>
             </ul>
 

@@ -23,9 +23,10 @@ const LuxuryTransport = () => {
   ];
 
   const suburbanImages = [
-    '/images/camioneta-1.png',
-    '/images/camioneta-2.jpeg',
-    '/images/camioneta-3.png'
+    '/images/sub/frente.png',
+    '/images/sub/frente1.png',
+    '/images/sub/lado1.png',
+    '/images/sub/lado2.png'
   ];
 
   const bmwImages = [
