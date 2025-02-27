@@ -6,6 +6,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import Navbar from '@/components/navbar';
 import Footer from '@/components/footer';
 import { CartProvider } from '@/context/cart-context'; // Importamos el CartProvider
+import ChatFlotante from '@/components/custom/chat-flotante'; // Importamos nuestro componente de chat
 
 export const metadata: Metadata = {
     title: 'Impulse Rentals - Premier Boat & Bounce House Rentals',
@@ -35,6 +36,7 @@ export default function RootLayout({
                 <Navbar />
                 <main className="min-h-screen">{children}</main>
                 <Footer />
+                <ChatFlotante /> {/* Añadimos el chat flotante */}
             </ThemeProvider>
         </CartProvider>
         </body>
