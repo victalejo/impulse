@@ -273,7 +273,7 @@ export default function ServicesPage() {
   </div>
 </Card>
  {/* Car Services */}
-<Card className="bg-[#fefefe]/5 backdrop-blur-sm border-[#ff0054]/20 hover:border-[#ff0054] transition-all duration-300 max-w-[85vw] mx-auto rounded-2xl">
+<Card id="car-services" className="bg-[#fefefe]/5 backdrop-blur-sm border-[#ff0054]/20 hover:border-[#ff0054] transition-all duration-300 max-w-[85vw] mx-auto rounded-2xl">
   <div className="grid md:grid-cols-2 gap-8 p-8">
     <div className="relative h-[500px] w-full rounded-xl overflow-hidden">
       <video
@@ -392,7 +392,7 @@ export default function ServicesPage() {
 
     <div className="relative h-[500px]">
       <Image
-        src="/images/bounce-houses.jpg"
+        src="/images/bounce-houses.png"
         alt="Bounce Houses"
         fill
         className="object-cover rounded-lg"
@@ -542,38 +542,25 @@ export default function ServicesPage() {
         </div>
       </div>
 
-      {/* Columna Derecha - FoamPit */}
-      <div className="space-y-8">
-        <div className="space-y-6">
-          <div className="relative h-[400px]">
-            <Image
-              src="/images/foampit.png"
-              alt="Foam Pit"
-              fill
-              className="object-cover rounded-lg"
-            />
-          </div>
-          <div className="relative overflow-hidden rounded-lg p-[2px] bg-gradient-to-r from-[#ff0054] to-[#fbe40b] transition-all duration-300 shadow-[0_0_15px_rgba(255,0,84,0.5)]">
-            <Button 
-              className="w-full bg-[#060404] hover:bg-[#060404]/90 text-[#fefefe] text-2xl px-8 py-8 
-                       transition-transform duration-300 font-bebas relative z-10
-                       before:absolute before:inset-0 before:bg-gradient-to-r before:from-[#ff0054] 
-                       before:to-[#fbe40b] before:opacity-0 hover:before:opacity-100 
-                       before:transition-opacity before:-z-10
-                       flex items-center justify-center gap-3"
-              asChild
-            >
-              <Link href="/booking">
-                FoamPit
-                <MousePointerClick className="w-6 h-6" />
-              </Link>
-            </Button>
-          </div>
-        </div>
-        <div>
-          <p className="text-xl text-[#fefefe]">Foam Pit Package <span className="text-[#ff0054]">$315</span></p>
-        </div>
-      </div>
+     {/* Columna Derecha - FoamPit */}
+<div className="space-y-8">
+  <div className="space-y-6">
+    <div className="relative h-[400px]">
+      <Image
+        src="/images/foampit.png"
+        alt="Foam Pit"
+        fill
+        className="object-cover rounded-lg"
+      />
+    </div>
+    <h3 className="text-2xl font-bebas text-center bg-gradient-to-r from-[#ff0054] to-[#fbe40b] text-transparent bg-clip-text">
+      FoamPit
+    </h3>
+  </div>
+  <div>
+    <p className="text-xl text-[#fefefe]">Foam Pit Package <span className="text-[#ff0054]">$315</span></p>
+  </div>
+</div>
     </div>
   </div>
 </Card>

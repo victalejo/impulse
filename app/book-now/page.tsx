@@ -27,7 +27,7 @@ const services = [
     id: "bounce",
     name: "Bounce Houses",
     icon: Castle,
-    image: "/images/bounce-houses.JPG",
+    image: "/images/bounce-houses.png",
     options: ["Ice Pops Mega Front Loader"]
   },
   {
@@ -57,9 +57,9 @@ const services = [
 const serviceImageMap: Record<string, string> = {
   "Silverwave Pontoon": "/images/silver-1.jpg",
   "Qwest Pontoon": "/images/quest-c.jpg",
-  "Ice Pops Mega Front Loader": "/images/bounce.PNG",
-  "Foam Party Package": "/images/foam-party.JPG",
-  "Color Foam Party Package": "/images/foamcolor.JPG",
+  "Ice Pops Mega Front Loader": "/images/bounce.jpg",
+  "Foam Party Package": "/images/foam-party.jpg",
+  "Color Foam Party Package": "/images/foamcolor.jpg",
   "Glow in the Dark Foam Party Package": "/images/fotofoamnoche.jpg",
   "Foam Pit Package": "/images/foampit.png",
   "GMC Yukon AT4 XL 2024": "/images/Gmc/1.jpg",

@@ -19,14 +19,13 @@ const LuxuryTransport = () => {
     '/images/Gmc/1.jpg',
     '/images/Gmc/2.jpg',
     '/images/Gmc/3.jpg',
-    '/images/Gmc/4.jpg'
+    '/images/Gmc/4.png'
   ];
 
   const suburbanImages = [
-    '/images/sub/frente.png',
-    '/images/sub/lado1.png',
-    '/images/sub/lado2.png',
-    '/images/sub/lado3.png'
+    '/images/camioneta-1.png',
+    '/images/camioneta-2.jpeg',
+    '/images/camioneta-3.png'
   ];
 
   const bmwImages = [
@@ -192,17 +191,17 @@ const LuxuryTransport = () => {
           <h3 className="text-3xl md:text-5xl font-acumin text-[#fefefe]">
             Experience Luxury Car
           </h3>
-          
-          <Button 
-            size="lg" 
-            className="bg-gradient-to-r from-[#ff0054] to-[#fbe40b] hover:from-[#fbe40b] hover:to-[#ff0054] 
-                     text-[#fefefe] font-bebas text-2xl px-12 py-8 
-                     transform hover:scale-105 transition-all duration-300 
-                     shadow-lg hover:shadow-[#ff0054]/50"
-            asChild
-          >
-            <Link href="/services">Read More</Link>
-          </Button>
+
+<Button 
+  size="lg" 
+  className="bg-gradient-to-r from-[#ff0054] to-[#fbe40b] hover:from-[#fbe40b] hover:to-[#ff0054] 
+           text-[#fefefe] font-bebas text-2xl px-12 py-8 
+           transform hover:scale-105 transition-all duration-300 
+           shadow-lg hover:shadow-[#ff0054]/50"
+  asChild
+>
+  <Link href="/services#car-services">Read More</Link>
+</Button>
         </div>
       </div>
     </section>

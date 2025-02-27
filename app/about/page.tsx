@@ -26,7 +26,7 @@ interface TeamMember {
 const teamMembers: TeamMember[] = [
   {
     id: 1,
-    name: "Adalberto Martin",
+    name: "Adalberto Marte",
     bio: "With over 10 years of experience in entertainment and events, Adalberto founded Impulse Rentals with the vision of creating unforgettable experiences for everyone.",
     imageUrl: "/images/about1.png"
   },
