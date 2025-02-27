@@ -18,7 +18,7 @@ export default function RootLayout({
     children: React.ReactNode;
 }) {
     return (
-        <html lang="es" suppressHydrationWarning>
+        <html lang="en" suppressHydrationWarning>
         <head>
             <link rel="preload" href="/fonts/BebasNeue-Regular.ttf" as="font" type="font/ttf" crossOrigin="anonymous" />
             <link rel="preload" href="/fonts/AcuminProCond-Bold.ttf" as="font" type="font/ttf" crossOrigin="anonymous" />
