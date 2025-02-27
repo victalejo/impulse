@@ -1,0 +1,66 @@
+// prisma/schema.prisma
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Customer {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  firstName String
+  lastName  String
+  email     String
+  phone     String
+  bookings  Booking[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Booking {
+  id                    String    @id @default(auto()) @map("_id") @db.ObjectId
+  stripePaymentIntentId String?   @unique
+  serviceId             String
+  serviceName           String
+  optionName            String
+  amount                Int
+  bookingDate           DateTime
+  status                String // pending, confirmed, cancelled, failed
+  customer              Customer  @relation(fields: [customerId], references: [id])
+  customerId            String    @db.ObjectId
+  confirmedAt           DateTime?
+  cancelledAt           DateTime?
+  failedAt              DateTime?
+  failureReason         String?
+  notes                 String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+}
+
+// Modelo para gestión de disponibilidad de servicios
+model Availability {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  serviceId String
+  date      DateTime
+  isBooked  Boolean  @default(false)
+  bookingId String?  @db.ObjectId
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([serviceId, date])
+}
+
+// Modelo para productos que ofrece la aplicación
+model Product {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  serviceId   String
+  name        String
+  description String?
+  price       Int // en centavos
+  imageUrl    String?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
