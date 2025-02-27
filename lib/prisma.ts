@@ -1,7 +1,6 @@
 // lib/prisma.ts
 import { PrismaClient } from '@prisma/client';
 
-// Evitar múltiples instancias de Prisma Client en desarrollo por Hot Reloading
 const globalForPrisma = global as unknown as { prisma: PrismaClient };
 
 export const prisma =

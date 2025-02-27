@@ -4,12 +4,12 @@ generator client {
 }
 
 datasource db {
-  provider = "mongodb"
+  provider = "postgresql" // Cambiado de mongodb a postgresql
   url      = env("DATABASE_URL")
 }
 
 model Customer {
-  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  id        String    @id @default(uuid()) // Cambiado de ObjectId a UUID
   firstName String
   lastName  String
   email     String
@@ -20,7 +20,7 @@ model Customer {
 }
 
 model Booking {
-  id                    String    @id @default(auto()) @map("_id") @db.ObjectId
+  id                    String    @id @default(uuid()) // Cambiado de ObjectId a UUID
   stripePaymentIntentId String?   @unique
   serviceId             String
   serviceName           String
@@ -29,7 +29,7 @@ model Booking {
   bookingDate           DateTime
   status                String // pending, confirmed, cancelled, failed
   customer              Customer  @relation(fields: [customerId], references: [id])
-  customerId            String    @db.ObjectId
+  customerId            String // Ya no se necesita @db.ObjectId
   confirmedAt           DateTime?
   cancelledAt           DateTime?
   failedAt              DateTime?
@@ -39,22 +39,20 @@ model Booking {
   updatedAt             DateTime  @updatedAt
 }
 
-// Modelo para gestión de disponibilidad de servicios
 model Availability {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  id        String   @id @default(uuid()) // Cambiado de ObjectId a UUID
   serviceId String
   date      DateTime
   isBooked  Boolean  @default(false)
-  bookingId String?  @db.ObjectId
+  bookingId String? // Ya no se necesita @db.ObjectId
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@unique([serviceId, date])
 }
 
-// Modelo para productos que ofrece la aplicación
 model Product {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  id          String   @id @default(uuid()) // Cambiado de ObjectId a UUID
   serviceId   String
   name        String
   description String?

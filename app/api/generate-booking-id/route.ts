@@ -1,8 +1,8 @@
 // app/api/generate-booking-id/route.ts
 import { NextResponse } from 'next/server';
-import { ObjectId } from 'mongodb';
+import { v4 as uuidv4 } from 'uuid';
 
 export async function GET() {
-    const bookingId = new ObjectId().toString();
+    const bookingId = uuidv4();
     return NextResponse.json({ bookingId });
 }
