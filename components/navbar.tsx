@@ -39,14 +39,16 @@ export default function Navbar() {
 
   return (
       <nav className={`fixed w-full z-50 transition-all duration-300 ${
-          isScrolled ? 'bg-[#fefefe] shadow-md' : 'bg-transparent'
+          isScrolled 
+            ? 'bg-[#fefefe] md:bg-[#fefefe] bg-[#fefefe]/40 backdrop-blur-sm shadow-md' 
+            : 'bg-transparent'
       }`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-28">
+          <div className="flex items-center justify-between h-20 md:h-28">
             {/* Logo */}
             <div className="flex-shrink-0">
               <Link href="/" className="flex items-center">
-                <div className="relative w-24 h-24">
+                <div className="relative w-16 h-16 md:w-24 md:h-24">
                   <Image
                       src="/logo-sin-texto.png"
                       alt="Impulse Rentals Logo"
@@ -88,9 +90,11 @@ export default function Navbar() {
               </Button>
             </div>
 
-            {/* CartButton - Añadido aquí */}
+            {/* CartButton - Con color rosa */}
             <div className="flex items-center gap-4">
-              <CartButton />
+              <div className="text-[#ff0054]">
+                <CartButton />
+              </div>
 
               {/* Mobile Menu Button */}
               <div className="md:hidden">
@@ -110,7 +114,7 @@ export default function Navbar() {
 
           {/* Mobile Menu */}
           {isOpen && (
-              <div className="md:hidden bg-[#fefefe]/95 backdrop-blur-sm absolute w-full left-0">
+              <div className="md:hidden bg-[#fefefe]/70 backdrop-blur-sm absolute w-full left-0">
                 <div className="px-4 pt-2 pb-3 space-y-4">
                   {navigation.map((item) => (
                       <Link

@@ -2,24 +2,103 @@
 
 "use client"
 
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Sparkles, Volume2, VolumeX } from "lucide-react";
 
 const BouncesSection = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
   const [isMuted, setIsMuted] = useState(true);
+  const [userPrefersMuted, setUserPrefersMuted] = useState(true);
 
+  // Función para manejar cuando el usuario cambia el estado de silencio manualmente
   const toggleAudio = () => {
+    const newMutedState = !isMuted;
+    setUserPrefersMuted(newMutedState); // Recordar la preferencia del usuario
+
     if (videoRef.current) {
-      videoRef.current.muted = !videoRef.current.muted;
-      setIsMuted(!isMuted);
+      videoRef.current.muted = newMutedState;
+      setIsMuted(newMutedState);
     }
   };
 
+  useEffect(() => {
+    let timeoutId: NodeJS.Timeout | null = null;
+    let observer: IntersectionObserver | null = null;
+    
+    // Configurar el video cuando esté disponible
+    if (videoRef.current) {
+      // Asegurarnos de que el video empiece siempre en silencio
+      videoRef.current.muted = true;
+      setIsMuted(true);
+      
+      // Intentar iniciar la reproducción (importante en móviles)
+      videoRef.current.play().catch(err => {
+        console.warn("No se pudo iniciar la reproducción automática:", err);
+      });
+    }
+
+    // Crear el observador de intersección si ambas referencias están disponibles
+    if (sectionRef.current && videoRef.current) {
+      observer = new IntersectionObserver(
+        (entries) => {
+          const entry = entries[0];
+          const visiblePercentage = entry.intersectionRatio * 100;
+          
+          // Limpiar cualquier temporizador pendiente
+          if (timeoutId) {
+            clearTimeout(timeoutId);
+            timeoutId = null;
+          }
+          
+          if (entry.isIntersecting && visiblePercentage > 50) {
+            // Solo cambiamos a sonido activado si el usuario no ha elegido silenciar manualmente
+            timeoutId = setTimeout(() => {
+              if (!userPrefersMuted && videoRef.current) {
+                videoRef.current.muted = false;
+                setIsMuted(false);
+                console.log("Sonido activado automáticamente");
+              }
+            }, 1000); // Retrasamos la activación del sonido para evitar cambios rápidos
+          } else {
+            // Sección no visible o poco visible - silenciar
+            if (videoRef.current) {
+              videoRef.current.muted = true;
+              setIsMuted(true);
+            }
+          }
+        },
+        {
+          // Múltiples umbrales para detección más precisa
+          threshold: [0, 0.25, 0.5, 0.75, 1.0],
+          // Ajustar el área de detección
+          rootMargin: "-10% 0px"
+        }
+      );
+      
+      // Iniciar observación
+      observer.observe(sectionRef.current);
+    }
+    
+    // Limpieza
+    return () => {
+      if (observer) {
+        observer.disconnect();
+      }
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
+  }, [userPrefersMuted]); // Dependencia en userPrefersMuted para reaccionar a cambios en la preferencia del usuario
+
   return (
-    <section className="relative min-h-screen bg-gradient-to-b from-[#060404] to-[#1a1a1a] overflow-hidden py-20">
+    <section 
+      ref={sectionRef}
+      id="bounce-house-section"
+      className="relative min-h-screen bg-gradient-to-b from-[#060404] to-[#1a1a1a] overflow-hidden py-10 sm:py-16 md:py-20"
+    >
       {/* Elementos decorativos del fondo */}
       <div className="absolute inset-0 overflow-hidden">
         {/* Burbujas animadas */}
@@ -39,47 +118,47 @@ const BouncesSection = () => {
         ))}
         
         {/* Efectos de luz */}
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#ff0054] rounded-full mix-blend-multiply filter blur-[128px] animate-pulse"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#fbe40b] rounded-full mix-blend-multiply filter blur-[128px] animate-pulse delay-700"></div>
+        <div className="absolute top-1/4 left-1/4 w-48 sm:w-64 md:w-96 h-48 sm:h-64 md:h-96 bg-[#ff0054] rounded-full mix-blend-multiply filter blur-[80px] sm:blur-[100px] md:blur-[128px] animate-pulse"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-48 sm:w-64 md:w-96 h-48 sm:h-64 md:h-96 bg-[#fbe40b] rounded-full mix-blend-multiply filter blur-[80px] sm:blur-[100px] md:blur-[128px] animate-pulse delay-700"></div>
       </div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Título principal */}
-        <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-6xl font-edo tracking-wider leading-tight inline-block">
+        <div className="text-center mb-8 sm:mb-12 md:mb-16">
+          <h1 className="text-3xl sm:text-4xl md:text-6xl font-edo tracking-wider leading-tight inline-block">
             <span className="bg-gradient-to-r from-[#fbe40b] to-[#ff0054] text-transparent bg-clip-text">
               Ice Pops Mega Front Loader<br />Combo Bounce House
             </span>
           </h1>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 md:gap-12 items-center">
           {/* Contenido de texto - Izquierda */}
-          <div className="lg:col-span-7 space-y-8">
-            <div className="bg-[#060404]/90 backdrop-blur-sm rounded-2xl p-12 border border-[#ff0054]/20 
-                          h-[600px] flex flex-col justify-between shadow-xl shadow-[#ff0054]/10">
+          <div className="lg:col-span-7 space-y-6 md:space-y-8">
+            <div className="bg-[#060404]/90 backdrop-blur-sm rounded-xl sm:rounded-2xl p-6 sm:p-8 md:p-12 border border-[#ff0054]/20 
+                          h-auto md:h-[500px] lg:h-[600px] flex flex-col justify-between shadow-xl shadow-[#ff0054]/10">
               <div>
-                <h3 className="text-4xl md:text-5xl font-acumin text-[#fefefe] leading-relaxed mb-8">
+                <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-acumin text-[#fefefe] leading-relaxed mb-4 sm:mb-6 md:mb-8">
                   Are you ready for an unforgettable time with our Ice Pops Mega Front Bounce House?
                 </h3>
                 
-                <p className="text-2xl text-[#fefefe]/80 leading-relaxed mb-12">
+                <p className="text-lg sm:text-xl md:text-2xl text-[#fefefe]/80 leading-relaxed mb-6 sm:mb-8 md:mb-12">
                   The kids will love this one for sure, but so will the parents! This bounce house has 
                   a capacity of 12 persons, and can be converted to a wet bounce house slide.
                 </p>
                 
-                <div className="space-y-6">
-                  <div className="flex items-center gap-4">
-                    <Sparkles className="text-[#fbe40b] h-8 w-8" />
-                    <span className="text-[#fefefe]/80 text-xl">Bounce area with splash pad</span>
+                <div className="space-y-3 sm:space-y-4 md:space-y-6">
+                  <div className="flex items-center gap-2 sm:gap-3 md:gap-4">
+                    <Sparkles className="text-[#fbe40b] h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8" />
+                    <span className="text-[#fefefe]/80 text-base sm:text-lg md:text-xl">Bounce area with splash pad</span>
                   </div>
-                  <div className="flex items-center gap-4">
-                    <Sparkles className="text-[#fbe40b] h-8 w-8" />
-                    <span className="text-[#fefefe]/80 text-xl">Exciting climbing wall</span>
+                  <div className="flex items-center gap-2 sm:gap-3 md:gap-4">
+                    <Sparkles className="text-[#fbe40b] h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8" />
+                    <span className="text-[#fefefe]/80 text-base sm:text-lg md:text-xl">Exciting climbing wall</span>
                   </div>
-                  <div className="flex items-center gap-4">
-                    <Sparkles className="text-[#fbe40b] h-8 w-8" />
-                    <span className="text-[#fefefe]/80 text-xl">6 ft. slide and tunnel</span>
+                  <div className="flex items-center gap-2 sm:gap-3 md:gap-4">
+                    <Sparkles className="text-[#fbe40b] h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8" />
+                    <span className="text-[#fefefe]/80 text-base sm:text-lg md:text-xl">6 ft. slide and tunnel</span>
                   </div>
                 </div>
               </div>
@@ -87,8 +166,9 @@ const BouncesSection = () => {
               <Button 
                 size="lg" 
                 className="bg-gradient-to-r from-[#ff0054] to-[#fbe40b] hover:from-[#fbe40b] hover:to-[#ff0054] 
-                         text-[#fefefe] font-bebas text-3xl px-16 py-8 transform hover:scale-105 
-                         transition-all duration-300 shadow-lg hover:shadow-[#ff0054]/50 w-fit mx-auto"
+                         text-[#fefefe] font-bebas text-xl sm:text-2xl md:text-3xl px-6 sm:px-10 md:px-16 py-4 sm:py-6 md:py-8 
+                         transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-[#ff0054]/50 
+                         w-fit mx-auto mt-6 sm:mt-8 md:mt-0"
                 asChild
               >
                 <Link href="/bounce">Read More</Link>
@@ -97,7 +177,7 @@ const BouncesSection = () => {
           </div>
 
           {/* Video Container - Derecha */}
-          <div className="lg:col-span-5 relative h-[600px] rounded-2xl overflow-hidden shadow-2xl">
+          <div className="lg:col-span-5 relative h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] rounded-xl sm:rounded-2xl overflow-hidden shadow-2xl">
             <div className="w-full h-full group">
               <video
                 ref={videoRef}
@@ -108,6 +188,7 @@ const BouncesSection = () => {
                 className="w-full h-full object-cover"
               >
                 <source src="/videos/Reel-bouncehouse.webm" type="video/webm" />
+                <source src="/videos/Reel-bouncehouse.mp4" type="video/mp4" />
                 Tu navegador no soporta el tag de video.
               </video>
 
@@ -115,21 +196,22 @@ const BouncesSection = () => {
               <Button
                 onClick={toggleAudio}
                 className="absolute bottom-4 right-4 z-30 bg-[#060404]/70 hover:bg-[#060404] 
-                         border-2 border-[#ff0054] text-[#fefefe] rounded-full p-3
+                         border-2 border-[#ff0054] text-[#fefefe] rounded-full p-2 sm:p-3
                          transition-all duration-300 hover:scale-110"
                 size="icon"
                 variant="outline"
+                aria-label={isMuted ? "Activar sonido" : "Silenciar"}
               >
                 {isMuted ? (
-                  <VolumeX className="h-6 w-6 text-[#ff0054]" />
+                  <VolumeX className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 text-[#ff0054]" />
                 ) : (
-                  <Volume2 className="h-6 w-6 text-[#ff0054]" />
+                  <Volume2 className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 text-[#ff0054]" />
                 )}
               </Button>
 
               {/* Efecto de borde al hover */}
               <div className="absolute inset-0 border-2 border-transparent 
-                           hover:border-[#ff0054] rounded-2xl transition-colors 
+                           hover:border-[#ff0054] rounded-xl sm:rounded-2xl transition-colors 
                            duration-300"></div>
             </div>
           </div>

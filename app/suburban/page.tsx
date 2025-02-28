@@ -9,7 +9,8 @@ import {
   Battery, 
   ArrowRight,
   Star,
-  Sparkles
+  Sparkles,
+  Info
 } from "lucide-react"
 import { Card } from "@/components/ui/card"
 import Image from "next/image"
@@ -18,6 +19,8 @@ export default function SuburbanPage() {
   const firstVideoRef = useRef<HTMLVideoElement>(null)
   const secondVideoRef = useRef<HTMLVideoElement>(null)
   const [isInViewport, setIsInViewport] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
+  const [activePoint, setActivePoint] = useState<number | null>(null)
 
   // Highlight points for interactive effect
   const [highlightedPoint, setHighlightedPoint] = useState<number | null>(null)
@@ -65,6 +68,21 @@ export default function SuburbanPage() {
     }
   ]
 
+  // Effect to handle mobile detection
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+    
+    // Check on initial load
+    checkMobile()
+    
+    // Add listener for window resize
+    window.addEventListener('resize', checkMobile)
+    
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
   // Effect to control video playback
   useEffect(() => {
     const handleScroll = () => {
@@ -96,10 +114,19 @@ export default function SuburbanPage() {
     }
   }, [])
 
+  // Toggle feature point for mobile
+  const toggleFeaturePoint = (id: number) => {
+    if (activePoint === id) {
+      setActivePoint(null)
+    } else {
+      setActivePoint(id)
+    }
+  }
+
   return (
     <div className="relative min-h-screen bg-[#060404]">
       {/* First Section - Interior Video */}
-      <div className="relative h-screen">
+      <div className="relative h-[70vh] sm:h-[80vh] md:h-screen">
         <video
           ref={firstVideoRef}
           className="w-full h-full object-cover"
@@ -111,8 +138,8 @@ export default function SuburbanPage() {
           <source src="/images/sub/suburban-dentro.mp4" type="video/mp4" />
         </video>
         <div className="absolute inset-0 bg-[#060404]/40 flex items-center justify-center">
-          <div className="text-center max-w-3xl mx-auto">
-            <h2 className="text-[#fefefe] text-6xl md:text-8xl font-bebas mb-6">
+          <div className="text-center max-w-xs sm:max-w-lg md:max-w-2xl lg:max-w-3xl mx-auto px-4">
+            <h2 className="text-[#fefefe] text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bebas mb-4 sm:mb-6">
               Experience{" "}
               <span className="bg-gradient-to-r from-[#ff0054] to-[#fbe40b] text-transparent bg-clip-text">
                 Sublime Elegance
@@ -120,7 +147,7 @@ export default function SuburbanPage() {
               <br />
               Maximum Comfort
             </h2>
-            <p className="text-xl md:text-2xl text-[#fefefe]/90 max-w-xl mx-auto">
+            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-[#fefefe]/90 max-w-xs sm:max-w-md md:max-w-xl mx-auto">
               When luxury meets versatility, the new Chevrolet Suburban is born.
               An unparalleled driving experience that redefines the concept of luxury SUV.
             </p>
@@ -128,16 +155,60 @@ export default function SuburbanPage() {
         </div>
       </div>
 
-      {/* Interactive Highlights Section - UNIQUE ELEMENT */}
-      <div className="relative py-24 bg-[#060404]">
+      {/* Interactive Highlights Section - Responsive version */}
+      <div className="relative py-12 sm:py-16 md:py-24 bg-[#060404]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-center text-5xl md:text-7xl font-bebas mb-12">
+          <h2 className="text-center text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bebas mb-8 sm:mb-12">
             <span className="bg-gradient-to-r from-[#ff0054] to-[#fbe40b] text-transparent bg-clip-text">
               Discover Excellence
             </span>
           </h2>
           
-          <div className="relative h-[600px] mt-12 mb-24 flex">
+          {/* Mobile version - separate image and features list */}
+          <div className="md:hidden space-y-8 mt-8">
+            {/* Centered image */}
+            <div className="relative w-full h-[250px] sm:h-[350px] mx-auto border-2 border-[#ff0054]/20 rounded-xl overflow-hidden">
+              <Image
+                src="/images/sub/frente1.png"
+                alt="Chevrolet Suburban 2025"
+                fill
+                className="object-contain"
+                sizes="(max-width: 768px) 100vw"
+              />
+            </div>
+            
+            {/* List of features as accordion */}
+            <div className="space-y-4">
+              {highlightedFeatures.map((feature) => (
+                <div
+                  key={feature.id}
+                  className="border border-[#ff0054]/30 rounded-lg overflow-hidden bg-[#060404]/60 backdrop-blur-sm"
+                >
+                  <button
+                    onClick={() => toggleFeaturePoint(feature.id)}
+                    className="w-full p-4 flex items-center justify-between text-left"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-full bg-[#fbe40b] flex items-center justify-center">
+                        <span className="text-[#060404] font-bold">{feature.id}</span>
+                      </div>
+                      <h4 className="font-bebas text-xl text-[#fefefe]">{feature.title}</h4>
+                    </div>
+                    <Info className={`w-5 h-5 text-[#ff0054] transition-transform duration-300 ${activePoint === feature.id ? 'rotate-180' : 'rotate-0'}`} />
+                  </button>
+                  
+                  {activePoint === feature.id && (
+                    <div className="p-4 pt-0 border-t border-[#ff0054]/20">
+                      <p className="text-[#fefefe]/80 text-sm">{feature.description}</p>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+          
+          {/* Desktop version - interactive points with tooltips */}
+          <div className="relative hidden md:flex h-[400px] lg:h-[600px] mt-12 mb-24">
             {/* Left side interactive points */}
             <div className="w-1/4 flex flex-col justify-center space-y-24">
               {highlightedFeatures.slice(0, 2).map((feature) => (
@@ -192,6 +263,7 @@ export default function SuburbanPage() {
                 alt="Chevrolet Suburban 2025"
                 fill
                 className="object-contain"
+                sizes="(min-width: 768px) 50vw"
               />
             </div>
             
@@ -245,27 +317,34 @@ export default function SuburbanPage() {
         </div>
       </div>
 
-      {/* Feature Cards Section */}
-      <div className="relative py-24 bg-[#060404]">
+      {/* Feature Cards Section - made responsive */}
+      <div className="relative py-12 sm:py-16 md:py-24 bg-[#060404]">
         {/* Decorative elements */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#ff0054] rounded-full mix-blend-multiply filter blur-[128px] animate-pulse opacity-30"></div>
-          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#fbe40b] rounded-full mix-blend-multiply filter blur-[128px] animate-pulse delay-700 opacity-30"></div>
+          <div className="absolute top-1/4 left-1/4 w-48 sm:w-64 md:w-96 h-48 sm:h-64 md:h-96 
+                        bg-[#ff0054] rounded-full mix-blend-multiply 
+                        filter blur-[50px] sm:blur-[80px] md:blur-[128px] 
+                        animate-pulse opacity-30"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-48 sm:w-64 md:w-96 h-48 sm:h-64 md:h-96 
+                        bg-[#fbe40b] rounded-full mix-blend-multiply 
+                        filter blur-[50px] sm:blur-[80px] md:blur-[128px] 
+                        animate-pulse delay-700 opacity-30"></div>
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <h2 className="text-center text-5xl md:text-7xl font-bebas mb-20">
+          <h2 className="text-center text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bebas mb-10 sm:mb-16 md:mb-20">
             <span className="bg-gradient-to-r from-[#ff0054] to-[#fbe40b] text-transparent bg-clip-text">
               Features
             </span>
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
             {featureCards.map((card, index) => (
               <div 
                 key={index}
                 className={`relative overflow-hidden rounded-xl group
-                          ${index === 1 ? 'transform scale-110 z-10 md:h-auto h-[500px]' : 'md:h-auto h-[450px]'}
+                          ${index === 1 && !isMobile ? 'md:transform md:scale-110 md:z-10' : ''}
+                          ${isMobile ? 'h-auto' : 'h-auto'}
                          `}
               >
                 <div className={`absolute inset-0 
@@ -280,20 +359,20 @@ export default function SuburbanPage() {
                   </div>
                 )}
                 
-                <div className={`relative z-10 p-8 
+                <div className={`relative z-10 p-6 sm:p-8 
                               ${index === 1 
                                 ? 'border-2 border-[#ff0054]' 
                                 : 'border border-[#ff0054]/30'} 
                               rounded-xl backdrop-blur-sm bg-[#060404]/70 h-full flex flex-col`}>
-                  <div className="flex items-center justify-between mb-6">
-                    <h3 className="text-4xl font-bebas text-[#fefefe]">{card.title}</h3>
-                    <div className={`p-3 ${index === 1 ? 'bg-[#fbe40b]' : 'bg-[#ff0054]'} rounded-full`}>
-                      <card.icon className={`w-8 h-8 ${index === 1 ? 'text-[#060404]' : 'text-[#fefefe]'}`} />
+                  <div className="flex items-center justify-between mb-4 sm:mb-6">
+                    <h3 className="text-2xl sm:text-3xl md:text-4xl font-bebas text-[#fefefe]">{card.title}</h3>
+                    <div className={`p-2 sm:p-3 ${index === 1 ? 'bg-[#fbe40b]' : 'bg-[#ff0054]'} rounded-full`}>
+                      <card.icon className={`w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 ${index === 1 ? 'text-[#060404]' : 'text-[#fefefe]'}`} />
                     </div>
                   </div>
                   
                   <div className="flex-grow">
-                    <p className={`${index === 1 ? 'text-[#fefefe]' : 'text-[#fefefe]/90'} leading-relaxed text-xl md:text-2xl`}>
+                    <p className={`${index === 1 ? 'text-[#fefefe]' : 'text-[#fefefe]/90'} leading-relaxed text-sm sm:text-base md:text-lg lg:text-xl`}>
                       {card.description}
                     </p>
                   </div>
@@ -305,7 +384,7 @@ export default function SuburbanPage() {
       </div>
 
       {/* Final Video Section */}
-      <div className="relative h-screen">
+      <div className="relative h-[70vh] sm:h-[80vh] md:h-screen">
         <video
           ref={secondVideoRef}
           className="w-full h-full object-cover"
@@ -315,8 +394,8 @@ export default function SuburbanPage() {
         >
           <source src="/images/sub/suburban-video.mp4" type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-[#060404]/40 flex flex-col items-center justify-center">
-          <h2 className="text-[#fefefe] text-6xl md:text-8xl font-bebas text-center px-4 mb-12">
+        <div className="absolute inset-0 bg-[#060404]/40 flex flex-col items-center justify-center px-4">
+          <h2 className="text-[#fefefe] text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bebas text-center mb-8 sm:mb-12">
             Dominate the{" "}
             <span className="bg-gradient-to-r from-[#ff0054] to-[#fbe40b] text-transparent bg-clip-text">
               Road
@@ -325,25 +404,26 @@ export default function SuburbanPage() {
             With Elegance
           </h2>
 
-          {/* Book Now Button */}
+          {/* Book Now Button - responsive */}
           <Button 
             size="lg" 
             className="relative overflow-hidden group
                      bg-gradient-to-r from-[#ff0054] to-[#fbe40b] hover:from-[#fbe40b] hover:to-[#ff0054] 
-                     text-[#fefefe] font-bebas text-3xl px-20 py-10
+                     text-[#fefefe] font-bebas text-lg sm:text-xl md:text-2xl lg:text-3xl 
+                     px-6 sm:px-10 md:px-16 lg:px-20 py-4 sm:py-6 md:py-8 lg:py-10
                      transform hover:scale-105 transition-all duration-500
                      shadow-lg hover:shadow-[#ff0054]/50"
             asChild
           >
-            <Link href="/book-now" className="flex items-center gap-4">
+            <Link href="/book-now" className="flex items-center gap-2 sm:gap-4">
               BOOK NOW
-              <ArrowRight className="w-8 h-8 transform group-hover:translate-x-2 transition-transform duration-300" />
+              <ArrowRight className="w-4 h-4 sm:w-6 sm:h-6 md:w-8 md:h-8 transform group-hover:translate-x-2 transition-transform duration-300" />
             </Link>
           </Button>
         </div>
       </div>
 
-      {/* Styles for animations */}
+      {/* Estilos para animaciones */}
       <style jsx global>{`
         @keyframes pulse-point {
           0%, 100% {
@@ -358,6 +438,19 @@ export default function SuburbanPage() {
 
         .animate-pulse-point {
           animation: pulse-point 2s ease-in-out infinite;
+        }
+        
+        /* Soporte para dispositivos táctiles */
+        @media (hover: none) {
+          .hover\\:scale-105:active {
+            transform: scale(1.05);
+          }
+          .group:active .group-hover\\:opacity-80 {
+            opacity: 0.8;
+          }
+          .group:active .group-hover\\:translate-x-2 {
+            transform: translateX(0.5rem);
+          }
         }
       `}</style>
     </div>

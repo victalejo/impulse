@@ -9,12 +9,14 @@ import Image from "next/image";
 import { Car, Users, Gauge, Star, Activity, Shield } from 'lucide-react';
 
 const LuxuryTransport = () => {
+  // Estado para controlar el índice de la imagen actual para cada vehículo
   const [currentImageIndex, setCurrentImageIndex] = useState({
     yukon: 0,
     suburban: 0,
     bmw: 0
   });
 
+  // Arrays con las rutas de las imágenes para cada vehículo
   const yukonImages = [
     '/images/Gmc/1.jpg',
     '/images/Gmc/2.jpg',
@@ -36,6 +38,7 @@ const LuxuryTransport = () => {
     '/images/bmw/4.jpg'
   ];
 
+  // Efecto para cambiar automáticamente las imágenes
   useEffect(() => {
     const intervals = {
       yukon: setInterval(() => {
@@ -58,11 +61,13 @@ const LuxuryTransport = () => {
       }, 3000)
     };
 
+    // Limpieza de los intervalos
     return () => {
       Object.values(intervals).forEach(clearInterval);
     };
   }, []);
 
+  // Características/features de cada vehículo
   const features = {
     yukon: [
       { icon: Car, text: "Powerful 6.2L V8 Engine" },
@@ -90,9 +95,10 @@ const LuxuryTransport = () => {
     ]
   };
 
+  // Función para renderizar cada tarjeta de vehículo
   const renderVehicleCard = (title: string, images: string[], currentImage: number, features: any) => (
-    <div className="group mb-24">
-      <div className="bg-gradient-to-br from-[#060404]/80 to-[#060404]/40 backdrop-blur-sm rounded-xl p-8
+    <div className="group mb-12 md:mb-24">
+      <div className="bg-gradient-to-br from-[#060404]/80 to-[#060404]/40 backdrop-blur-sm rounded-xl p-4 md:p-8
                     transform transition-all duration-500 hover:scale-[1.02]
                     border border-[#ff0054]/10 hover:border-[#ff0054]/30
                     shadow-lg hover:shadow-[#ff0054]/20
@@ -100,13 +106,13 @@ const LuxuryTransport = () => {
         <div className="absolute inset-0 bg-gradient-to-r from-[#ff0054]/0 via-[#ff0054]/5 to-[#fbe40b]/0 
                       opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
         
-        <h2 className="text-4xl font-bebas text-[#fefefe] text-center mb-8 relative">
+        <h2 className="text-3xl md:text-4xl font-bebas text-[#fefefe] text-center mb-4 md:mb-8 relative">
           {title}
         </h2>
 
-        <div className="flex flex-col lg:flex-row gap-8">
+        <div className="flex flex-col lg:flex-row gap-6 md:gap-8">
           <div className="flex-1">
-            <div className="relative h-[600px] rounded-lg overflow-hidden
+            <div className="relative h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] rounded-lg overflow-hidden
                           shadow-[0_0_20px_rgba(255,0,84,0.1)]
                           group-hover:shadow-[0_0_30px_rgba(255,0,84,0.2)]
                           transition-all duration-500">
@@ -147,13 +153,13 @@ const LuxuryTransport = () => {
             </div>
           </div>
 
-          <div className="flex-1 flex flex-col justify-center">
-            <div className="grid grid-cols-1 gap-6">
+          <div className="flex-1 flex flex-col justify-center mt-6 lg:mt-0">
+            <div className="grid grid-cols-1 gap-4 md:gap-6">
               {features.map((feature: any, index: number) => (
                 <div key={index} className="flex items-center space-x-4 text-[#fefefe]/80 group-hover:text-[#fefefe] 
-                                        transition-colors duration-300 bg-[#060404]/50 p-4 rounded-lg">
-                  <feature.icon className="w-6 h-6 text-[#ff0054]" />
-                  <span className="text-lg">{feature.text}</span>
+                                        transition-colors duration-300 bg-[#060404]/50 p-3 md:p-4 rounded-lg">
+                  <feature.icon className="w-5 h-5 md:w-6 md:h-6 text-[#ff0054] flex-shrink-0" />
+                  <span className="text-base md:text-lg">{feature.text}</span>
                 </div>
               ))}
             </div>
@@ -164,7 +170,7 @@ const LuxuryTransport = () => {
   );
 
   return (
-    <section className="relative min-h-screen bg-[#060404] overflow-hidden py-24">
+    <section className="relative min-h-screen bg-[#060404] overflow-hidden py-12 md:py-24">
       <div className="absolute inset-0">
         <Image
           src="/images/fondo-camionetas.jpg"
@@ -175,8 +181,8 @@ const LuxuryTransport = () => {
         <div className="absolute inset-0 bg-[#060404]/60" />
       </div>
 
-      <div className="relative mb-20">
-        <h1 className="text-center text-5xl md:text-7xl font-bebas tracking-wider leading-tight px-4">
+      <div className="relative mb-10 md:mb-20">
+        <h1 className="text-center text-4xl sm:text-5xl md:text-7xl font-bebas tracking-wider leading-tight px-4">
           <span className="bg-gradient-to-r from-[#ff0054] to-[#fbe40b] text-transparent bg-clip-text">
             Premium Luxury Fleet
           </span>
@@ -188,21 +194,21 @@ const LuxuryTransport = () => {
         {renderVehicleCard("Chevrolet Suburban", suburbanImages, currentImageIndex.suburban, features.suburban)}
         {renderVehicleCard("BMW X7 M60i", bmwImages, currentImageIndex.bmw, features.bmw)}
 
-        <div className="text-center mt-24 space-y-10">
-          <h3 className="text-3xl md:text-5xl font-acumin text-[#fefefe]">
+        <div className="text-center mt-12 md:mt-24 space-y-6 md:space-y-10">
+          <h3 className="text-2xl sm:text-3xl md:text-5xl font-acumin text-[#fefefe]">
             Experience Luxury Car
           </h3>
 
-<Button 
-  size="lg" 
-  className="bg-gradient-to-r from-[#ff0054] to-[#fbe40b] hover:from-[#fbe40b] hover:to-[#ff0054] 
-           text-[#fefefe] font-bebas text-2xl px-12 py-8 
-           transform hover:scale-105 transition-all duration-300 
-           shadow-lg hover:shadow-[#ff0054]/50"
-  asChild
->
-  <Link href="/services#car-services">Read More</Link>
-</Button>
+          <Button 
+            size="lg" 
+            className="bg-gradient-to-r from-[#ff0054] to-[#fbe40b] hover:from-[#fbe40b] hover:to-[#ff0054] 
+                     text-[#fefefe] font-bebas text-xl md:text-2xl px-8 md:px-12 py-6 md:py-8 
+                     transform hover:scale-105 transition-all duration-300 
+                     shadow-lg hover:shadow-[#ff0054]/50 max-w-full"
+            asChild
+          >
+            <Link href="/services#car-services">Read More</Link>
+          </Button>
         </div>
       </div>
     </section>

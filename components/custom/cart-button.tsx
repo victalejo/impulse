@@ -18,7 +18,7 @@ const CartButton = () => {
                 className="relative p-0 h-9 w-9 rounded-full"
                 onClick={() => setIsOpen(true)}
             >
-                <ShoppingCart className="h-5 w-5 text-[#fefefe]" />
+                <ShoppingCart className="h-5 w-5 text-[#ff0054]" />
                 {totalItems > 0 && (
                     <span className="absolute -top-1 -right-1 bg-[#ff0054] text-[#fefefe] text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
             {totalItems}

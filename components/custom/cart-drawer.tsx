@@ -21,10 +21,10 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ open, onClose }) => {
     const handleQuantityChange = (item: CartItem, newQuantity: number) => {
         if (newQuantity < 1) return
 
-        // Marcar como cargando
+        // Mark as loading
         setLoading(prev => ({ ...prev, [item.id]: true }))
 
-        // Simular un pequeño retraso para la actualización
+        // Simulate a small delay for the update
         setTimeout(() => {
             updateQuantity(item.id, newQuantity)
             setLoading(prev => ({ ...prev, [item.id]: false }))
@@ -39,7 +39,7 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ open, onClose }) => {
                 <SheetHeader className="border-b border-[#ff0054]/30 pb-4">
                     <div className="flex justify-between items-center">
                         <SheetTitle className="text-2xl font-bebas text-[#fefefe]">
-                            Mi Carrito
+                            My Cart
                         </SheetTitle>
                         <Button variant="ghost" size="icon" onClick={onClose} className="hover:bg-[#ff0054]/10">
                             <X className="h-5 w-5 text-[#fefefe]" />
@@ -50,13 +50,13 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ open, onClose }) => {
                 {items.length === 0 ? (
                     <div className="flex flex-col items-center justify-center h-full py-20">
                         <ShoppingBag className="h-16 w-16 text-[#ff0054]/50 mb-4" />
-                        <p className="text-[#fefefe]/70 text-lg mb-6">Tu carrito está vacío</p>
+                        <p className="text-[#fefefe]/70 text-lg mb-6">Your cart is empty</p>
                         <Button
-                            className="bg-gradient-to-r from-[#ff0054] to-[#fbe40b] hover:from-[#fbe40b] hover:to-[#ff0054] text-[#fefefe]"
+                            className="bg-gradient-to-r from-[#ff0054] to-[#fbe40b] hover:from-[#fbe40b] hover:to-[#ff0054] text-[#060404]"
                             onClick={onClose}
                             asChild
                         >
-                            <Link href="/wear">Explorar Productos</Link>
+                            <Link href="/wear">Explore Products</Link>
                         </Button>
                     </div>
                 ) : (
@@ -65,7 +65,7 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ open, onClose }) => {
                             <div className="space-y-6">
                                 {items.map((item) => (
                                     <div key={item.id} className="flex items-center space-x-4">
-                                        {/* Imagen del producto */}
+                                        {/* Product image */}
                                         <div className="relative h-20 w-20 rounded-md overflow-hidden border border-[#ff0054]/30">
                                             <Image
                                                 src={item.image || "/logo.PNG"}
@@ -75,12 +75,12 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ open, onClose }) => {
                                             />
                                         </div>
 
-                                        {/* Información del producto */}
+                                        {/* Product information */}
                                         <div className="flex-1 min-w-0">
                                             <h4 className="text-[#fefefe] font-medium truncate">{item.title}</h4>
                                             {(item.size || item.color) && (
                                                 <p className="text-[#fefefe]/60 text-sm">
-                                                    {item.size && `Talla: ${item.size}`}
+                                                    {item.size && `Size: ${item.size}`}
                                                     {item.size && item.color && ' | '}
                                                     {item.color && `Color: ${item.color}`}
                                                 </p>
@@ -88,7 +88,7 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ open, onClose }) => {
                                             <p className="text-[#fbe40b] font-bold">{formatPrice(item.price)}</p>
                                         </div>
 
-                                        {/* Controles de cantidad */}
+                                        {/* Quantity controls */}
                                         <div className="flex items-center space-x-2">
                                             <Button
                                                 variant="ghost"
@@ -101,8 +101,8 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ open, onClose }) => {
                                             </Button>
 
                                             <span className="text-[#fefefe] min-w-[24px] text-center">
-                        {loading[item.id] ? '...' : item.quantity}
-                      </span>
+                                                {loading[item.id] ? '...' : item.quantity}
+                                            </span>
 
                                             <Button
                                                 variant="ghost"
@@ -115,7 +115,7 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ open, onClose }) => {
                                             </Button>
                                         </div>
 
-                                        {/* Botón de eliminar */}
+                                        {/* Delete button */}
                                         <Button
                                             variant="ghost"
                                             size="icon"
@@ -129,7 +129,7 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ open, onClose }) => {
                             </div>
                         </div>
 
-                        {/* Resumen y botones */}
+                        {/* Summary and buttons */}
                         <div className="border-t border-[#ff0054]/30 pt-4">
                             <div className="flex justify-between items-center mb-4">
                                 <span className="text-[#fefefe] font-medium">Subtotal</span>
@@ -142,10 +142,10 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ open, onClose }) => {
                                     className="flex-1 border-[#ff0054]/50 text-[#fefefe] hover:bg-[#ff0054]/10"
                                     onClick={clearCart}
                                 >
-                                    Vaciar
+                                    Clear
                                 </Button>
                                 <Button
-                                    className="flex-1 bg-gradient-to-r from-[#ff0054] to-[#fbe40b] hover:from-[#fbe40b] hover:to-[#ff0054] text-[#fefefe]"
+                                    className="flex-1 bg-gradient-to-r from-[#ff0054] to-[#fbe40b] hover:from-[#fbe40b] hover:to-[#ff0054] text-[#060404]"
                                     asChild
                                     onClick={onClose}
                                 >

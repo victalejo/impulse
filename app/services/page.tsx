@@ -63,31 +63,31 @@ export default function ServicesPage() {
       </div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-        <h1 className="text-center text-7xl md:text-9xl font-bebas mb-16 bg-gradient-to-r from-[#fbe40b] to-[#ff0054] text-transparent bg-clip-text">
+        <h1 className="text-center text-5xl sm:text-6xl md:text-7xl lg:text-9xl font-bebas mb-8 md:mb-16 bg-gradient-to-r from-[#fbe40b] to-[#ff0054] text-transparent bg-clip-text">
           Impulse Services
         </h1>
 
-        <div className="space-y-24">
+        <div className="space-y-12 md:space-y-24">
           {/* Pontoons - Tarjeta Interactiva */}
 <Card className="bg-[#fefefe]/5 backdrop-blur-sm border-[#ff0054]/20 hover:border-[#ff0054] transition-all duration-300">
-  <div className="p-8 space-y-8">
-    <h2 className="text-6xl font-bebas mb-8 text-center">
+  <div className="p-4 sm:p-6 md:p-8 space-y-6 md:space-y-8">
+    <h2 className="text-4xl sm:text-5xl md:text-6xl font-bebas mb-4 sm:mb-6 md:mb-8 text-center">
       <span className="bg-gradient-to-r from-[#fbe40b] to-[#ff0054] text-transparent bg-clip-text">
         Pontoon Rentals
       </span>
     </h2>
-    <div className="grid md:grid-cols-2 gap-12">
+    <div className="grid md:grid-cols-2 gap-6 md:gap-12">
       {/* Imagen o Selector de Pontoons */}
-      <div className="relative min-h-[500px]">
+      <div className="relative min-h-[300px] sm:min-h-[400px] md:min-h-[500px]">
         {selectedPontoon ? (
-          <div className="relative h-[500px] w-full">
+          <div className="relative h-[300px] sm:h-[400px] md:h-[500px] w-full">
             <Carousel className="w-full h-full">
               <CarouselContent>
                 {selectedPontoon === "silverwave" ? (
                   // Silverwave Carousel Items
                   <>
                     <CarouselItem>
-                      <div className="relative h-[500px] rounded-lg overflow-hidden">
+                      <div className="relative h-[300px] sm:h-[400px] md:h-[500px] rounded-lg overflow-hidden">
                         <Image
                           src="/images/silver-1.jpg"
                           alt="Silverwave Pontoon"
@@ -102,7 +102,7 @@ export default function ServicesPage() {
                   // Qwest Carousel Items
                   <>
                     <CarouselItem>
-                      <div className="relative h-[500px] rounded-lg overflow-hidden">
+                      <div className="relative h-[300px] sm:h-[400px] md:h-[500px] rounded-lg overflow-hidden">
                         <Image
                           src="/images/quest-c.jpg"
                           alt="Qwest Pontoon"
@@ -131,16 +131,16 @@ export default function ServicesPage() {
             </Button>
           </div>
         ) : (
-          <div className="flex flex-col items-center justify-center h-full space-y-8 bg-[#060404]/50 rounded-lg p-8">
-            <h3 className="text-3xl font-bebas text-[#fefefe] text-center">
+          <div className="flex flex-col items-center justify-center h-full space-y-4 sm:space-y-6 md:space-y-8 bg-[#060404]/50 rounded-lg p-4 sm:p-6 md:p-8">
+            <h3 className="text-xl sm:text-2xl md:text-3xl font-bebas text-[#fefefe] text-center">
               Click to View Images
             </h3>
             
-            <div className="space-y-6 w-full">
+            <div className="space-y-4 sm:space-y-6 w-full">
               <Button 
                 onClick={() => setSelectedPontoon("silverwave")}
                 className="w-full bg-gradient-to-r from-[#ff0054] to-[#fbe40b] hover:from-[#fbe40b] hover:to-[#ff0054] 
-                         text-[#060404] font-bebas text-2xl py-8 
+                         text-[#060404] font-bebas text-lg sm:text-xl md:text-2xl py-4 sm:py-6 md:py-8 
                          transition-all duration-300 shadow-lg"
               >
                 Silverwave Pontoon
@@ -149,15 +149,15 @@ export default function ServicesPage() {
               <Button 
                 onClick={() => setSelectedPontoon("qwest")}
                 className="w-full bg-gradient-to-r from-[#ff0054] to-[#fbe40b] hover:from-[#fbe40b] hover:to-[#ff0054] 
-                         text-[#060404] font-bebas text-2xl py-8 
+                         text-[#060404] font-bebas text-lg sm:text-xl md:text-2xl py-4 sm:py-6 md:py-8 
                          transition-all duration-300 shadow-lg"
               >
                 Qwest Pontoon
               </Button>
             </div>
             
-            <div className="p-6 border border-[#ff0054]/30 rounded-lg bg-[#060404]/80 max-w-md mx-auto mt-8">
-              <p className="text-lg text-[#fefefe]/80 text-center italic">
+            <div className="p-4 sm:p-6 border border-[#ff0054]/30 rounded-lg bg-[#060404]/80 max-w-md mx-auto mt-4 sm:mt-8">
+              <p className="text-base sm:text-lg text-[#fefefe]/80 text-center italic">
                 "Experience the ultimate water adventure with our premium pontoon boats equipped with all the features you need for a perfect day on the water."
               </p>
             </div>
@@ -166,47 +166,47 @@ export default function ServicesPage() {
       </div>
 
       {/* Contenido */}
-      <div className="space-y-8">
+      <div className="space-y-4 sm:space-y-6 md:space-y-8">
         {/* Título de Precios */}
         <div className="bg-gradient-to-r from-[#ff0054] to-[#fbe40b] p-[1px] rounded-lg">
-          <div className="bg-[#060404] rounded-lg p-4">
-            <h3 className="text-3xl font-bebas text-[#fefefe] text-center">Pontoon Rental Prices</h3>
+          <div className="bg-[#060404] rounded-lg p-3 sm:p-4">
+            <h3 className="text-xl sm:text-2xl md:text-3xl font-bebas text-[#fefefe] text-center">Pontoon Rental Prices</h3>
           </div>
         </div>
 
         {/* Lista de Precios en una sola tarjeta */}
         <div className="bg-gradient-to-r from-[#ff0054] to-[#fbe40b] p-[1px] rounded-lg">
-          <div className="bg-[#060404] rounded-lg p-6">
-            <div className="grid grid-cols-2 gap-8">
+          <div className="bg-[#060404] rounded-lg p-4 sm:p-6">
+            <div className="grid grid-cols-2 gap-4 sm:gap-8">
               {/* Columna izquierda */}
-              <div className="space-y-4">
+              <div className="space-y-2 sm:space-y-4">
                 <div className="text-center space-y-1">
-                  <p className="text-xl text-[#fefefe] font-bebas">2 Hours</p>
-                  <p className="text-2xl text-[#fbe40b] font-bebas">$265</p>
+                  <p className="text-base sm:text-lg md:text-xl text-[#fefefe] font-bebas">2 Hours</p>
+                  <p className="text-lg sm:text-xl md:text-2xl text-[#fbe40b] font-bebas">$265</p>
                 </div>
                 <div className="text-center space-y-1">
-                  <p className="text-xl text-[#fefefe] font-bebas">3 Hours</p>
-                  <p className="text-2xl text-[#fbe40b] font-bebas">$350</p>
+                  <p className="text-base sm:text-lg md:text-xl text-[#fefefe] font-bebas">3 Hours</p>
+                  <p className="text-lg sm:text-xl md:text-2xl text-[#fbe40b] font-bebas">$350</p>
                 </div>
                 <div className="text-center space-y-1">
-                  <p className="text-xl text-[#fefefe] font-bebas">4 Hours</p>
-                  <p className="text-2xl text-[#fbe40b] font-bebas">$450</p>
+                  <p className="text-base sm:text-lg md:text-xl text-[#fefefe] font-bebas">4 Hours</p>
+                  <p className="text-lg sm:text-xl md:text-2xl text-[#fbe40b] font-bebas">$450</p>
                 </div>
               </div>
               
               {/* Columna derecha */}
-              <div className="space-y-4">
+              <div className="space-y-2 sm:space-y-4">
                 <div className="text-center space-y-1">
-                  <p className="text-xl text-[#fefefe] font-bebas">5 Hours</p>
-                  <p className="text-2xl text-[#fbe40b] font-bebas">$560</p>
+                  <p className="text-base sm:text-lg md:text-xl text-[#fefefe] font-bebas">5 Hours</p>
+                  <p className="text-lg sm:text-xl md:text-2xl text-[#fbe40b] font-bebas">$560</p>
                 </div>
                 <div className="text-center space-y-1">
-                  <p className="text-xl text-[#fefefe] font-bebas">6 Hours</p>
-                  <p className="text-2xl text-[#fbe40b] font-bebas">$675</p>
+                  <p className="text-base sm:text-lg md:text-xl text-[#fefefe] font-bebas">6 Hours</p>
+                  <p className="text-lg sm:text-xl md:text-2xl text-[#fbe40b] font-bebas">$675</p>
                 </div>
                 <div className="text-center space-y-1">
-                  <p className="text-xl text-[#fefefe] font-bebas">8 Hours</p>
-                  <p className="text-2xl text-[#fbe40b] font-bebas">$850</p>
+                  <p className="text-base sm:text-lg md:text-xl text-[#fefefe] font-bebas">8 Hours</p>
+                  <p className="text-lg sm:text-xl md:text-2xl text-[#fbe40b] font-bebas">$850</p>
                 </div>
               </div>
             </div>
@@ -216,29 +216,29 @@ export default function ServicesPage() {
     </div>
 
     {/* Botón antes de Sunset Cruise */}
-    <div className="flex justify-center pt-8 pb-8">
+    <div className="flex justify-center pt-4 sm:pt-6 md:pt-8 pb-4 sm:pb-6 md:pb-8">
       <div className="relative overflow-hidden rounded-lg p-[2px] bg-gradient-to-r from-[#ff0054] to-[#fbe40b] 
-                    transition-all duration-300 shadow-[0_0_15px_rgba(255,0,84,0.5)] w-[400px]">
+                    transition-all duration-300 shadow-[0_0_15px_rgba(255,0,84,0.5)] w-full max-w-[280px] sm:max-w-[350px] md:max-w-[400px]">
         <Button 
-          className="w-full bg-[#060404] hover:bg-[#060404]/90 text-[#fefefe] text-3xl px-12 py-6
+          className="w-full bg-[#060404] hover:bg-[#060404]/90 text-[#fefefe] text-xl sm:text-2xl md:text-3xl px-6 sm:px-8 md:px-12 py-4 sm:py-5 md:py-6
                    transition-transform duration-300 font-bebas relative z-10
                    before:absolute before:inset-0 before:bg-gradient-to-r before:from-[#ff0054] 
                    before:to-[#fbe40b] before:opacity-0 hover:before:opacity-100 
                    before:transition-opacity before:-z-10
-                   flex items-center justify-center gap-3
+                   flex items-center justify-center gap-2 sm:gap-3
                    hover:scale-[1.02]"
           asChild
         >
           <Link href="/barco">
             MORE ABOUT PONTOONS
-            <MousePointerClick className="w-6 h-6" />
+            <MousePointerClick className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" />
           </Link>
         </Button>
       </div>
     </div>
 
     {/* Sunset Cruise */}
-    <div className="relative h-[400px] rounded-lg overflow-hidden">
+    <div className="relative h-[200px] sm:h-[300px] md:h-[400px] rounded-lg overflow-hidden">
       <Image
         src="/images/atardecer-1.jpg"
         alt="Sunset Cruise"
@@ -246,18 +246,18 @@ export default function ServicesPage() {
         className="object-cover"
       />
       <div className="absolute inset-0 bg-[#060404]/50" />
-      <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-6">
-        <h3 className="text-4xl font-bebas text-[#ff0054] mb-4">Special Service</h3>
-        <p className="text-3xl text-[#fefefe] font-bebas mb-2">2 Hour Sunset Cruise w/Captain</p>
-        <p className="text-5xl text-[#fbe40b] font-bebas">$365</p>
+      <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-4 sm:p-6">
+        <h3 className="text-2xl sm:text-3xl md:text-4xl font-bebas text-[#ff0054] mb-2 sm:mb-4">Special Service</h3>
+        <p className="text-xl sm:text-2xl md:text-3xl text-[#fefefe] font-bebas mb-1 sm:mb-2">2 Hour Sunset Cruise w/Captain</p>
+        <p className="text-3xl sm:text-4xl md:text-5xl text-[#fbe40b] font-bebas">$365</p>
       </div>
     </div>
   </div>
 </Card>
  {/* Car Services */}
 <Card id="car-services" className="bg-[#fefefe]/5 backdrop-blur-sm border-[#ff0054]/20 hover:border-[#ff0054] transition-all duration-300 max-w-[85vw] mx-auto rounded-2xl">
-  <div className="grid md:grid-cols-2 gap-8 p-8">
-    <div className="relative h-[500px] w-full rounded-xl overflow-hidden">
+  <div className="grid md:grid-cols-2 gap-6 md:gap-8 p-4 sm:p-6 md:p-8">
+    <div className="relative h-[300px] sm:h-[400px] md:h-[500px] w-full rounded-xl overflow-hidden">
       <video
         className="w-full h-full object-cover rounded-xl"
         autoPlay
@@ -268,24 +268,24 @@ export default function ServicesPage() {
         <source src="/videos/1.mp4" type="video/mp4" />
       </video>
     </div>
-    <div className="space-y-8">
-      <h2 className="text-6xl md:text-7xl font-bebas mb-6">
+    <div className="space-y-4 sm:space-y-6 md:space-y-8">
+      <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bebas mb-4 md:mb-6">
         <span className="bg-gradient-to-r from-[#fbe40b] to-[#ff0054] text-transparent bg-clip-text">
           Car Services
         </span>
       </h2>
-      <div className="grid grid-cols-1 gap-4">
+      <div className="grid grid-cols-1 gap-3 md:gap-4">
         {/* Botón GMC */}
         <div className="relative overflow-hidden rounded-lg p-[2px] bg-gradient-to-r from-[#ff0054] to-[#fbe40b] transition-all duration-300 shadow-[0_0_15px_rgba(255,0,84,0.5)]">
           <Button 
-            className="w-full bg-[#060404] hover:bg-[#060404]/90 text-[#fefefe] text-2xl px-8 py-8 transition-transform duration-300 font-bebas relative z-10
+            className="w-full bg-[#060404] hover:bg-[#060404]/90 text-[#fefefe] text-lg sm:text-xl md:text-2xl px-4 sm:px-6 md:px-8 py-3 sm:py-6 md:py-8 transition-transform duration-300 font-bebas relative z-10
                      before:absolute before:inset-0 before:bg-gradient-to-r before:from-[#ff0054] before:to-[#fbe40b] before:opacity-0 hover:before:opacity-100 before:transition-opacity before:-z-10
-                     flex items-center justify-center gap-3"
+                     flex items-center justify-center gap-2 sm:gap-3"
             asChild
           >
             <Link href="/gmc">
               GMC Yukon AT4 XL
-              <MousePointerClick className="w-6 h-6" />
+              <MousePointerClick className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" />
             </Link>
           </Button>
         </div>
@@ -293,14 +293,14 @@ export default function ServicesPage() {
         {/* Botón Suburban */}
         <div className="relative overflow-hidden rounded-lg p-[2px] bg-gradient-to-r from-[#ff0054] to-[#fbe40b] transition-all duration-300 shadow-[0_0_15px_rgba(255,0,84,0.5)]">
           <Button 
-            className="w-full bg-[#060404] hover:bg-[#060404]/90 text-[#fefefe] text-2xl px-8 py-8 transition-transform duration-300 font-bebas relative z-10
+            className="w-full bg-[#060404] hover:bg-[#060404]/90 text-[#fefefe] text-lg sm:text-xl md:text-2xl px-4 sm:px-6 md:px-8 py-3 sm:py-6 md:py-8 transition-transform duration-300 font-bebas relative z-10
                      before:absolute before:inset-0 before:bg-gradient-to-r before:from-[#ff0054] before:to-[#fbe40b] before:opacity-0 hover:before:opacity-100 before:transition-opacity before:-z-10
-                     flex items-center justify-center gap-3"
+                     flex items-center justify-center gap-2 sm:gap-3"
             asChild
           >
             <Link href="/suburban">
               Chevrolet Suburban
-              <MousePointerClick className="w-6 h-6" />
+              <MousePointerClick className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" />
             </Link>
           </Button>
         </div>
@@ -308,39 +308,60 @@ export default function ServicesPage() {
         {/* Botón BMW */}
         <div className="relative overflow-hidden rounded-lg p-[2px] bg-gradient-to-r from-[#ff0054] to-[#fbe40b] transition-all duration-300 shadow-[0_0_15px_rgba(255,0,84,0.5)]">
           <Button 
-            className="w-full bg-[#060404] hover:bg-[#060404]/90 text-[#fefefe] text-2xl px-8 py-8 transition-transform duration-300 font-bebas relative z-10
+            className="w-full bg-[#060404] hover:bg-[#060404]/90 text-[#fefefe] text-lg sm:text-xl md:text-2xl px-4 sm:px-6 md:px-8 py-3 sm:py-6 md:py-8 transition-transform duration-300 font-bebas relative z-10
                      before:absolute before:inset-0 before:bg-gradient-to-r before:from-[#ff0054] before:to-[#fbe40b] before:opacity-0 hover:before:opacity-100 before:transition-opacity before:-z-10
-                     flex items-center justify-center gap-3"
+                     flex items-center justify-center gap-2 sm:gap-3"
             asChild
           >
             <Link href="/bmw">
               BMW X7
-              <MousePointerClick className="w-6 h-6" />
+              <MousePointerClick className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" />
             </Link>
           </Button>
         </div>
       </div>
-      <p className="text-xl text-[#fefefe]/80">
+      <p className="text-base sm:text-lg md:text-xl text-[#fefefe]/80">
         Our premium SUVs redefine luxury transportation. With their spacious interiors, 
         state-of-the-art entertainment systems, and comfortable seating, they are the ideal 
         choice for a variety of occasions. Whether it's a special event, a corporate gathering, 
         an airport transfer, or a luxurious travel experience, our SUVs are designed to meet your needs.
       </p>
+      
+      {/* Nuevos botones de precios con fondo blanco y texto negro */}
+      <div className="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4 md:space-x-6 pt-4 sm:pt-6">
+        <Button 
+          className="bg-[#fefefe] border-3 border-[#ff0054] text-[#060404] hover:bg-[#fefefe]/90
+                   text-lg sm:text-xl md:text-2xl px-4 sm:px-6 md:px-8 py-3 sm:py-4 md:py-6 font-bebas transition-all duration-300 shadow-md
+                   min-w-[180px] sm:min-w-[200px] md:min-w-[220px]"
+          disabled
+        >
+          Price per hour $75
+        </Button>
+        
+        <Button 
+          className="bg-[#fefefe] border-3 border-[#fbe40b] text-[#060404] hover:bg-[#fefefe]/90
+                   text-lg sm:text-xl md:text-2xl px-4 sm:px-6 md:px-8 py-3 sm:py-4 md:py-6 font-bebas transition-all duration-300 shadow-md
+                   min-w-[180px] sm:min-w-[200px] md:min-w-[220px]"
+          disabled
+        >
+          Trip to the airport $149
+        </Button>
+      </div>
     </div>
   </div>
 </Card>
 
          {/* Bounce Houses */}
 <Card className="bg-[#fefefe]/5 backdrop-blur-sm border-[#ff0054]/20 hover:border-[#ff0054] transition-all duration-300">
-  <div className="grid md:grid-cols-2 gap-8 p-8">
-    <div className="space-y-8">
-      <h2 className="text-5xl font-bebas mb-6">
+  <div className="grid md:grid-cols-2 gap-6 md:gap-8 p-4 sm:p-6 md:p-8">
+    <div className="space-y-4 sm:space-y-6 md:space-y-8">
+      <h2 className="text-3xl sm:text-4xl md:text-5xl font-bebas mb-3 sm:mb-4 md:mb-6">
         <span className="bg-gradient-to-r from-[#ff0054] to-[#fbe40b] text-transparent bg-clip-text">
           BOUNCE HOUSES
         </span>
       </h2>
       
-      <p className="text-2xl md:text-3xl text-[#fefefe]/80 leading-relaxed">
+      <p className="text-base sm:text-xl md:text-2xl lg:text-3xl text-[#fefefe]/80 leading-relaxed">
         At Impulse Rentals, safety is our top priority. All our bounce houses undergo rigorous safety 
         inspections and are thoroughly cleaned and sanitized before each use. Our professional team 
         handles setup and takedown, ensuring a worry-free experience for your special event.
@@ -348,31 +369,31 @@ export default function ServicesPage() {
 
       <div className="flex flex-col gap-4">
         <div>
-          <p className="text-3xl text-[#fbe40b]">8 Hours</p>
-          <p className="text-5xl font-bebas text-[#ff0054]">$200</p>
+          <p className="text-xl sm:text-2xl md:text-3xl text-[#fbe40b]">8 Hours</p>
+          <p className="text-3xl sm:text-4xl md:text-5xl font-bebas text-[#ff0054]">$200</p>
         </div>
 
         {/* Botón con el mismo estilo que Car Services */}
         <div className="relative overflow-hidden rounded-lg p-[2px] bg-gradient-to-r from-[#ff0054] to-[#fbe40b] transition-all duration-300 shadow-[0_0_15px_rgba(255,0,84,0.5)]">
           <Button 
-            className="w-full bg-[#060404] hover:bg-[#060404]/90 text-[#fefefe] text-2xl px-8 py-8 
+            className="w-full bg-[#060404] hover:bg-[#060404]/90 text-[#fefefe] text-lg sm:text-xl md:text-2xl px-4 sm:px-6 md:px-8 py-3 sm:py-6 md:py-8
                      transition-transform duration-300 font-bebas relative z-10
                      before:absolute before:inset-0 before:bg-gradient-to-r before:from-[#ff0054] 
                      before:to-[#fbe40b] before:opacity-0 hover:before:opacity-100 
                      before:transition-opacity before:-z-10
-                     flex items-center justify-center gap-3"
+                     flex items-center justify-center gap-2 sm:gap-3"
             asChild
           >
             <Link href="/bounce">
               BOUNCE HOUSES
-              <MousePointerClick className="w-6 h-6" />
+              <MousePointerClick className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" />
             </Link>
           </Button>
         </div>
       </div>
     </div>
 
-    <div className="relative h-[500px]">
+    <div className="relative h-[250px] sm:h-[350px] md:h-[500px]">
       <Image
         src="/images/bounce-houses.png"
         alt="Bounce Houses"
@@ -385,8 +406,8 @@ export default function ServicesPage() {
 
           {/* DJ Services */}
 <Card className="bg-[#fefefe]/5 backdrop-blur-sm border-[#ff0054]/20 hover:border-[#ff0054] transition-all duration-300">
-  <div className="grid md:grid-cols-2 gap-8 p-8">
-    <div className="relative h-[500px]">
+  <div className="grid md:grid-cols-2 gap-6 md:gap-8 p-4 sm:p-6 md:p-8">
+    <div className="relative h-[250px] sm:h-[350px] md:h-[500px] md:order-1 order-2">
       <Image
         src="/images/dj-services.png"
         alt="DJ Services"
@@ -394,34 +415,34 @@ export default function ServicesPage() {
         className="object-cover rounded-lg"
       />
     </div>
-    <div className="space-y-8">
-      <h2 className="text-5xl font-bebas mb-6">
+    <div className="space-y-4 sm:space-y-6 md:space-y-8 md:order-2 order-1">
+      <h2 className="text-3xl sm:text-4xl md:text-5xl font-bebas mb-3 sm:mb-4 md:mb-6">
         <span className="bg-gradient-to-r from-[#ff0054] to-[#fbe40b] text-transparent bg-clip-text">
           DJ SERVICES
         </span>
       </h2>
       
-      <p className="text-2xl md:text-3xl text-[#fefefe]/80 leading-relaxed">
+      <p className="text-base sm:text-xl md:text-2xl lg:text-3xl text-[#fefefe]/80 leading-relaxed">
         Transform your event with our professional DJ services. Whether it's a wedding, 
         corporate event, or private party, our experienced DJs will keep your guests 
         entertained with the perfect mix of music.
       </p>
 
-      <div className="grid grid-cols-1 gap-6">
+      <div className="grid grid-cols-1 gap-4 sm:gap-6">
         {/* Botón Book Now */}
         <div className="relative overflow-hidden rounded-lg p-[2px] bg-gradient-to-r from-[#ff0054] to-[#fbe40b] transition-all duration-300 shadow-[0_0_15px_rgba(255,0,84,0.5)]">
           <Button 
-            className="w-full bg-[#060404] hover:bg-[#060404]/90 text-[#fefefe] text-2xl px-8 py-8 
+            className="w-full bg-[#060404] hover:bg-[#060404]/90 text-[#fefefe] text-lg sm:text-xl md:text-2xl px-4 sm:px-6 md:px-8 py-3 sm:py-6 md:py-8
                      transition-transform duration-300 font-bebas relative z-10
                      before:absolute before:inset-0 before:bg-gradient-to-r before:from-[#ff0054] 
                      before:to-[#fbe40b] before:opacity-0 hover:before:opacity-100 
                      before:transition-opacity before:-z-10
-                     flex items-center justify-center gap-3"
+                     flex items-center justify-center gap-2 sm:gap-3"
             asChild
           >
             <Link href="/book-now">
               BOOK NOW
-              <MousePointerClick className="w-6 h-6" />
+              <MousePointerClick className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" />
             </Link>
           </Button>
         </div>
@@ -429,38 +450,39 @@ export default function ServicesPage() {
         {/* Botón Contact */}
         <Button 
           className="w-full bg-[#060404] border-2 border-[#fbe40b] hover:bg-[#fbe40b]/10 
-                   text-[#fbe40b] text-2xl px-8 py-8 
+                   text-[#fbe40b] text-lg sm:text-xl md:text-2xl px-4 sm:px-6 md:px-8 py-3 sm:py-6 md:py-8 
                    transition-all duration-300 font-bebas
-                   flex items-center justify-center gap-3"
+                   flex items-center justify-center gap-2 sm:gap-3"
           asChild
         >
           <Link href="/contact">
             CONTACT
-            <MousePointerClick className="w-6 h-6" />
+            <MousePointerClick className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" />
           </Link>
         </Button>
       </div>
     </div>
   </div>
 </Card>
+
           {/* Foam Party */}
 <Card id="foam-party-section" className="bg-[#fefefe]/5 backdrop-blur-sm border-[#ff0054]/20 hover:border-[#ff0054] transition-all duration-300">
-  <div className="p-8 space-y-8">
-    <h2 className="text-5xl font-bebas">
+  <div className="p-4 sm:p-6 md:p-8 space-y-4 sm:space-y-6 md:space-y-8">
+    <h2 className="text-3xl sm:text-4xl md:text-5xl font-bebas">
       <span className="bg-gradient-to-r from-[#fbe40b] to-[#ff0054] text-transparent bg-clip-text">
         Foam Party Packages
       </span>
     </h2>
     
-    <p className="text-xl md:text-2xl text-[#fefefe]/80 leading-relaxed w-full">
+    <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-[#fefefe]/80 leading-relaxed w-full">
       Immerse yourself in an unforgettable, interactive experience with our exhilarating foam party services! Our foam parties transform any event into a vibrant, bubbly wonderland where guests of all ages can dance, laugh, and play in mountains of fluffy foam. Our state-of-the-art foam machines create a magical atmosphere filled with cascading bubbles and pulsating music, encouraging everyone to join in the fun. Perfect for birthdays, festivals, and corporate events, our foam parties promise non-stop fun and an incredible photo backdrop. Get ready to make a splash and create lasting memories with our foam party extravaganza!
     </p>
 
-    <div className="grid md:grid-cols-3 gap-8">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
       {/* Columna Izquierda - Foam Party */}
-      <div className="space-y-8">
-        <div className="space-y-6">
-          <div className="relative h-[400px]">
+      <div className="space-y-4 sm:space-y-6 md:space-y-8">
+        <div className="space-y-4 sm:space-y-6">
+          <div className="relative h-[250px] sm:h-[300px] md:h-[400px]">
             <Image
               src="/images/foam-party.jpg"
               alt="Foam Party"
@@ -470,31 +492,31 @@ export default function ServicesPage() {
           </div>
           <div className="relative overflow-hidden rounded-lg p-[2px] bg-gradient-to-r from-[#ff0054] to-[#fbe40b] transition-all duration-300 shadow-[0_0_15px_rgba(255,0,84,0.5)]">
             <Button 
-              className="w-full bg-[#060404] hover:bg-[#060404]/90 text-[#fefefe] text-2xl px-8 py-8 
+              className="w-full bg-[#060404] hover:bg-[#060404]/90 text-[#fefefe] text-lg sm:text-xl md:text-2xl px-4 sm:px-6 md:px-8 py-3 sm:py-4 md:py-6
                        transition-transform duration-300 font-bebas relative z-10
                        before:absolute before:inset-0 before:bg-gradient-to-r before:from-[#ff0054] 
                        before:to-[#fbe40b] before:opacity-0 hover:before:opacity-100 
                        before:transition-opacity before:-z-10
-                       flex items-center justify-center gap-3"
+                       flex items-center justify-center gap-2 sm:gap-3"
               asChild
             >
               <Link href="/foamdia">
                 Foam Party
-                <MousePointerClick className="w-6 h-6" />
+                <MousePointerClick className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" />
               </Link>
             </Button>
           </div>
         </div>
         <div className="space-y-2">
-          <p className="text-xl text-[#fefefe]">Foam Party Package <span className="text-[#ff0054]">$315</span></p>
-          <p className="text-xl text-[#fefefe]">Color Foam Party Package <span className="text-[#ff0054]">$420</span></p>
+          <p className="text-base sm:text-lg md:text-xl text-[#fefefe]">Foam Party Package <span className="text-[#ff0054]">$315</span></p>
+          <p className="text-base sm:text-lg md:text-xl text-[#fefefe]">Color Foam Party Package <span className="text-[#ff0054]">$420</span></p>
         </div>
       </div>
 
       {/* Columna Central - Glow Foam */}
-      <div className="space-y-8">
-        <div className="space-y-6">
-          <div className="relative h-[400px]">
+      <div className="space-y-4 sm:space-y-6 md:space-y-8">
+        <div className="space-y-4 sm:space-y-6">
+          <div className="relative h-[250px] sm:h-[300px] md:h-[400px]">
             <Image
               src="/images/foam-night.jpg"
               alt="Glow Foam Party"
@@ -504,30 +526,30 @@ export default function ServicesPage() {
           </div>
           <div className="relative overflow-hidden rounded-lg p-[2px] bg-gradient-to-r from-[#ff0054] to-[#fbe40b] transition-all duration-300 shadow-[0_0_15px_rgba(255,0,84,0.5)]">
             <Button 
-              className="w-full bg-[#060404] hover:bg-[#060404]/90 text-[#fefefe] text-2xl px-8 py-8 
+              className="w-full bg-[#060404] hover:bg-[#060404]/90 text-[#fefefe] text-lg sm:text-xl md:text-2xl px-4 sm:px-6 md:px-8 py-3 sm:py-4 md:py-6
                        transition-transform duration-300 font-bebas relative z-10
                        before:absolute before:inset-0 before:bg-gradient-to-r before:from-[#ff0054] 
                        before:to-[#fbe40b] before:opacity-0 hover:before:opacity-100 
                        before:transition-opacity before:-z-10
-                       flex items-center justify-center gap-3"
+                       flex items-center justify-center gap-2 sm:gap-3"
               asChild
             >
               <Link href="/foamnoche">
                 Glow in the Dark Foam Party
-                <MousePointerClick className="w-6 h-6" />
+                <MousePointerClick className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" />
               </Link>
             </Button>
           </div>
         </div>
         <div>
-          <p className="text-xl text-[#fefefe]">Glow in the Dark Foam Party Package <span className="text-[#ff0054]">$445</span></p>
+          <p className="text-base sm:text-lg md:text-xl text-[#fefefe]">Glow in the Dark Foam Party Package <span className="text-[#ff0054]">$445</span></p>
         </div>
       </div>
 
      {/* Columna Derecha - FoamPit */}
-<div className="space-y-8">
-  <div className="space-y-6">
-    <div className="relative h-[400px]">
+<div className="space-y-4 sm:space-y-6 md:space-y-8">
+  <div className="space-y-4 sm:space-y-6">
+    <div className="relative h-[250px] sm:h-[300px] md:h-[400px]">
       <Image
         src="/images/foampit.png"
         alt="Foam Pit"
@@ -535,21 +557,26 @@ export default function ServicesPage() {
         className="object-cover rounded-lg"
       />
     </div>
-    <h3 className="text-2xl font-bebas text-center bg-gradient-to-r from-[#ff0054] to-[#fbe40b] text-transparent bg-clip-text">
-      FoamPit
-    </h3>
+    <div className="flex justify-center">
+      <div className="w-[220px] relative overflow-hidden rounded-lg p-[2px] bg-gradient-to-r from-[#ff0054] to-[#fbe40b] shadow-[0_0_15px_rgba(255,0,84,0.5)]">
+        <div className="w-full bg-[#060404] text-[#fefefe] text-lg sm:text-xl md:text-2xl px-6 py-4 
+                      font-bebas relative z-10 flex items-center justify-center">
+          FoamPit
+        </div>
+      </div>
+    </div>
   </div>
   <div>
-    <p className="text-xl text-[#fefefe]">Foam Pit Package <span className="text-[#ff0054]">$315</span></p>
+    <p className="text-base sm:text-lg md:text-xl text-[#fefefe]">Foam Pit Package <span className="text-[#ff0054]">$315</span></p>
   </div>
 </div>
     </div>
   </div>
 </Card>
-    
         </div>
       </div>
-       {/* Estilos para la animación de burbujas */}
+
+      {/* Estilos para la animación de burbujas */}
        <style jsx global>{`
         @keyframes float {
           0%, 100% {
@@ -571,6 +598,33 @@ export default function ServicesPage() {
 
         .animate-slide {
           animation: slide 8s linear infinite;
+        }
+
+        /* Media queries para mejorar la responsividad */
+        @media (max-width: 640px) {
+          .bubbles {
+            display: none;
+          }
+          
+          .ocean-background {
+            opacity: 0.2;
+          }
+        }
+        
+        /* Optimizaciones para dispositivos con animaciones reducidas */
+        @media (prefers-reduced-motion: reduce) {
+          .animate-slide,
+          .animate-float,
+          .animate-pulse {
+            animation: none;
+          }
+          
+          .transition-all,
+          .transition-transform,
+          .transition-opacity,
+          .transition-colors {
+            transition: none;
+          }
         }
       `}</style>
     </div>

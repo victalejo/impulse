@@ -13,14 +13,14 @@ import Image from "next/image"
 import Link from "next/link"
 import { useToast } from "@/hooks/use-toast"
 
-// Definir los pasos del checkout
+// Define checkout steps
 enum CheckoutStep {
     SHIPPING_INFO = 0,
     PAYMENT = 1,
     CONFIRMATION = 2
 }
 
-// Interfaz para la información de envío
+// Interface for shipping information
 interface ShippingInfo {
     firstName: string
     lastName: string
@@ -41,7 +41,7 @@ export default function CheckoutPage() {
     const [isProcessing, setIsProcessing] = useState(false)
     const [orderId, setOrderId] = useState<string | null>(null)
 
-    // Estado para la información de envío
+    // State for shipping information
     const [shippingInfo, setShippingInfo] = useState<ShippingInfo>({
         firstName: '',
         lastName: '',
@@ -52,10 +52,10 @@ export default function CheckoutPage() {
         city: '',
         region: '',
         zip: '',
-        country: 'US', // Por defecto Estados Unidos
+        country: 'US', // Default to United States
     })
 
-    // Función para verificar si se puede continuar al siguiente paso
+    // Function to check if can proceed to next step
     const canProceedToNextStep = () => {
         if (currentStep === CheckoutStep.SHIPPING_INFO) {
             const { firstName, lastName, email, phone, address1, city, region, zip, country } = shippingInfo
@@ -64,7 +64,7 @@ export default function CheckoutPage() {
         return true
     }
 
-    // Función para manejar el cambio en los campos del formulario
+    // Function to handle input changes in the form
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target
         setShippingInfo(prev => ({
@@ -73,7 +73,7 @@ export default function CheckoutPage() {
         }))
     }
 
-    // Función para avanzar al siguiente paso
+    // Function to advance to the next step
     const goToNextStep = () => {
         if (currentStep < CheckoutStep.CONFIRMATION) {
             setCurrentStep(prev => prev + 1)
@@ -81,7 +81,7 @@ export default function CheckoutPage() {
         }
     }
 
-    // Función para retroceder al paso anterior
+    // Function to go back to the previous step
     const goToPreviousStep = () => {
         if (currentStep > CheckoutStep.SHIPPING_INFO) {
             setCurrentStep(prev => prev - 1)
@@ -89,12 +89,12 @@ export default function CheckoutPage() {
         }
     }
 
-    // Función para simular el proceso de pago
+    // Function to process payment
     const processPayment = async () => {
         if (items.length === 0) {
             toast({
-                title: "Carrito vacío",
-                description: "No hay productos en tu carrito para procesar.",
+                title: "Empty Cart",
+                description: "There are no products in your cart to process.",
                 variant: "destructive"
             })
             return
@@ -103,14 +103,14 @@ export default function CheckoutPage() {
         setIsProcessing(true)
 
         try {
-            // Preparar los elementos de línea para la orden
+            // Prepare line items for the order
             const lineItems = items.map(item => ({
                 product_id: item.productId,
                 variant_id: item.variantId,
                 quantity: item.quantity
             }))
 
-            // Crear la orden para enviar a Printify
+            // Create the order to send to Printify
             const orderData = {
                 external_id: `order-${Date.now()}`,
                 label: `ORDER-${Math.floor(Math.random() * 10000)}`,
@@ -131,7 +131,7 @@ export default function CheckoutPage() {
                 }
             }
 
-            // Enviar la orden a través de nuestra API
+            // Send the order through our API
             const response = await fetch('/api/wear/orders', {
                 method: 'POST',
                 headers: {
@@ -142,7 +142,7 @@ export default function CheckoutPage() {
 
             if (!response.ok) {
                 const errorData = await response.json();
-                throw new Error(errorData.error || 'Error al crear la orden');
+                throw new Error(errorData.error || 'Error creating order');
             }
 
             const data = await response.json();
@@ -150,17 +150,17 @@ export default function CheckoutPage() {
 
             setOrderId(generatedOrderId);
 
-            // Limpiar el carrito después de una orden exitosa
+            // Clear cart after successful order
             clearCart();
 
-            // Avanzar a la página de confirmación
+            // Advance to confirmation page
             setCurrentStep(CheckoutStep.CONFIRMATION);
 
         } catch (error) {
-            console.error("Error al procesar el pago:", error)
+            console.error("Error processing payment:", error)
             toast({
-                title: "Error en el pago",
-                description: "Hubo un problema al procesar tu pago. Por favor, inténtalo de nuevo.",
+                title: "Payment Error",
+                description: "There was a problem processing your payment. Please try again.",
                 variant: "destructive"
             })
         } finally {
@@ -168,129 +168,129 @@ export default function CheckoutPage() {
         }
     }
 
-    // Verificar si hay productos en el carrito
+    // Check if there are products in the cart
     if (items.length === 0 && currentStep !== CheckoutStep.CONFIRMATION) {
         return (
-            <div className="min-h-screen bg-[#060404] py-24">
+            <div className="min-h-screen bg-[#060404] py-16 sm:py-20 md:py-24">
                 <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center h-[60vh]">
-                    <ShoppingCart className="h-16 w-16 text-[#ff0054]/50 mb-4" />
-                    <h1 className="text-3xl font-bebas text-[#fefefe] mb-6">Tu carrito está vacío</h1>
-                    <p className="text-[#fefefe]/70 text-lg mb-8 text-center">
-                        No hay productos en tu carrito para procesar el checkout.
+                    <ShoppingCart className="h-12 w-12 md:h-16 md:w-16 text-[#ff0054]/50 mb-4" />
+                    <h1 className="text-2xl sm:text-3xl font-bebas text-[#fefefe] mb-4 sm:mb-6 text-center">Your cart is empty</h1>
+                    <p className="text-base sm:text-lg text-[#fefefe]/70 mb-6 sm:mb-8 text-center">
+                        There are no products in your cart to process checkout.
                     </p>
                     <Button
                         className="bg-gradient-to-r from-[#ff0054] to-[#fbe40b] hover:from-[#fbe40b] hover:to-[#ff0054] text-[#fefefe]"
                         asChild
                     >
-                        <Link href="/wear">Explorar Productos</Link>
+                        <Link href="/wear">Explore Products</Link>
                     </Button>
                 </div>
             </div>
         )
     }
 
-    // Formatear precio
+    // Format price
     const formatPrice = (price: number) => `$${(price / 100).toFixed(2)}`
 
     return (
-        <div className="min-h-screen bg-[#060404] py-24">
+        <div className="min-h-screen bg-[#060404] py-16 sm:py-20 md:py-24">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h1 className="text-center text-5xl md:text-6xl font-bebas mb-12 bg-gradient-to-r from-[#fbe40b] to-[#ff0054] text-transparent bg-clip-text">
-                    {currentStep === CheckoutStep.SHIPPING_INFO && "Información de Envío"}
-                    {currentStep === CheckoutStep.PAYMENT && "Completar Pago"}
-                    {currentStep === CheckoutStep.CONFIRMATION && "¡Pedido Confirmado!"}
+                <h1 className="text-center text-4xl sm:text-5xl md:text-6xl font-bebas mb-8 sm:mb-12 bg-gradient-to-r from-[#fbe40b] to-[#ff0054] text-transparent bg-clip-text">
+                    {currentStep === CheckoutStep.SHIPPING_INFO && "Shipping Information"}
+                    {currentStep === CheckoutStep.PAYMENT && "Complete Payment"}
+                    {currentStep === CheckoutStep.CONFIRMATION && "Order Confirmed!"}
                 </h1>
 
-                {/* Barra de progreso */}
+                {/* Progress bar */}
                 {currentStep !== CheckoutStep.CONFIRMATION && (
-                    <div className="max-w-3xl mx-auto mb-10">
+                    <div className="max-w-3xl mx-auto mb-8 sm:mb-10">
                         <div className="relative">
                             <div className="absolute inset-0 flex items-center">
                                 <div className="w-full h-1 bg-[#fefefe]/10"></div>
                             </div>
                             <div className="relative flex justify-between">
                                 <div className="flex flex-col items-center">
-                                    <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                                    <div className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center ${
                                         currentStep >= CheckoutStep.SHIPPING_INFO
                                             ? 'bg-[#ff0054] text-[#fefefe]'
                                             : 'bg-[#fefefe]/20 text-[#fefefe]/50'
                                     }`}>
-                                        {currentStep > CheckoutStep.SHIPPING_INFO ? <Check className="h-4 w-4" /> : '1'}
+                                        {currentStep > CheckoutStep.SHIPPING_INFO ? <Check className="h-3 w-3 sm:h-4 sm:w-4" /> : '1'}
                                     </div>
                                     <span className={`mt-2 text-xs ${
                                         currentStep >= CheckoutStep.SHIPPING_INFO ? 'text-[#fefefe]' : 'text-[#fefefe]/50'
-                                    }`}>Envío</span>
+                                    }`}>Shipping</span>
                                 </div>
                                 <div className="flex flex-col items-center">
-                                    <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                                    <div className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center ${
                                         currentStep >= CheckoutStep.PAYMENT
                                             ? 'bg-[#ff0054] text-[#fefefe]'
                                             : 'bg-[#fefefe]/20 text-[#fefefe]/50'
                                     }`}>
-                                        {currentStep > CheckoutStep.PAYMENT ? <Check className="h-4 w-4" /> : '2'}
+                                        {currentStep > CheckoutStep.PAYMENT ? <Check className="h-3 w-3 sm:h-4 sm:w-4" /> : '2'}
                                     </div>
                                     <span className={`mt-2 text-xs ${
                                         currentStep >= CheckoutStep.PAYMENT ? 'text-[#fefefe]' : 'text-[#fefefe]/50'
-                                    }`}>Pago</span>
+                                    }`}>Payment</span>
                                 </div>
                                 <div className="flex flex-col items-center">
-                                    <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                                    <div className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center ${
                                         currentStep >= CheckoutStep.CONFIRMATION
                                             ? 'bg-[#ff0054] text-[#fefefe]'
                                             : 'bg-[#fefefe]/20 text-[#fefefe]/50'
                                     }`}>
-                                        {currentStep > CheckoutStep.CONFIRMATION ? <Check className="h-4 w-4" /> : '3'}
+                                        {currentStep > CheckoutStep.CONFIRMATION ? <Check className="h-3 w-3 sm:h-4 sm:w-4" /> : '3'}
                                     </div>
                                     <span className={`mt-2 text-xs ${
                                         currentStep >= CheckoutStep.CONFIRMATION ? 'text-[#fefefe]' : 'text-[#fefefe]/50'
-                                    }`}>Confirmación</span>
+                                    }`}>Confirmation</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 )}
 
-                <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
-                    {/* Formulario de checkout */}
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8">
+                    {/* Checkout form */}
                     <div className="md:col-span-7">
-                        {/* Paso 1: Información de Envío */}
+                        {/* Step 1: Shipping Information */}
                         {currentStep === CheckoutStep.SHIPPING_INFO && (
                             <Card className="bg-[#060404]/80 border border-[#ff0054]/30">
-                                <CardHeader>
-                                    <CardTitle className="flex items-center text-2xl font-bebas text-[#fefefe]">
-                                        <Truck className="mr-2 h-5 w-5 text-[#ff0054]" />
-                                        Dirección de Envío
+                                <CardHeader className="px-4 sm:px-6">
+                                    <CardTitle className="flex items-center text-xl sm:text-2xl font-bebas text-[#fefefe]">
+                                        <Truck className="mr-2 h-4 w-4 sm:h-5 sm:w-5 text-[#ff0054]" />
+                                        Shipping Address
                                     </CardTitle>
                                 </CardHeader>
-                                <CardContent className="space-y-6">
-                                    <div className="grid grid-cols-2 gap-4">
+                                <CardContent className="space-y-4 sm:space-y-6 px-4 sm:px-6">
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                         <div className="space-y-2">
-                                            <Label htmlFor="firstName" className="text-[#fefefe]">Nombre</Label>
+                                            <Label htmlFor="firstName" className="text-[#fefefe]">First Name</Label>
                                             <Input
                                                 id="firstName"
                                                 name="firstName"
                                                 value={shippingInfo.firstName}
                                                 onChange={handleInputChange}
                                                 className="bg-[#fefefe] border-[#ff0054]/20 text-[#060404]"
-                                                placeholder="Tu nombre"
+                                                placeholder="Your first name"
                                                 required
                                             />
                                         </div>
                                         <div className="space-y-2">
-                                            <Label htmlFor="lastName" className="text-[#fefefe]">Apellido</Label>
+                                            <Label htmlFor="lastName" className="text-[#fefefe]">Last Name</Label>
                                             <Input
                                                 id="lastName"
                                                 name="lastName"
                                                 value={shippingInfo.lastName}
                                                 onChange={handleInputChange}
                                                 className="bg-[#fefefe] border-[#ff0054]/20 text-[#060404]"
-                                                placeholder="Tu apellido"
+                                                placeholder="Your last name"
                                                 required
                                             />
                                         </div>
                                     </div>
 
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                         <div className="space-y-2">
                                             <Label htmlFor="email" className="text-[#fefefe]">Email</Label>
                                             <Input
@@ -300,12 +300,12 @@ export default function CheckoutPage() {
                                                 value={shippingInfo.email}
                                                 onChange={handleInputChange}
                                                 className="bg-[#fefefe] border-[#ff0054]/20 text-[#060404]"
-                                                placeholder="tu@email.com"
+                                                placeholder="you@example.com"
                                                 required
                                             />
                                         </div>
                                         <div className="space-y-2">
-                                            <Label htmlFor="phone" className="text-[#fefefe]">Teléfono</Label>
+                                            <Label htmlFor="phone" className="text-[#fefefe]">Phone</Label>
                                             <Input
                                                 id="phone"
                                                 name="phone"
@@ -313,79 +313,79 @@ export default function CheckoutPage() {
                                                 value={shippingInfo.phone}
                                                 onChange={handleInputChange}
                                                 className="bg-[#fefefe] border-[#ff0054]/20 text-[#060404]"
-                                                placeholder="Tu número de teléfono"
+                                                placeholder="Your phone number"
                                                 required
                                             />
                                         </div>
                                     </div>
 
                                     <div className="space-y-2">
-                                        <Label htmlFor="address1" className="text-[#fefefe]">Dirección</Label>
+                                        <Label htmlFor="address1" className="text-[#fefefe]">Address</Label>
                                         <Input
                                             id="address1"
                                             name="address1"
                                             value={shippingInfo.address1}
                                             onChange={handleInputChange}
                                             className="bg-[#fefefe] border-[#ff0054]/20 text-[#060404]"
-                                            placeholder="Calle y número"
+                                            placeholder="Street address"
                                             required
                                         />
                                     </div>
 
                                     <div className="space-y-2">
-                                        <Label htmlFor="address2" className="text-[#fefefe]">Apartamento, suite, etc. (opcional)</Label>
+                                        <Label htmlFor="address2" className="text-[#fefefe]">Apartment, suite, etc. (optional)</Label>
                                         <Input
                                             id="address2"
                                             name="address2"
                                             value={shippingInfo.address2}
                                             onChange={handleInputChange}
                                             className="bg-[#fefefe] border-[#ff0054]/20 text-[#060404]"
-                                            placeholder="Información adicional de dirección"
+                                            placeholder="Additional address information"
                                         />
                                     </div>
 
-                                    <div className="grid grid-cols-2 gap-4">
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                         <div className="space-y-2">
-                                            <Label htmlFor="city" className="text-[#fefefe]">Ciudad</Label>
+                                            <Label htmlFor="city" className="text-[#fefefe]">City</Label>
                                             <Input
                                                 id="city"
                                                 name="city"
                                                 value={shippingInfo.city}
                                                 onChange={handleInputChange}
                                                 className="bg-[#fefefe] border-[#ff0054]/20 text-[#060404]"
-                                                placeholder="Tu ciudad"
+                                                placeholder="Your city"
                                                 required
                                             />
                                         </div>
                                         <div className="space-y-2">
-                                            <Label htmlFor="region" className="text-[#fefefe]">Estado/Provincia</Label>
+                                            <Label htmlFor="region" className="text-[#fefefe]">State/Province</Label>
                                             <Input
                                                 id="region"
                                                 name="region"
                                                 value={shippingInfo.region}
                                                 onChange={handleInputChange}
                                                 className="bg-[#fefefe] border-[#ff0054]/20 text-[#060404]"
-                                                placeholder="Estado o provincia"
+                                                placeholder="State or province"
                                                 required
                                             />
                                         </div>
                                     </div>
 
-                                    <div className="grid grid-cols-2 gap-4">
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                         <div className="space-y-2">
-                                            <Label htmlFor="zip" className="text-[#fefefe]">Código Postal</Label>
+                                            <Label htmlFor="zip" className="text-[#fefefe]">Zip/Postal Code</Label>
                                             <Input
                                                 id="zip"
                                                 name="zip"
                                                 value={shippingInfo.zip}
                                                 onChange={handleInputChange}
                                                 className="bg-[#fefefe] border-[#ff0054]/20 text-[#060404]"
-                                                placeholder="Código postal"
+                                                placeholder="Postal code"
                                                 required
                                             />
                                         </div>
                                         <div className="space-y-2">
-                                            <Label htmlFor="country" className="text-[#fefefe]">País</Label>
+                                            <Label htmlFor="country" className="text-[#fefefe]">Country</Label>
                                             <select
                                                 id="country"
                                                 name="country"
@@ -394,42 +394,42 @@ export default function CheckoutPage() {
                                                 className="w-full h-10 rounded-md border border-[#ff0054]/20 bg-[#fefefe] px-3 py-2 text-[#060404]"
                                                 required
                                             >
-                                                <option value="US">Estados Unidos</option>
-                                                <option value="MX">México</option>
-                                                <option value="CA">Canadá</option>
-                                                <option value="ES">España</option>
-                                                {/* Añadir más países según sea necesario */}
+                                                <option value="US">United States</option>
+                                                <option value="MX">Mexico</option>
+                                                <option value="CA">Canada</option>
+                                                <option value="ES">Spain</option>
+                                                {/* Add more countries as needed */}
                                             </select>
                                         </div>
                                     </div>
                                 </CardContent>
-                                <CardFooter className="justify-end border-t border-[#ff0054]/20 pt-4">
+                                <CardFooter className="justify-end border-t border-[#ff0054]/20 pt-4 px-4 sm:px-6">
                                     <Button
                                         onClick={goToNextStep}
                                         disabled={!canProceedToNextStep()}
-                                        className="bg-gradient-to-r from-[#ff0054] to-[#fbe40b] hover:from-[#fbe40b] hover:to-[#ff0054] text-[#060404]"
+                                        className="bg-gradient-to-r from-[#ff0054] to-[#fbe40b] hover:from-[#fbe40b] hover:to-[#ff0054] text-[#060404] px-4 sm:px-6"
                                     >
-                                        Continuar
+                                        Continue
                                     </Button>
                                 </CardFooter>
                             </Card>
                         )}
 
-                        {/* Paso 2: Información de Pago */}
+                        {/* Step 2: Payment Information */}
                         {currentStep === CheckoutStep.PAYMENT && (
                             <Card className="bg-[#060404]/80 border border-[#ff0054]/30">
-                                <CardHeader>
-                                    <CardTitle className="flex items-center text-2xl font-bebas text-[#fefefe]">
-                                        <CreditCard className="mr-2 h-5 w-5 text-[#ff0054]" />
-                                        Información de Pago
+                                <CardHeader className="px-4 sm:px-6">
+                                    <CardTitle className="flex items-center text-xl sm:text-2xl font-bebas text-[#fefefe]">
+                                        <CreditCard className="mr-2 h-4 w-4 sm:h-5 sm:w-5 text-[#ff0054]" />
+                                        Payment Information
                                     </CardTitle>
                                 </CardHeader>
-                                <CardContent className="space-y-6">
-                                    {/* Aquí iría el formulario de tarjeta de crédito o integración con pasarela de pago */}
-                                    <div className="bg-[#fefefe] rounded-lg p-6">
+                                <CardContent className="space-y-4 sm:space-y-6 px-4 sm:px-6">
+                                    {/* Credit card form or payment gateway integration */}
+                                    <div className="bg-[#fefefe] rounded-lg p-4 sm:p-6">
                                         <div className="space-y-4">
                                             <div className="space-y-2">
-                                                <Label htmlFor="cardNumber" className="text-[#060404]">Número de Tarjeta</Label>
+                                                <Label htmlFor="cardNumber" className="text-[#060404]">Card Number</Label>
                                                 <Input
                                                     id="cardNumber"
                                                     placeholder="1234 5678 9012 3456"
@@ -437,12 +437,12 @@ export default function CheckoutPage() {
                                                 />
                                             </div>
 
-                                            <div className="grid grid-cols-3 gap-4">
+                                            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-4">
                                                 <div className="space-y-2">
-                                                    <Label htmlFor="expiry" className="text-[#060404]">Fecha de Expiración</Label>
+                                                    <Label htmlFor="expiry" className="text-[#060404]">Expiration Date</Label>
                                                     <Input
                                                         id="expiry"
-                                                        placeholder="MM/AA"
+                                                        placeholder="MM/YY"
                                                         className="border-[#ff0054]/20 text-[#060404]"
                                                     />
                                                 </div>
@@ -454,8 +454,8 @@ export default function CheckoutPage() {
                                                         className="border-[#ff0054]/20 text-[#060404]"
                                                     />
                                                 </div>
-                                                <div className="space-y-2">
-                                                    <Label htmlFor="zip" className="text-[#060404]">Código Postal</Label>
+                                                <div className="col-span-2 sm:col-span-1 space-y-2">
+                                                    <Label htmlFor="zip" className="text-[#060404]">Zip Code</Label>
                                                     <Input
                                                         id="zipCode"
                                                         placeholder="12345"
@@ -465,10 +465,10 @@ export default function CheckoutPage() {
                                             </div>
 
                                             <div className="space-y-2">
-                                                <Label htmlFor="nameOnCard" className="text-[#060404]">Nombre en la Tarjeta</Label>
+                                                <Label htmlFor="nameOnCard" className="text-[#060404]">Name on Card</Label>
                                                 <Input
                                                     id="nameOnCard"
-                                                    placeholder="Nombre completo"
+                                                    placeholder="Full name"
                                                     className="border-[#ff0054]/20 text-[#060404]"
                                                 />
                                             </div>
@@ -477,20 +477,20 @@ export default function CheckoutPage() {
 
                                     <div className="flex items-center p-4 bg-[#fefefe]/5 rounded-lg">
                                         <div className="flex-1">
-                                            <h3 className="text-[#fefefe] font-medium">Total a pagar</h3>
-                                            <p className="text-[#fefefe]/70 text-sm">Incluye envío e impuestos</p>
+                                            <h3 className="text-[#fefefe] font-medium">Total to pay</h3>
+                                            <p className="text-[#fefefe]/70 text-sm">Includes shipping and taxes</p>
                                         </div>
-                                        <span className="text-2xl font-bold text-[#fbe40b]">{formatPrice(totalAmount)}</span>
+                                        <span className="text-xl sm:text-2xl font-bold text-[#fbe40b]">{formatPrice(totalAmount)}</span>
                                     </div>
                                 </CardContent>
-                                <CardFooter className="justify-between border-t border-[#ff0054]/20 pt-4">
+                                <CardFooter className="justify-between border-t border-[#ff0054]/20 pt-4 px-4 sm:px-6">
                                     <Button
                                         onClick={goToPreviousStep}
                                         variant="outline"
                                         className="border-[#fefefe]/50 text-[#fefefe] hover:bg-[#fefefe]/10"
                                     >
-                                        <ArrowLeft className="mr-2 h-4 w-4" />
-                                        Regresar
+                                        <ArrowLeft className="mr-1 sm:mr-2 h-3 w-3 sm:h-4 sm:w-4" />
+                                        Back
                                     </Button>
 
                                     <Button
@@ -500,12 +500,12 @@ export default function CheckoutPage() {
                                     >
                                         {isProcessing ? (
                                             <>
-                                                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                                                Procesando...
+                                                <Loader2 className="mr-1 sm:mr-2 h-3 w-3 sm:h-4 sm:w-4 animate-spin" />
+                                                Processing...
                                             </>
                                         ) : (
                                             <>
-                                                Completar Compra
+                                                Complete Purchase
                                             </>
                                         )}
                                     </Button>
@@ -513,42 +513,42 @@ export default function CheckoutPage() {
                             </Card>
                         )}
 
-                        {/* Paso 3: Confirmación */}
+                        {/* Step 3: Confirmation */}
                         {currentStep === CheckoutStep.CONFIRMATION && (
                             <Card className="bg-[#060404]/80 border border-[#ff0054]/30">
-                                <CardContent className="pt-6 pb-8 px-6">
+                                <CardContent className="pt-6 pb-8 px-4 sm:px-6">
                                     <div className="flex flex-col items-center justify-center text-center">
-                                        <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
-                                            <Check className="h-8 w-8 text-green-600" />
+                                        <div className="w-12 h-12 sm:w-16 sm:h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
+                                            <Check className="h-6 w-6 sm:h-8 sm:w-8 text-green-600" />
                                         </div>
-                                        <h2 className="text-3xl font-bebas text-[#fefefe] mb-2">¡Gracias por tu compra!</h2>
+                                        <h2 className="text-2xl sm:text-3xl font-bebas text-[#fefefe] mb-2">Thank you for your purchase!</h2>
                                         <p className="text-[#fefefe]/70 mb-6">
-                                            Tu pedido ha sido recibido y está siendo procesado.
+                                            Your order has been received and is being processed.
                                         </p>
 
                                         <div className="bg-[#fefefe]/5 p-4 rounded-lg w-full mb-6">
-                                            <p className="text-[#fefefe]/70 text-sm">Número de Pedido</p>
+                                            <p className="text-[#fefefe]/70 text-sm">Order Number</p>
                                             <p className="text-[#fefefe] font-medium text-lg">{orderId}</p>
                                         </div>
 
                                         <p className="text-[#fefefe]/70 text-sm mb-8">
-                                            Hemos enviado un correo electrónico con la confirmación del pedido a{' '}
+                                            We've sent an email with order confirmation to{' '}
                                             <span className="text-[#fefefe]">{shippingInfo.email}</span>
                                         </p>
 
-                                        <div className="flex space-x-4">
+                                        <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
                                             <Button
                                                 className="bg-[#fefefe]/10 hover:bg-[#fefefe]/20 text-[#fefefe]"
                                                 asChild
                                             >
-                                                <Link href="/wear">Seguir Comprando</Link>
+                                                <Link href="/wear">Continue Shopping</Link>
                                             </Button>
 
                                             <Button
                                                 className="bg-gradient-to-r from-[#ff0054] to-[#fbe40b] hover:from-[#fbe40b] hover:to-[#ff0054] text-[#060404]"
                                                 asChild
                                             >
-                                                <Link href="/">Volver al Inicio</Link>
+                                                <Link href="/">Return to Home</Link>
                                             </Button>
                                         </div>
                                     </div>
@@ -557,22 +557,22 @@ export default function CheckoutPage() {
                         )}
                     </div>
 
-                    {/* Resumen del carrito */}
+                    {/* Cart summary */}
                     {currentStep !== CheckoutStep.CONFIRMATION && (
                         <div className="md:col-span-5">
-                            <Card className="bg-[#060404]/80 border border-[#ff0054]/30 sticky top-32">
-                                <CardHeader>
-                                    <CardTitle className="flex items-center text-2xl font-bebas text-[#fefefe]">
-                                        <ShoppingCart className="mr-2 h-5 w-5 text-[#ff0054]" />
-                                        Resumen del Pedido
+                            <Card className="bg-[#060404]/80 border border-[#ff0054]/30 sticky top-20 sm:top-24 md:top-32">
+                                <CardHeader className="px-4 sm:px-6">
+                                    <CardTitle className="flex items-center text-xl sm:text-2xl font-bebas text-[#fefefe]">
+                                        <ShoppingCart className="mr-2 h-4 w-4 sm:h-5 sm:w-5 text-[#ff0054]" />
+                                        Order Summary
                                     </CardTitle>
                                 </CardHeader>
-                                <CardContent className="space-y-6">
-                                    {/* Lista de productos */}
-                                    <div className="space-y-4">
+                                <CardContent className="space-y-4 sm:space-y-6 px-4 sm:px-6">
+                                    {/* Product list */}
+                                    <div className="space-y-3 sm:space-y-4 max-h-72 overflow-y-auto pr-2">
                                         {items.map((item) => (
-                                            <div key={item.id} className="flex gap-4 py-3">
-                                                <div className="relative h-16 w-16 rounded overflow-hidden border border-[#ff0054]/20">
+                                            <div key={item.id} className="flex gap-3 sm:gap-4 py-2 sm:py-3">
+                                                <div className="relative h-14 w-14 sm:h-16 sm:w-16 rounded overflow-hidden border border-[#ff0054]/20 flex-shrink-0">
                                                     <Image
                                                         src={item.image || "/logo.PNG"}
                                                         alt={item.title}
@@ -581,17 +581,17 @@ export default function CheckoutPage() {
                                                     />
                                                 </div>
                                                 <div className="flex-1 min-w-0">
-                                                    <h4 className="text-[#fefefe] font-medium truncate">{item.title}</h4>
+                                                    <h4 className="text-[#fefefe] font-medium truncate text-sm sm:text-base">{item.title}</h4>
                                                     {(item.size || item.color) && (
-                                                        <p className="text-[#fefefe]/60 text-sm">
-                                                            {item.size && `Talla: ${item.size}`}
+                                                        <p className="text-[#fefefe]/60 text-xs sm:text-sm">
+                                                            {item.size && `Size: ${item.size}`}
                                                             {item.size && item.color && ' | '}
                                                             {item.color && `Color: ${item.color}`}
                                                         </p>
                                                     )}
                                                     <div className="flex justify-between mt-1">
-                                                        <span className="text-[#fefefe]/60 text-sm">Cant: {item.quantity}</span>
-                                                        <span className="text-[#fbe40b]">{formatPrice(item.price * item.quantity)}</span>
+                                                        <span className="text-[#fefefe]/60 text-xs sm:text-sm">Qty: {item.quantity}</span>
+                                                        <span className="text-[#fbe40b] text-sm sm:text-base">{formatPrice(item.price * item.quantity)}</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -600,20 +600,20 @@ export default function CheckoutPage() {
 
                                     <Separator className="bg-[#ff0054]/20" />
 
-                                    {/* Totales */}
-                                    <div className="space-y-3">
+                                    {/* Totals */}
+                                    <div className="space-y-2 sm:space-y-3">
                                         <div className="flex justify-between">
-                                            <span className="text-[#fefefe]/70">Subtotal</span>
-                                            <span className="text-[#fefefe]">{formatPrice(totalAmount)}</span>
+                                            <span className="text-[#fefefe]/70 text-sm">Subtotal</span>
+                                            <span className="text-[#fefefe] text-sm sm:text-base">{formatPrice(totalAmount)}</span>
                                         </div>
                                         <div className="flex justify-between">
-                                            <span className="text-[#fefefe]/70">Envío</span>
-                                            <span className="text-[#fefefe]">Calculado en el siguiente paso</span>
+                                            <span className="text-[#fefefe]/70 text-sm">Shipping</span>
+                                            <span className="text-[#fefefe] text-sm sm:text-base">Calculated at next step</span>
                                         </div>
                                         <Separator className="bg-[#ff0054]/20" />
                                         <div className="flex justify-between">
-                                            <span className="text-[#fefefe] font-medium">Total</span>
-                                            <span className="text-xl font-bold text-[#fbe40b]">{formatPrice(totalAmount)}</span>
+                                            <span className="text-[#fefefe] font-medium text-sm sm:text-base">Total</span>
+                                            <span className="text-lg sm:text-xl font-bold text-[#fbe40b]">{formatPrice(totalAmount)}</span>
                                         </div>
                                     </div>
                                 </CardContent>

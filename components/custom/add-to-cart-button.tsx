@@ -20,15 +20,15 @@ interface AddToCartButtonProps {
 }
 
 const AddToCartButton: React.FC<AddToCartButtonProps> = ({
-                                                             productId,
-                                                             variantId,
-                                                             title,
-                                                             price,
-                                                             image,
-                                                             size,
-                                                             color,
-                                                             disabled = false
-                                                         }) => {
+    productId,
+    variantId,
+    title,
+    price,
+    image,
+    size,
+    color,
+    disabled = false
+}) => {
     const { addItem } = useCart()
     const { toast } = useToast()
     const [loading, setLoading] = useState(false)
@@ -39,13 +39,13 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
 
         setLoading(true)
 
-        // Simular un pequeño retraso para mostrar el estado de carga
+        // Simulate a small delay to show loading state
         setTimeout(() => {
             try {
-                // Crear un ID único para el item del carrito
+                // Create a unique ID for the cart item
                 const cartItemId = `${productId}-${variantId}-${uuidv4().slice(0, 8)}`
 
-                // Añadir al carrito
+                // Add to cart
                 addItem({
                     id: cartItemId,
                     productId,
@@ -58,21 +58,21 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
                     color
                 })
 
-                // Mostrar éxito
+                // Show success
                 setSuccess(true)
                 toast({
-                    title: "Producto añadido",
-                    description: "El producto ha sido añadido a tu carrito.",
+                    title: "Product added",
+                    description: "The product has been added to your cart.",
                 })
 
-                // Restablecer el estado después de un momento
+                // Reset state after a moment
                 setTimeout(() => {
                     setSuccess(false)
                 }, 2000)
             } catch (error) {
                 toast({
                     title: "Error",
-                    description: "No se pudo añadir el producto al carrito.",
+                    description: "Could not add the product to your cart.",
                     variant: "destructive"
                 })
             } finally {
@@ -86,16 +86,16 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
             onClick={handleAddToCart}
             disabled={disabled || loading}
             className="w-full bg-gradient-to-r from-[#ff0054] to-[#fbe40b] hover:from-[#fbe40b] hover:to-[#ff0054]
-               text-[#060404] font-medium text-lg h-12"
+               text-[#060404] font-medium text-base sm:text-lg h-10 sm:h-12 transition-all duration-300"
         >
             {loading ? (
-                <Loader2 className="h-5 w-5 animate-spin mr-2" />
+                <Loader2 className="h-4 w-4 sm:h-5 sm:w-5 animate-spin mr-2" />
             ) : success ? (
-                <Check className="h-5 w-5 mr-2" />
+                <Check className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
             ) : (
-                <ShoppingCart className="h-5 w-5 mr-2" />
+                <ShoppingCart className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
             )}
-            {loading ? "Añadiendo..." : success ? "¡Añadido!" : "Añadir al Carrito"}
+            {loading ? "Adding..." : success ? "Added!" : "Add to Cart"}
         </Button>
     )
 }
