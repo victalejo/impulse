@@ -115,7 +115,7 @@ export default function BMWPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <h2 className="text-center text-5xl md:text-7xl font-bebas mb-20">
             <span className="bg-gradient-to-r from-[#ff0054] to-[#fbe40b] text-transparent bg-clip-text">
-              BMW X7 2024 Features
+              BMW X7 Features
             </span>
           </h2>
 

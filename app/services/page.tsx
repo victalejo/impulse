@@ -96,16 +96,7 @@ export default function ServicesPage() {
                         />
                       </div>
                     </CarouselItem>
-                    <CarouselItem>
-                      <div className="relative h-[500px] rounded-lg overflow-hidden">
-                        <Image
-                          src="/images/silver-3.jpg"
-                          alt="Silverwave Pontoon"
-                          fill
-                          className="object-cover rounded-lg"
-                        />
-                      </div>
-                    </CarouselItem>
+                    
                   </>
                 ) : (
                   // Qwest Carousel Items
@@ -120,16 +111,7 @@ export default function ServicesPage() {
                         />
                       </div>
                     </CarouselItem>
-                    <CarouselItem>
-                      <div className="relative h-[500px] rounded-lg overflow-hidden">
-                        <Image
-                          src="/images/quest-3.jpg"
-                          alt="Qwest Pontoon"
-                          fill
-                          className="object-cover rounded-lg"
-                        />
-                      </div>
-                    </CarouselItem>
+                   
                   </>
                 )}
               </CarouselContent>

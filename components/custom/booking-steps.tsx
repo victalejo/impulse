@@ -47,28 +47,28 @@ export const BookingSteps: React.FC<StepProps> = ({
                                         <span className={cn(
                                             isActive || isCompleted ? "text-[#ff0054]" : "text-gray-500"
                                         )}>
-                      Servicio
+                      Service
                     </span>
                                     )}
                                     {step === 2 && (
                                         <span className={cn(
                                             isActive || isCompleted ? "text-[#ff0054]" : "text-gray-500"
                                         )}>
-                      Detalles
+                      Details
                     </span>
                                     )}
                                     {step === 3 && (
                                         <span className={cn(
                                             isActive || isCompleted ? "text-[#ff0054]" : "text-gray-500"
                                         )}>
-                      Fecha
+                      Date 
                     </span>
                                     )}
                                     {step === 4 && (
                                         <span className={cn(
                                             isActive || isCompleted ? "text-[#ff0054]" : "text-gray-500"
                                         )}>
-                      Pago
+                      Payment
                     </span>
                                     )}
                                 </div>
