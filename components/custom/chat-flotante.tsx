@@ -8,7 +8,8 @@ import { Input } from "@/components/ui/input";
 import { MessageCircle, Send, X, Bot, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
-import { FlowiseClient } from 'flowise-sdk'; // Importar el SDK de Flowise
+import { FlowiseClient } from 'flowise-sdk';
+import { v4 as uuidv4 } from 'uuid'; // Asegúrate de tener uuid instalado: npm install uuid
 
 // Interfaz para los mensajes
 interface Message {
@@ -19,8 +20,12 @@ interface Message {
 }
 
 // URL del servidor Flowise
-const FLOWISE_URL = 'https://modelos.iaportafolio.com'; // Ajusta esto a la URL correcta
-const CHATFLOW_ID = '67d18b37-97a1-415c-8de7-a6845ed0d367'; // Reemplaza con tu ID de chatflow
+const FLOWISE_URL = 'https://modelos.iaportafolio.com';
+const CHATFLOW_ID = '67d18b37-97a1-415c-8de7-a6845ed0d367';
+
+// Clave para el almacenamiento local
+const CHAT_HISTORY_KEY = 'impulse_chat_history';
+const SESSION_ID_KEY = 'impulse_chat_session_id';
 
 const ChatFlotante: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -34,9 +39,29 @@ const ChatFlotante: React.FC = () => {
     ]);
     const [inputValue, setInputValue] = useState('');
     const [isTyping, setIsTyping] = useState(false);
+    const [sessionId, setSessionId] = useState<string>('');
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
     const client = new FlowiseClient({ baseUrl: FLOWISE_URL });
+
+    // Inicializar o recuperar el sessionId cuando se monta el componente
+    useEffect(() => {
+        // Cargar mensajes previos del almacenamiento local
+        const loadedMessages = loadMessages();
+        if (loadedMessages.length > 0) {
+            setMessages(loadedMessages);
+        }
+
+        // Recuperar o crear sessionId
+        const storedSessionId = localStorage.getItem(SESSION_ID_KEY);
+        if (storedSessionId) {
+            setSessionId(storedSessionId);
+        } else {
+            const newSessionId = uuidv4();
+            setSessionId(newSessionId);
+            localStorage.setItem(SESSION_ID_KEY, newSessionId);
+        }
+    }, []);
 
     // Autofocus en el input cuando se abre el chat
     useEffect(() => {
@@ -50,7 +75,48 @@ const ChatFlotante: React.FC = () => {
         if (messagesEndRef.current) {
             messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
         }
+
+        // Guardar mensajes en localStorage
+        saveMessages(messages);
     }, [messages]);
+
+    // Función para guardar mensajes en localStorage
+    const saveMessages = (messages: Message[]): void => {
+        try {
+            // Solo guardar los últimos 50 mensajes para no sobrecargar localStorage
+            const messagesToSave = messages.slice(-50);
+            localStorage.setItem(CHAT_HISTORY_KEY, JSON.stringify(messagesToSave));
+        } catch (error) {
+            console.error('Error al guardar mensajes en localStorage:', error);
+        }
+    };
+
+    // Función para cargar mensajes desde localStorage
+    const loadMessages = (): Message[] => {
+        try {
+            const savedMessages = localStorage.getItem(CHAT_HISTORY_KEY);
+            if (savedMessages) {
+                const parsedMessages = JSON.parse(savedMessages);
+                // Convertir strings de fechas a objetos Date
+                return parsedMessages.map((msg: any) => ({
+                    ...msg,
+                    timestamp: new Date(msg.timestamp)
+                }));
+            }
+        } catch (error) {
+            console.error('Error al cargar mensajes desde localStorage:', error);
+        }
+
+        // Mensaje inicial por defecto si no hay historial
+        return [
+            {
+                id: '1',
+                content: '¡Hola! Soy el asistente virtual de Impulse Rentals. ¿En qué puedo ayudarte hoy?',
+                sender: 'bot',
+                timestamp: new Date()
+            }
+        ];
+    };
 
     const toggleChat = () => {
         setIsOpen(!isOpen);
@@ -83,11 +149,14 @@ const ChatFlotante: React.FC = () => {
         setIsTyping(true);
 
         try {
-            // Llamada a la API usando el SDK de Flowise
+            // Llamada a la API usando el SDK de Flowise con sessionId
             const prediction = await client.createPrediction({
                 chatflowId: CHATFLOW_ID,
                 question: userMessage.content,
                 streaming: true,
+                overrideConfig: {
+                    sessionId: sessionId, // Usar el sessionId guardado
+                }
             });
 
             let botResponse = '';
@@ -170,6 +239,9 @@ const ChatFlotante: React.FC = () => {
                     },
                     body: JSON.stringify({
                         question: userMessage.content,
+                        overrideConfig: {
+                            sessionId: sessionId, // Usar el sessionId guardado
+                        }
                     }),
                 }
             );
@@ -213,6 +285,25 @@ const ChatFlotante: React.FC = () => {
         return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     };
 
+    // Función para reiniciar la conversación
+    const resetConversation = () => {
+        // Crear nuevo sessionId
+        const newSessionId = uuidv4();
+        setSessionId(newSessionId);
+        localStorage.setItem(SESSION_ID_KEY, newSessionId);
+
+        // Reiniciar mensajes
+        const initialMessage: Message = {
+            id: Date.now().toString(),
+            content: '¡Hola! Soy el asistente virtual de Impulse Rentals. ¿En qué puedo ayudarte hoy?',
+            sender: 'bot' as const,
+            timestamp: new Date()
+        };
+
+        setMessages([initialMessage]);
+        saveMessages([initialMessage]);
+    };
+
     return (
         <div className="fixed bottom-6 right-6 z-50">
             {/* Botón de chat flotante */}
@@ -250,14 +341,30 @@ const ChatFlotante: React.FC = () => {
                             <h3 className="text-xl font-bold">Asistente Impulse</h3>
                             <p className="text-sm opacity-90">Estamos aquí para ayudarte</p>
                         </div>
-                        <Button
-                            variant="ghost"
-                            size="icon"
-                            onClick={toggleChat}
-                            className="h-8 w-8 rounded-full hover:bg-[#fefefe]/10"
-                        >
-                            <X className="h-4 w-4 text-[#fefefe]" />
-                        </Button>
+                        <div className="flex gap-2">
+                            {/* Botón para reiniciar la conversación */}
+                            <Button
+                                variant="ghost"
+                                size="icon"
+                                onClick={resetConversation}
+                                className="h-8 w-8 rounded-full hover:bg-[#fefefe]/10"
+                                title="Reiniciar conversación"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                    <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+                                    <path d="M3 3v5h5"></path>
+                                </svg>
+                            </Button>
+                            {/* Botón para cerrar el chat */}
+                            <Button
+                                variant="ghost"
+                                size="icon"
+                                onClick={toggleChat}
+                                className="h-8 w-8 rounded-full hover:bg-[#fefefe]/10"
+                            >
+                                <X className="h-4 w-4 text-[#fefefe]" />
+                            </Button>
+                        </div>
                     </div>
 
                     {/* Cuerpo del chat */}

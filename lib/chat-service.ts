@@ -1,6 +1,7 @@
 // lib/chat-service.ts
 
 import { FlowiseClient } from 'flowise-sdk';
+import { v4 as uuidv4 } from 'uuid';
 
 // Interfaz para los mensajes
 export interface ChatMessage {
@@ -14,6 +15,10 @@ export interface ChatMessage {
 const FLOWISE_URL = 'https://modelos.iaportafolio.com';
 const CHATFLOW_ID = '67d18b37-97a1-415c-8de7-a6845ed0d367';
 
+// Claves para el almacenamiento local
+const CHAT_HISTORY_KEY = 'impulse_chat_history';
+const SESSION_ID_KEY = 'impulse_chat_session_id';
+
 // Inicializar el cliente Flowise
 let client: FlowiseClient;
 
@@ -23,8 +28,42 @@ try {
     console.error('Error inicializando FlowiseClient:', error);
 }
 
-// Clave para el almacenamiento local
-const CHAT_HISTORY_KEY = 'impulse_chat_history';
+// Función para obtener o crear un sessionId
+export const getOrCreateSessionId = (): string => {
+    try {
+        let sessionId = localStorage.getItem(SESSION_ID_KEY);
+
+        if (!sessionId) {
+            sessionId = uuidv4();
+            localStorage.setItem(SESSION_ID_KEY, sessionId);
+        }
+
+        return sessionId;
+    } catch (error) {
+        console.error('Error al manejar sessionId:', error);
+        // Generar uno nuevo si hay algún error
+        return uuidv4();
+    }
+};
+
+// Función para reiniciar la sesión de chat
+export const resetChatSession = (): string => {
+    const newSessionId = uuidv4();
+    localStorage.setItem(SESSION_ID_KEY, newSessionId);
+
+    // Crear mensaje inicial
+    const initialMessage: ChatMessage = {
+        id: '1',
+        content: 'Hello! I am the virtual assistant for Impulse Rentals. How can I help you today?',
+        sender: 'bot',
+        timestamp: new Date()
+    };
+
+    // Guardar solo el mensaje inicial
+    saveMessages([initialMessage]);
+
+    return newSessionId;
+};
 
 // Función para guardar mensajes en localStorage
 export const saveMessages = (messages: ChatMessage[]): void => {
@@ -33,7 +72,7 @@ export const saveMessages = (messages: ChatMessage[]): void => {
         const messagesToSave = messages.slice(-50);
         localStorage.setItem(CHAT_HISTORY_KEY, JSON.stringify(messagesToSave));
     } catch (error) {
-        console.error('Error al guardar mensajes en localStorage:', error);
+        console.error('Error saving messages to localStorage:', error);
     }
 };
 
@@ -50,14 +89,14 @@ export const loadMessages = (): ChatMessage[] => {
             }));
         }
     } catch (error) {
-        console.error('Error al cargar mensajes desde localStorage:', error);
+        console.error('Error saving messages to localStorage:', error);
     }
 
     // Mensaje inicial por defecto si no hay historial
     return [
         {
             id: '1',
-            content: '¡Hola! Soy el asistente virtual de Impulse Rentals. ¿En qué puedo ayudarte hoy?',
+            content: 'Hello! I am the virtual assistant for Impulse Rentals. How can I help you today?',
             sender: 'bot',
             timestamp: new Date()
         }
@@ -67,11 +106,15 @@ export const loadMessages = (): ChatMessage[] => {
 // Función para enviar mensaje al asistente con streaming
 export const sendMessageWithStreaming = async (
     userMessage: string,
-    onPartialResponse: (text: string) => void
+    onPartialResponse: (text: string) => void,
+    sessionId?: string
 ): Promise<string> => {
     if (!client) {
         throw new Error('FlowiseClient no está inicializado');
     }
+
+    // Usar el sessionId proporcionado o obtener el actual
+    const currentSessionId = sessionId || getOrCreateSessionId();
 
     try {
         // Crear predicción con streaming activado
@@ -79,6 +122,9 @@ export const sendMessageWithStreaming = async (
             chatflowId: CHATFLOW_ID,
             question: userMessage,
             streaming: true,
+            overrideConfig: {
+                sessionId: currentSessionId, // Usar el sessionId
+            }
         });
 
         let botResponse = '';
@@ -91,7 +137,7 @@ export const sendMessageWithStreaming = async (
             }
         }
 
-        return botResponse || 'Lo siento, no he podido procesar tu solicitud.';
+        return botResponse || 'Sorry, I was unable to process your request.';
     } catch (error) {
         console.error('Error al enviar mensaje con streaming:', error);
         throw error;
@@ -99,8 +145,14 @@ export const sendMessageWithStreaming = async (
 };
 
 // Función alternativa para enviar mensaje sin streaming
-export const sendMessageWithoutStreaming = async (userMessage: string): Promise<string> => {
+export const sendMessageWithoutStreaming = async (
+    userMessage: string,
+    sessionId?: string
+): Promise<string> => {
     try {
+        // Usar el sessionId proporcionado o obtener el actual
+        const currentSessionId = sessionId || getOrCreateSessionId();
+
         // Llamada directa a la API
         const response = await fetch(
             `${FLOWISE_URL}/api/v1/prediction/${CHATFLOW_ID}`,
@@ -111,6 +163,9 @@ export const sendMessageWithoutStreaming = async (userMessage: string): Promise<
                 },
                 body: JSON.stringify({
                     question: userMessage,
+                    overrideConfig: {
+                        sessionId: currentSessionId, // Usar el sessionId
+                    }
                 }),
             }
         );
