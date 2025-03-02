@@ -8,7 +8,7 @@ const SHOP_ID = '5981437';
 // En un entorno real, obtendrías estos valores de variables de entorno:
 // const API_TOKEN = process.env.PRINTIFY_API_TOKEN;
 // const SHOP_ID = process.env.PRINTIFY_SHOP_ID;
-
+export const dynamic = 'force-dynamic';
 export async function GET(request: Request) {
     try {
         // Obtener parámetros de consulta (page, limit)

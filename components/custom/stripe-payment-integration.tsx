@@ -80,10 +80,10 @@ export const StripeCheckout: React.FC<StripeCheckoutProps> = ({
         createPaymentIntent();
     }, [bookingData]);
 
-    const options = {
+    const options = clientSecret ? {
         clientSecret,
         appearance: {
-            theme: 'stripe',
+            theme: 'stripe' as const,
             variables: {
                 colorPrimary: '#ff0054',
                 colorBackground: '#ffffff',
@@ -101,7 +101,7 @@ export const StripeCheckout: React.FC<StripeCheckoutProps> = ({
                 }
             }
         }
-    };
+    } : undefined;
 
     if (isLoading) {
         return (

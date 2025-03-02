@@ -447,12 +447,13 @@ export default function BookNowPage() {
   // Get packages for selected option (for pontoons and transport)
   const getPackagesForSelectedOption = () => {
     if (!selectedService || !booking.selectedOption) return [];
-    
+
     if (booking.serviceId === "pontoons" || booking.serviceId === "transport") {
       const option = selectedService.options.find(opt => opt.name === booking.selectedOption);
-      return option?.packages || [];
+      // Verificar si la opción tiene la propiedad 'packages'
+      return 'packages' in (option || {}) ? (option as any).packages : [];
     }
-    
+
     return [];
   };
 
@@ -656,13 +657,15 @@ export default function BookNowPage() {
                                     handleOptionSelection(option.name);
                                     setBooking(prev => ({
                                       ...prev,
-                                      selectedOptionPrice: option.price || 0
+                                      selectedOptionPrice: 'price' in option ? option.price : 0
                                     }));
                                   }}
                                 >
                                   <div className="flex justify-between items-center">
                                     <h4 className="font-medium text-[#060404]">{option.name}</h4>
-                                    <span className="font-bold text-[#ff0054]">${(option.price/100).toFixed(2)}</span>
+                                    <span className="font-bold text-[#ff0054]">
+                                    ${'price' in option ? (option.price/100).toFixed(2) : '0.00'}
+                                  </span>
                                   </div>
                                 </div>
                               ))}
