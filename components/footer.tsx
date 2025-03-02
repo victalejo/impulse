@@ -98,8 +98,8 @@ export default function Footer() {
               </li>
               <li className="flex items-center">
                 <Mail className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 mr-2 text-[#ff0054]" />
-                <a href="mailto:impulsexperience.com" className="text-[#060404] hover:text-[#ff0054] transition-colors duration-300">
-                  impulsexperience.com
+                <a href="mailto:info@impulsexperience.com" className="text-[#060404] hover:text-[#ff0054] transition-colors duration-300">
+                  info@impulsexperience.com
                 </a>
               </li>
               <li className="flex items-center">

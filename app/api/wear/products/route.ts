@@ -14,11 +14,11 @@ export async function GET(request: Request) {
         // Obtener parámetros de consulta (page, limit)
         const { searchParams } = new URL(request.url);
         const page = searchParams.get('page') || '1';
-        const limit = searchParams.get('limit') || '8';
+        const limit = searchParams.get('limit') || '20';
 
         // Realizar la solicitud a la API de Printify
         const response = await fetch(
-            `https://api.printify.com/v1/shops/${SHOP_ID}/products.json?page=${page}&limit=${limit}`,
+            `https://api.printify.com/v1/shops/${SHOP_ID}/products.json`,
             {
                 headers: {
                     'Authorization': `Bearer ${API_TOKEN}`,
@@ -37,7 +37,12 @@ export async function GET(request: Request) {
 
         const data = await response.json();
 
-        // Devolver los datos al cliente
+        // Filtrar solo productos que tengan la propiedad 'external'
+        if (data && data.data && Array.isArray(data.data)) {
+            data.data = data.data.filter((product: any) => product.external !== undefined);
+        }
+
+        // Devolver los datos filtrados al cliente
         return NextResponse.json(data);
     } catch (error: any) {
         console.error('Error fetching products from Printify:', error);
