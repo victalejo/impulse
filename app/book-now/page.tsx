@@ -81,21 +81,21 @@ const services = [
     image: "/images/car-services.png",
     options: [
       { 
-        name: "GMC Yukon AT4 XL 2024", 
+        name: "GMC Yukon AT4 XL", 
         packages: [
           { name: "Hour", price: 7500 },
           { name: "Trip to the airport", price: 14900 }
         ]
       },
       { 
-        name: "Chevrolet Suburban 2025", 
+        name: "Chevrolet Suburban", 
         packages: [
           { name: "Hour", price: 7500 },
           { name: "Trip to the airport", price: 14900 }
         ]
       },
       { 
-        name: "BMW X7 2024", 
+        name: "BMW X7", 
         packages: [
           { name: "Hour", price: 7500 },
           { name: "Trip to the airport", price: 14900 }
