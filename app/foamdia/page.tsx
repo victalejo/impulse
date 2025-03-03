@@ -95,7 +95,7 @@ export default function FoamDiaPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-24">
             <div className="relative h-[600px] rounded-xl overflow-hidden">
               <Image
-                src="/images/foamcolor.jpg"
+                src="/images/foamcolor.png"
                 alt="Color Foam Party"
                 fill
                 className="object-cover"

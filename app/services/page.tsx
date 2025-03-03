@@ -484,7 +484,7 @@ export default function ServicesPage() {
         <div className="space-y-4 sm:space-y-6">
           <div className="relative h-[250px] sm:h-[300px] md:h-[400px]">
             <Image
-              src="/images/foam-party.jpg"
+              src="/images/foam-party.png"
               alt="Foam Party"
               fill
               className="object-cover rounded-lg"
