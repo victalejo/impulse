@@ -55,7 +55,7 @@ const WearPage = () => {
                         title: "Impulse T-Shirt",
                         description: "T-shirt with Impulse Rentals logo",
                         variants: [{ price: 2500, cost: 1500 }],
-                        images: [{ src: "/images/logo.PNG", is_default: true }],
+                        images: [{ src: "/images/logo.png", is_default: true }],
                         tags: ["Clothing", "T-shirts"]
                     },
                     {
@@ -63,7 +63,7 @@ const WearPage = () => {
                         title: "Impulse Mug",
                         description: "Mug with Impulse Rentals logo",
                         variants: [{ price: 1500, cost: 800 }],
-                        images: [{ src: "/images/logo.PNG", is_default: true }],
+                        images: [{ src: "/images/logo.png", is_default: true }],
                         tags: ["Accessories", "Mugs"]
                     }
                 ]);

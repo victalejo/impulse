@@ -68,7 +68,7 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ open, onClose }) => {
                                         {/* Product image */}
                                         <div className="relative h-20 w-20 rounded-md overflow-hidden border border-[#ff0054]/30">
                                             <Image
-                                                src={item.image || "/logo.PNG"}
+                                                src={item.image || "/logo.png"}
                                                 alt={item.title}
                                                 fill
                                                 className="object-cover"

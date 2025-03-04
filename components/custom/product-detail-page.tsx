@@ -98,7 +98,7 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ params }) => {
                         { id: 3, title: "L", price: 2500, cost: 1500 }
                     ],
                     images: [
-                        { id: 1, src: "/images/logo.PNG", is_default: true, position: "front" },
+                        { id: 1, src: "/images/logo.png", is_default: true, position: "front" },
                         { id: 2, src: "/images/logo-sin-texto.png", position: "back" }
                     ],
                     tags: ["Clothing", "T-Shirts", "Merchandise"],
