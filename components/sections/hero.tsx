@@ -114,7 +114,7 @@ export default function Hero() {
         {/* Logo - Responsive size adjustments */}
         <div className="w-[150px] h-[150px] sm:w-[200px] sm:h-[200px] md:w-[250px] md:h-[250px] lg:w-[350px] lg:h-[350px] mb-4 sm:mb-6 md:mb-8 relative">
           <Image
-            src="/logo.PNG"
+            src="/logo.png"
             alt="Impulse Rentals Logo"
             fill
             style={{ objectFit: 'contain' }}
