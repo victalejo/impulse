@@ -32,7 +32,7 @@ const ChatFlotante: React.FC = () => {
     const [messages, setMessages] = useState<Message[]>([
         {
             id: '1',
-            content: '¡Hola! Soy el asistente virtual de Impulse Rentals. ¿En qué puedo ayudarte hoy?',
+            content: 'Hello! I am the virtual assistant for Impulse Rentals. How can I help you today?',
             sender: 'bot',
             timestamp: new Date()
         }
@@ -111,7 +111,7 @@ const ChatFlotante: React.FC = () => {
         return [
             {
                 id: '1',
-                content: '¡Hola! Soy el asistente virtual de Impulse Rentals. ¿En qué puedo ayudarte hoy?',
+                content: 'Hello! I am the virtual assistant for Impulse Rentals. How can I help you today?',
                 sender: 'bot',
                 timestamp: new Date()
             }
@@ -295,7 +295,7 @@ const ChatFlotante: React.FC = () => {
         // Reiniciar mensajes
         const initialMessage: Message = {
             id: Date.now().toString(),
-            content: '¡Hola! Soy el asistente virtual de Impulse Rentals. ¿En qué puedo ayudarte hoy?',
+            content: 'Hello! I am the virtual assistant for Impulse Rentals. How can I help you today?',
             sender: 'bot' as const,
             timestamp: new Date()
         };
@@ -338,8 +338,8 @@ const ChatFlotante: React.FC = () => {
                             />
                         </div>
                         <div className="flex-1">
-                            <h3 className="text-xl font-bold">Asistente Impulse</h3>
-                            <p className="text-sm opacity-90">Estamos aquí para ayudarte</p>
+                            <h3 className="text-xl font-bold">Impulse Assistant</h3>
+                            <p className="text-sm opacity-90">We are here to help you</p>
                         </div>
                         <div className="flex gap-2">
                             {/* Botón para reiniciar la conversación */}
