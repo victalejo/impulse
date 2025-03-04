@@ -404,66 +404,7 @@ export default function ServicesPage() {
   </div>
 </Card>
 
-          {/* DJ Services */}
-<Card className="bg-[#fefefe]/5 backdrop-blur-sm border-[#ff0054]/20 hover:border-[#ff0054] transition-all duration-300">
-  <div className="grid md:grid-cols-2 gap-6 md:gap-8 p-4 sm:p-6 md:p-8">
-    <div className="relative h-[250px] sm:h-[350px] md:h-[500px] md:order-1 order-2">
-      <Image
-        src="/images/dj-services.png"
-        alt="DJ Services"
-        fill
-        className="object-cover rounded-lg"
-      />
-    </div>
-    <div className="space-y-4 sm:space-y-6 md:space-y-8 md:order-2 order-1">
-      <h2 className="text-3xl sm:text-4xl md:text-5xl font-bebas mb-3 sm:mb-4 md:mb-6">
-        <span className="bg-gradient-to-r from-[#ff0054] to-[#fbe40b] text-transparent bg-clip-text">
-          DJ SERVICES
-        </span>
-      </h2>
-      
-      <p className="text-base sm:text-xl md:text-2xl lg:text-3xl text-[#fefefe]/80 leading-relaxed">
-        Transform your event with our professional DJ services. Whether it's a wedding, 
-        corporate event, or private party, our experienced DJs will keep your guests 
-        entertained with the perfect mix of music.
-      </p>
-
-      <div className="grid grid-cols-1 gap-4 sm:gap-6">
-        {/* Botón Book Now */}
-        <div className="relative overflow-hidden rounded-lg p-[2px] bg-gradient-to-r from-[#ff0054] to-[#fbe40b] transition-all duration-300 shadow-[0_0_15px_rgba(255,0,84,0.5)]">
-          <Button 
-            className="w-full bg-[#060404] hover:bg-[#060404]/90 text-[#fefefe] text-lg sm:text-xl md:text-2xl px-4 sm:px-6 md:px-8 py-3 sm:py-6 md:py-8
-                     transition-transform duration-300 font-bebas relative z-10
-                     before:absolute before:inset-0 before:bg-gradient-to-r before:from-[#ff0054] 
-                     before:to-[#fbe40b] before:opacity-0 hover:before:opacity-100 
-                     before:transition-opacity before:-z-10
-                     flex items-center justify-center gap-2 sm:gap-3"
-            asChild
-          >
-            <Link href="/book-now">
-              BOOK NOW
-              <MousePointerClick className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" />
-            </Link>
-          </Button>
-        </div>
-
-        {/* Botón Contact */}
-        <Button 
-          className="w-full bg-[#060404] border-2 border-[#fbe40b] hover:bg-[#fbe40b]/10 
-                   text-[#fbe40b] text-lg sm:text-xl md:text-2xl px-4 sm:px-6 md:px-8 py-3 sm:py-6 md:py-8 
-                   transition-all duration-300 font-bebas
-                   flex items-center justify-center gap-2 sm:gap-3"
-          asChild
-        >
-          <Link href="/contact">
-            CONTACT
-            <MousePointerClick className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" />
-          </Link>
-        </Button>
-      </div>
-    </div>
-  </div>
-</Card>
+          
 
           {/* Foam Party */}
 <Card id="foam-party-section" className="bg-[#fefefe]/5 backdrop-blur-sm border-[#ff0054]/20 hover:border-[#ff0054] transition-all duration-300">
@@ -570,6 +511,67 @@ export default function ServicesPage() {
     <p className="text-base sm:text-lg md:text-xl text-[#fefefe]">Foam Pit Package <span className="text-[#ff0054]">$315</span></p>
   </div>
 </div>
+    </div>
+  </div>
+</Card>
+
+{/* DJ Services */}
+<Card className="bg-[#fefefe]/5 backdrop-blur-sm border-[#ff0054]/20 hover:border-[#ff0054] transition-all duration-300">
+  <div className="grid md:grid-cols-2 gap-6 md:gap-8 p-4 sm:p-6 md:p-8">
+    <div className="relative h-[250px] sm:h-[350px] md:h-[500px] md:order-1 order-2">
+      <Image
+        src="/images/dj-services.png"
+        alt="DJ Services"
+        fill
+        className="object-cover rounded-lg"
+      />
+    </div>
+    <div className="space-y-4 sm:space-y-6 md:space-y-8 md:order-2 order-1">
+      <h2 className="text-3xl sm:text-4xl md:text-5xl font-bebas mb-3 sm:mb-4 md:mb-6">
+        <span className="bg-gradient-to-r from-[#ff0054] to-[#fbe40b] text-transparent bg-clip-text">
+          DJ SERVICES
+        </span>
+      </h2>
+      
+      <p className="text-base sm:text-xl md:text-2xl lg:text-3xl text-[#fefefe]/80 leading-relaxed">
+        Transform your event with our professional DJ services. Whether it's a wedding, 
+        corporate event, or private party, our experienced DJs will keep your guests 
+        entertained with the perfect mix of music.
+      </p>
+
+      <div className="grid grid-cols-1 gap-4 sm:gap-6">
+        {/* Botón Book Now */}
+        <div className="relative overflow-hidden rounded-lg p-[2px] bg-gradient-to-r from-[#ff0054] to-[#fbe40b] transition-all duration-300 shadow-[0_0_15px_rgba(255,0,84,0.5)]">
+          <Button 
+            className="w-full bg-[#060404] hover:bg-[#060404]/90 text-[#fefefe] text-lg sm:text-xl md:text-2xl px-4 sm:px-6 md:px-8 py-3 sm:py-6 md:py-8
+                     transition-transform duration-300 font-bebas relative z-10
+                     before:absolute before:inset-0 before:bg-gradient-to-r before:from-[#ff0054] 
+                     before:to-[#fbe40b] before:opacity-0 hover:before:opacity-100 
+                     before:transition-opacity before:-z-10
+                     flex items-center justify-center gap-2 sm:gap-3"
+            asChild
+          >
+            <Link href="/book-now">
+              BOOK NOW
+              <MousePointerClick className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" />
+            </Link>
+          </Button>
+        </div>
+
+        {/* Botón Contact */}
+        <Button 
+          className="w-full bg-[#060404] border-2 border-[#fbe40b] hover:bg-[#fbe40b]/10 
+                   text-[#fbe40b] text-lg sm:text-xl md:text-2xl px-4 sm:px-6 md:px-8 py-3 sm:py-6 md:py-8 
+                   transition-all duration-300 font-bebas
+                   flex items-center justify-center gap-2 sm:gap-3"
+          asChild
+        >
+          <Link href="/contact">
+            CONTACT
+            <MousePointerClick className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" />
+          </Link>
+        </Button>
+      </div>
     </div>
   </div>
 </Card>
