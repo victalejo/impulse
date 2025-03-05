@@ -176,18 +176,18 @@ const BouncesSection = () => {
             </div>
           </div>
 
-          {/* Video Container - Derecha */}
+          {/* Video Container - Derecha - CORREGIDO para eliminar espacios negros */}
           <div className="lg:col-span-5 relative h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] rounded-xl sm:rounded-2xl overflow-hidden shadow-2xl">
-            <div className="w-full h-full group">
-            <video
+            <div className="absolute inset-0 w-full h-full group">
+              <video
                 ref={videoRef}
                 autoPlay
                 loop
                 muted={isMuted}
                 playsInline
-                className="w-full h-full object-cover"
+                className="absolute inset-0 w-full h-full object-cover object-center"
               >
-                <source src="/images/ninja-homepage.webm" type="video/webm" />
+                <source src="/images/ninja-homepag.mp4" type="video/mp4" />
                 <source src="/videos/Reel-bouncehouse.mp4" type="video/mp4" />
                 Tu navegador no soporta el tag de video.
               </video>
