@@ -127,7 +127,7 @@ const BouncesSection = () => {
         <div className="text-center mb-8 sm:mb-12 md:mb-16">
           <h1 className="text-3xl sm:text-4xl md:text-6xl font-edo tracking-wider leading-tight inline-block">
             <span className="bg-gradient-to-r from-[#fbe40b] to-[#ff0054] text-transparent bg-clip-text">
-              Ice Pops Mega Front Loader<br />Combo Bounce House
+              Ice Pops Mega Front Loader and Ninja House<br />Combo Bounce House
             </span>
           </h1>
         </div>
@@ -179,7 +179,7 @@ const BouncesSection = () => {
           {/* Video Container - Derecha */}
           <div className="lg:col-span-5 relative h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] rounded-xl sm:rounded-2xl overflow-hidden shadow-2xl">
             <div className="w-full h-full group">
-              <video
+            <video
                 ref={videoRef}
                 autoPlay
                 loop
@@ -187,7 +187,7 @@ const BouncesSection = () => {
                 playsInline
                 className="w-full h-full object-cover"
               >
-                <source src="/videos/Reel-bouncehouse.webm" type="video/webm" />
+                <source src="/images/ninja-homepage.webm" type="video/webm" />
                 <source src="/videos/Reel-bouncehouse.mp4" type="video/mp4" />
                 Tu navegador no soporta el tag de video.
               </video>

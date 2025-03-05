@@ -353,53 +353,78 @@ export default function ServicesPage() {
 
          {/* Bounce Houses */}
 <Card className="bg-[#fefefe]/5 backdrop-blur-sm border-[#ff0054]/20 hover:border-[#ff0054] transition-all duration-300">
-  <div className="grid md:grid-cols-2 gap-6 md:gap-8 p-4 sm:p-6 md:p-8">
-    <div className="space-y-4 sm:space-y-6 md:space-y-8">
-      <h2 className="text-3xl sm:text-4xl md:text-5xl font-bebas mb-3 sm:mb-4 md:mb-6">
-        <span className="bg-gradient-to-r from-[#ff0054] to-[#fbe40b] text-transparent bg-clip-text">
-          BOUNCE HOUSES
-        </span>
-      </h2>
-      
-      <p className="text-base sm:text-xl md:text-2xl lg:text-3xl text-[#fefefe]/80 leading-relaxed">
-        At Impulse Rentals, safety is our top priority. All our bounce houses undergo rigorous safety 
-        inspections and are thoroughly cleaned and sanitized before each use. Our professional team 
-        handles setup and takedown, ensuring a worry-free experience for your special event.
-      </p>
+  <div className="p-4 sm:p-6 md:p-8 space-y-4 sm:space-y-6 md:space-y-8">
+    <h2 className="text-3xl sm:text-4xl md:text-5xl font-bebas">
+      <span className="bg-gradient-to-r from-[#ff0054] to-[#fbe40b] text-transparent bg-clip-text">
+        BOUNCE HOUSES
+      </span>
+    </h2>
+    
+    <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-[#fefefe]/80 leading-relaxed w-full">
+      At Impulse Rentals, safety is our top priority. All our bounce houses undergo rigorous safety 
+      inspections and are thoroughly cleaned and sanitized before each use. Our professional team 
+      handles setup and takedown, ensuring a worry-free experience for your special event.
+    </p>
 
-      <div className="flex flex-col gap-4">
-        <div>
-          <p className="text-xl sm:text-2xl md:text-3xl text-[#fbe40b]">8 Hours</p>
-          <p className="text-3xl sm:text-4xl md:text-5xl font-bebas text-[#ff0054]">$200</p>
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8">
+      {/* Ice Pops Mega Front Loader */}
+      <div className="space-y-4 sm:space-y-6 md:space-y-8">
+        <h4 className="text-xl sm:text-2xl md:text-3xl font-bebas text-center">
+          <span className="bg-gradient-to-r from-[#ff0054] to-[#fbe40b] text-transparent bg-clip-text">
+            Ice Pops Mega Front Loader
+          </span>
+        </h4>
+        <div className="relative h-[250px] sm:h-[300px] md:h-[400px]">
+          <Image
+            src="/images/bounce-houses.png"
+            alt="Ice Pops Mega Front Loader"
+            fill
+            className="object-cover rounded-lg"
+          />
         </div>
+      </div>
 
-        {/* Botón con el mismo estilo que Car Services */}
-        <div className="relative overflow-hidden rounded-lg p-[2px] bg-gradient-to-r from-[#ff0054] to-[#fbe40b] transition-all duration-300 shadow-[0_0_15px_rgba(255,0,84,0.5)]">
-          <Button 
-            className="w-full bg-[#060404] hover:bg-[#060404]/90 text-[#fefefe] text-lg sm:text-xl md:text-2xl px-4 sm:px-6 md:px-8 py-3 sm:py-6 md:py-8
-                     transition-transform duration-300 font-bebas relative z-10
-                     before:absolute before:inset-0 before:bg-gradient-to-r before:from-[#ff0054] 
-                     before:to-[#fbe40b] before:opacity-0 hover:before:opacity-100 
-                     before:transition-opacity before:-z-10
-                     flex items-center justify-center gap-2 sm:gap-3"
-            asChild
-          >
-            <Link href="/bounce">
-              BOUNCE HOUSES
-              <MousePointerClick className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" />
-            </Link>
-          </Button>
+      {/* Ninja Bounce House */}
+      <div className="space-y-4 sm:space-y-6 md:space-y-8">
+        <h4 className="text-xl sm:text-2xl md:text-3xl font-bebas text-center">
+          <span className="bg-gradient-to-r from-[#ff0054] to-[#fbe40b] text-transparent bg-clip-text">
+            Ninja Bounce House
+          </span>
+        </h4>
+        <div className="relative h-[250px] sm:h-[300px] md:h-[400px]">
+          <Image
+            src="/images/ninja-1.png"
+            alt="Ninja Bounce House"
+            fill
+            className="object-cover rounded-lg"
+          />
         </div>
       </div>
     </div>
 
-    <div className="relative h-[250px] sm:h-[350px] md:h-[500px]">
-      <Image
-        src="/images/bounce-houses.png"
-        alt="Bounce Houses"
-        fill
-        className="object-cover rounded-lg"
-      />
+    {/* Precio y botón */}
+    <div className="flex flex-col md:flex-row justify-center items-center gap-6 pt-6 border-t border-[#ff0054]/20">
+      <p className="text-xl sm:text-2xl md:text-3xl text-center">
+        <span className="text-[#fbe40b]">8 Hours:</span> 
+        <span className="text-[#ff0054] font-bebas ml-2">$200</span>
+      </p>
+
+      <div className="relative overflow-hidden rounded-lg p-[2px] bg-gradient-to-r from-[#ff0054] to-[#fbe40b] transition-all duration-300 shadow-[0_0_15px_rgba(255,0,84,0.5)]">
+        <Button 
+          className="w-full bg-[#060404] hover:bg-[#060404]/90 text-[#fefefe] text-lg sm:text-xl md:text-2xl px-4 sm:px-6 md:px-8 py-3 sm:py-6 md:py-8
+                   transition-transform duration-300 font-bebas relative z-10
+                   before:absolute before:inset-0 before:bg-gradient-to-r before:from-[#ff0054] 
+                   before:to-[#fbe40b] before:opacity-0 hover:before:opacity-100 
+                   before:transition-opacity before:-z-10
+                   flex items-center justify-center gap-2 sm:gap-3"
+          asChild
+        >
+          <Link href="/bounce">
+            BOUNCE HOUSES
+            <MousePointerClick className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" />
+          </Link>
+        </Button>
+      </div>
     </div>
   </div>
 </Card>
@@ -632,3 +657,4 @@ export default function ServicesPage() {
     </div>
   )
 }
+
