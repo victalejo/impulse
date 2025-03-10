@@ -411,7 +411,7 @@ const ChatFlotante: React.FC = () => {
                         <div className="flex w-full gap-2">
                             <Input
                                 ref={inputRef}
-                                placeholder="Escribe tu mensaje..."
+                                placeholder="Write your message..."
                                 value={inputValue}
                                 onChange={handleInputChange}
                                 onKeyDown={handleKeyDown}
