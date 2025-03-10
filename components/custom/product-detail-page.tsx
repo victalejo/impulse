@@ -336,46 +336,8 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ params }) => {
                     </div>
                 </div>
 
-                {/* Related products */}
-                <div className="mt-16 sm:mt-24">
-                    <h2 className="text-2xl sm:text-3xl font-bebas text-[#fefefe] mb-6 sm:mb-8">Related Products</h2>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
-                        {/* Example related products */}
-                        {[1, 2, 3, 4].map((item) => (
-                            <Card key={item} className="bg-[#060404]/80 border border-[#ff0054]/30 hover:border-[#ff0054] transition-all duration-300 overflow-hidden group">
-                                <div className="relative h-40 sm:h-48 w-full overflow-hidden">
-                                    <div className="absolute inset-0 bg-[#060404]/30 group-hover:bg-[#060404]/10 transition-all duration-300 z-10"></div>
-                                    <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[#ff0054]/20 to-[#fbe40b]/20">
-                                        <Image
-                                            src="/logo.PNG"
-                                            alt="Related Product"
-                                            width={120}
-                                            height={120}
-                                            className="object-contain"
-                                        />
-                                    </div>
-                                </div>
-                                <CardContent className="p-4 sm:p-6">
-                                    <h3 className="text-lg sm:text-xl font-bebas text-[#fefefe] mb-2 group-hover:text-[#ff0054] transition-colors duration-300">
-                                        Related Product {item}
-                                    </h3>
-                                    <p className="text-base sm:text-lg font-bold text-[#fbe40b] mb-4">
-                                        $25.00
-                                    </p>
-                                    <Button
-                                        className="w-full bg-[#060404] border border-[#ff0054]/50 text-[#fefefe] hover:bg-[#ff0054]/20"
-                                        asChild
-                                    >
-                                        <Link href="#" onClick={(e) => e.preventDefault()}>View Details</Link>
-                                    </Button>
-                                </CardContent>
-                            </Card>
-                        ))}
                     </div>
                 </div>
-            </div>
-        </div>
     );
 };
 

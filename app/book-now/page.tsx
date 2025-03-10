@@ -57,9 +57,10 @@ const services = [
     id: "bounce",
     name: "Bounce Houses",
     icon: Castle,
-    image: "/images/bounce-houses.png",
+    image: "/images/ninja-1.png",
     options: [
-      { name: "Ice Pops Mega Front Loader, 8 hours", price: 20000 }
+      { name: "Ice Pops Mega Front Loader, 8 hours", price: 20000 },
+      { name: "Ninja Bounce House, 8 hours", price: 20000 }
     ]
   },
   {
@@ -116,17 +117,15 @@ const services = [
 const serviceImageMap: Record<string, string> = {
   "Silverwave Pontoon": "/images/silver-1.jpg",
   "Qwest Pontoon": "/images/quest-c.jpg",
-  "Ice Pops Mega Front Loader": "/images/bounce.jpg",
+  "Ice Pops Mega Front Loader, 8 hours": "/images/bounce-houses.png",
+  "Ninja Bounce House, 8 hours": "/images/ninja-2.png",
   "Foam Party Package": "/images/foam-party.png",
   "Color Foam Party Package": "/images/foamcolor.png",
   "Glow in the Dark Foam Party Package": "/images/fotofoamnoche.jpg",
   "Foam Pit Package": "/images/foampit.png",
-  "GMC Yukon AT4 XL 2024": "/images/Gmc/1.jpg",
-  "Chevrolet Suburban 2025": "/images/camioneta-1.png",
-  "BMW X7 2024": "/images/bmw/1.jpg",
-  "Basic DJ": "/images/dj-services.png",
-  "Premium DJ": "/images/dj-services.png",
-  "DJ + Full Equipment": "/images/dj-services.png"
+  "GMC Yukon AT4 XL": "/images/Gmc/1.jpg",
+  "Chevrolet Suburban": "/images/sub/lado2.png",
+  "BMW X7": "/images/bmw/1.jpg",
 }
 
 // Simulated booked dates

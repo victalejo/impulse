@@ -74,7 +74,7 @@ export default function BoatPage() {
           playsInline
           loop
         >
-          <source src="/videos/fondo-page.webm" type="video/mp4" />
+          <source src="/videos/fondo-page.webm" type="video/webm" />
         </video>
         <div className="absolute inset-0 bg-[#060404]/50 flex items-center justify-center">
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-bebas text-center px-4 animate-fade-in">
