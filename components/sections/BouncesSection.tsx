@@ -192,23 +192,7 @@ const BouncesSection = () => {
                 Tu navegador no soporta el tag de video.
               </video>
 
-              {/* Botón de control de audio */}
-              <Button
-                onClick={toggleAudio}
-                className="absolute bottom-4 right-4 z-30 bg-[#060404]/70 hover:bg-[#060404] 
-                         border-2 border-[#ff0054] text-[#fefefe] rounded-full p-2 sm:p-3
-                         transition-all duration-300 hover:scale-110"
-                size="icon"
-                variant="outline"
-                aria-label={isMuted ? "Activar sonido" : "Silenciar"}
-              >
-                {isMuted ? (
-                  <VolumeX className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 text-[#ff0054]" />
-                ) : (
-                  <Volume2 className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 text-[#ff0054]" />
-                )}
-              </Button>
-
+              
               {/* Efecto de borde al hover */}
               <div className="absolute inset-0 border-2 border-transparent 
                            hover:border-[#ff0054] rounded-xl sm:rounded-2xl transition-colors 

@@ -253,7 +253,7 @@ export default function GMCPage() {
                        shadow-lg hover:shadow-[#ff0054]/50"
               asChild
             >
-              <Link href="/booking">Book Now</Link>
+             <Link href="/book-now?service=transport">Book Now</Link>
             </Button>
           </div>
         </div>

@@ -223,7 +223,7 @@ export default function FoamNochePage() {
                        hover:shadow-[0_0_50px_rgba(255,0,84,0.5)]"
               asChild
             >
-              <Link href="/book-now">Book Now</Link>
+              <Link href="/book-now?service=foam">Book Now</Link>
             </Button>
           </div>
         </div>

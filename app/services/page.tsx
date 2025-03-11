@@ -576,10 +576,10 @@ export default function ServicesPage() {
                      flex items-center justify-center gap-2 sm:gap-3"
             asChild
           >
-            <Link href="/book-now">
-              BOOK NOW
-              <MousePointerClick className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" />
-            </Link>
+            <Link href="/book-now?service=dj">
+  BOOK NOW
+  <MousePointerClick className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" />
+</Link>
           </Button>
         </div>
 

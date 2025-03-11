@@ -199,10 +199,10 @@ export default function BMWPage() {
                      shadow-lg hover:shadow-[#ff0054]/50"
             asChild
           >
-            <Link href="/booking" className="flex items-center gap-4">
-              BOOK NOW
-              <ArrowRight className="w-8 h-8 transform group-hover:translate-x-2 transition-transform duration-300" />
-            </Link>
+            <Link href="/book-now?service=transport" className="flex items-center gap-4">
+  BOOK NOW
+  <ArrowRight className="w-8 h-8 transform group-hover:translate-x-2 transition-transform duration-300" />
+</Link>
           </Button>
         </div>
       </div>

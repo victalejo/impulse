@@ -415,10 +415,10 @@ export default function SuburbanPage() {
                      shadow-lg hover:shadow-[#ff0054]/50"
             asChild
           >
-            <Link href="/book-now" className="flex items-center gap-2 sm:gap-4">
-              BOOK NOW
-              <ArrowRight className="w-4 h-4 sm:w-6 sm:h-6 md:w-8 md:h-8 transform group-hover:translate-x-2 transition-transform duration-300" />
-            </Link>
+            <Link href="/book-now?service=transport" className="flex items-center gap-2 sm:gap-4">
+  BOOK NOW
+  <ArrowRight className="w-4 h-4 sm:w-6 sm:h-6 md:w-8 md:h-8 transform group-hover:translate-x-2 transition-transform duration-300" />
+</Link>
           </Button>
         </div>
       </div>

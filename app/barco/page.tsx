@@ -102,7 +102,7 @@ export default function BoatPage() {
                       playsInline
                       loop
                     >
-                      <source src="/videos/gaviotas.mp4" type="video/mp4" />
+                      <source src="/videos/gaviotas.webm" type="video/webm" />
                     </video>
                     <div className="absolute inset-0 bg-gradient-to-t from-[#060404] via-transparent to-transparent" />
                   </div>
@@ -190,14 +190,15 @@ export default function BoatPage() {
 
           {/* Book Now Button at the bottom */}
           <div className="text-center mt-16">
-            <Button 
-              className="book-now-button bg-gradient-to-r from-[#ff0054] to-[#fbe40b] 
-                       hover:from-[#fbe40b] hover:to-[#ff0054] 
-                       text-[#fefefe] font-bebas text-3xl px-16 py-8"
-              asChild
-            >
-              <Link href="/book-now">BOOK NOW</Link>
-            </Button>
+          
+<Button 
+  className="book-now-button bg-gradient-to-r from-[#ff0054] to-[#fbe40b] 
+           hover:from-[#fbe40b] hover:to-[#ff0054] 
+           text-[#fefefe] font-bebas text-3xl px-16 py-8"
+  asChild
+>
+<Link href="/book-now?service=pontoons">BOOK NOW</Link>
+</Button>
           </div>
         </div>
       </div>

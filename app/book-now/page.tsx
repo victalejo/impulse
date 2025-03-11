@@ -1,7 +1,7 @@
 // app/book-now/page.tsx
 "use client"
 
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -294,6 +294,19 @@ export default function BookNowPage() {
   });
 
   const formRef = useRef<HTMLDivElement>(null);
+
+  // Efecto para manejar parámetros de URL al cargar la página
+  useEffect(() => {
+    // Verificar si hay un parámetro de servicio en la URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const serviceParam = urlParams.get('service');
+    
+    // Si existe el parámetro y es válido, seleccionar ese servicio
+    if (serviceParam && services.some(s => s.id === serviceParam)) {
+      console.log(`Redirecting to service: ${serviceParam}`);
+      handleServiceSelection(serviceParam);
+    }
+  }, []); // Este efecto se ejecuta solo una vez al cargar
 
   // Select a service and move to step 2
   const handleServiceSelection = (serviceId: string) => {
@@ -742,7 +755,7 @@ export default function BookNowPage() {
                             />
                           </div>
                         </div>
-                      </div>
+                        </div>
                     </div>
                   </CardContent>
 

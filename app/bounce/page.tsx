@@ -238,7 +238,7 @@ export default function BouncePage() {
                        border-2 border-[#fefefe]"
               asChild
             >
-              <Link href="/book-now">Book Now</Link>
+              <Link href="/book-now?service=bounce">Book Now</Link>
             </Button>
           </div>
         </div>

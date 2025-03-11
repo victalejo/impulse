@@ -214,7 +214,7 @@ export default function FoamDiaPage() {
                        shadow-lg hover:shadow-[#ff0054]/50"
               asChild
             >
-              <Link href="/book-now">Book Now</Link>
+              <Link href="/book-now?service=foam">Book Now</Link>
             </Button>
           </div>
         </div>

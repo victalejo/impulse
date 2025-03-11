@@ -12,59 +12,56 @@ const FoamSection = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const sectionRef = useRef<HTMLElement>(null);
   const [isMuted, setIsMuted] = useState(true);
-  const [userPrefersMuted, setUserPrefersMuted] = useState(true);
+  const [userInteracted, setUserInteracted] = useState(false);
 
   // Función para manejar cuando el usuario cambia el estado de silencio manualmente
   const toggleAudio = () => {
-    const newMutedState = !isMuted;
-    setUserPrefersMuted(newMutedState); // Recordar la preferencia del usuario
-
+    setUserInteracted(true);
     if (videoRef.current) {
-      videoRef.current.muted = newMutedState;
-      setIsMuted(newMutedState);
+      videoRef.current.muted = !videoRef.current.muted;
+      setIsMuted(!isMuted);
     }
   };
 
   useEffect(() => {
-    let timeoutId: NodeJS.Timeout | null = null;
     let observer: IntersectionObserver | null = null;
     
     // Configurar el video cuando esté disponible
     if (videoRef.current) {
-      // Asegurarnos de que el video empiece siempre en silencio
+      // Iniciar siempre en silencio (requisito de navegadores)
       videoRef.current.muted = true;
       setIsMuted(true);
       
-      // Intentar iniciar la reproducción (importante en móviles)
+      // Intentar iniciar la reproducción
       videoRef.current.play().catch(err => {
         console.warn("No se pudo iniciar la reproducción automática:", err);
       });
     }
 
-    // Crear el observador de intersección si ambas referencias están disponibles
+    // Crear el observador de intersección
     if (sectionRef.current && videoRef.current) {
       observer = new IntersectionObserver(
         (entries) => {
           const entry = entries[0];
-          const visiblePercentage = entry.intersectionRatio * 100;
           
-          // Limpiar cualquier temporizador pendiente
-          if (timeoutId) {
-            clearTimeout(timeoutId);
-            timeoutId = null;
-          }
-          
-          if (entry.isIntersecting && visiblePercentage > 50) {
-            // Solo cambiamos a sonido activado si el usuario no ha elegido silenciar manualmente
-            timeoutId = setTimeout(() => {
-              if (!userPrefersMuted && videoRef.current) {
-                videoRef.current.muted = false;
-                setIsMuted(false);
-                console.log("Sonido activado automáticamente");
-              }
-            }, 1000); // Retrasamos la activación del sonido para evitar cambios rápidos
+          if (entry.isIntersecting) {
+            // La sección está visible
+            if (!userInteracted && videoRef.current) {
+              // Si el usuario no ha interactuado manualmente, activamos el audio
+              // Pequeño retraso para asegurar que la sección está realmente en vista
+              setTimeout(() => {
+                if (videoRef.current) {
+                  try {
+                    videoRef.current.muted = false;
+                    setIsMuted(false);
+                  } catch (e) {
+                    console.error("Error al activar audio:", e);
+                  }
+                }
+              }, 300);
+            }
           } else {
-            // Sección no visible o poco visible - silenciar
+            // La sección no está visible, silenciamos el video
             if (videoRef.current) {
               videoRef.current.muted = true;
               setIsMuted(true);
@@ -72,10 +69,7 @@ const FoamSection = () => {
           }
         },
         {
-          // Múltiples umbrales para detección más precisa
-          threshold: [0, 0.25, 0.5, 0.75, 1.0],
-          // Ajustar el área de detección
-          rootMargin: "-10% 0px"
+          threshold: 0.5, // Cuando al menos el 50% de la sección es visible
         }
       );
       
@@ -83,22 +77,30 @@ const FoamSection = () => {
       observer.observe(sectionRef.current);
     }
     
+    // Silenciar al cambiar de página
+    const handleRouteChange = () => {
+      if (videoRef.current) {
+        videoRef.current.muted = true;
+        setIsMuted(true);
+      }
+    };
+
+    window.addEventListener('beforeunload', handleRouteChange);
+    
     // Limpieza
     return () => {
       if (observer) {
         observer.disconnect();
       }
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
+      window.removeEventListener('beforeunload', handleRouteChange);
     };
-  }, [userPrefersMuted]); // Dependencia en userPrefersMuted para reaccionar a cambios en la preferencia del usuario
+  }, [userInteracted]);
 
   return (
     <section 
       ref={sectionRef}
       id="foam-party-section"
-      className="relative min-h-screen bg-[#060404] overflow-hidden py-12 sm:py-16 md:py-24"
+      className="relative bg-[#060404] overflow-hidden py-12 sm:py-16 md:py-20"
     >
       {/* Fondo con imagen opaca */}
       <div className="absolute inset-0">
@@ -108,8 +110,9 @@ const FoamSection = () => {
           fill
           className="object-cover opacity-40"
           priority
+          sizes="100vw"
         />
-        <div className="absolute inset-0 bg-[#060404]/20" />
+        <div className="absolute inset-0 bg-[#060404]/30" />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center">
@@ -125,11 +128,10 @@ const FoamSection = () => {
           Dive Into The Foam Magic
         </p>
 
-        {/* Contenedor del video */}
-        <div className="relative w-full max-w-6xl h-[250px] sm:h-[300px] md:h-[400px] rounded-xl sm:rounded-2xl overflow-hidden 
+        {/* Contenedor del video - Altura reducida en móviles */}
+        <div className="relative w-full max-w-6xl h-[200px] sm:h-[300px] md:h-[400px] rounded-xl sm:rounded-2xl overflow-hidden 
                       mb-6 sm:mb-8 md:mb-12 transform hover:scale-105 transition-transform duration-500
-                      shadow-[0_0_15px_rgba(255,0,84,0.2)] sm:shadow-[0_0_20px_rgba(255,0,84,0.25)] 
-                      md:shadow-[0_0_30px_rgba(255,0,84,0.3)]">
+                      shadow-[0_0_30px_rgba(255,0,84,0.3)]">
           <video
             ref={videoRef}
             autoPlay
@@ -146,17 +148,17 @@ const FoamSection = () => {
           {/* Botón de control de audio */}
           <Button
             onClick={toggleAudio}
-            className="absolute bottom-3 right-3 sm:bottom-4 sm:right-4 z-30 bg-[#060404]/70 hover:bg-[#060404] 
-                     border-2 border-[#ff0054] text-[#fefefe] rounded-full p-2 sm:p-3
+            className="absolute bottom-4 right-4 z-30 bg-[#060404]/70 hover:bg-[#060404] 
+                     border-2 border-[#ff0054] text-[#fefefe] rounded-full p-3
                      transition-all duration-300 hover:scale-110"
             size="icon"
             variant="outline"
             aria-label={isMuted ? "Activar sonido" : "Silenciar"}
           >
             {isMuted ? (
-              <VolumeX className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 text-[#ff0054]" />
+              <VolumeX className="h-6 w-6 text-[#ff0054]" />
             ) : (
-              <Volume2 className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 text-[#ff0054]" />
+              <Volume2 className="h-6 w-6 text-[#ff0054]" />
             )}
           </Button>
           
