@@ -194,7 +194,7 @@ export default function AboutPage() {
                         
                         {/* Flip text */}
                         <p className="text-[#fefefe]/70 text-xs sm:text-sm mt-2 sm:mt-4">
-                          (Toca para ver biografía)
+                          (Tap to view bio)
                         </p>
                       </div>
                     </div>

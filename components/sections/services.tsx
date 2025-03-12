@@ -71,7 +71,7 @@ const LuxuryTransport = () => {
   const features = {
     yukon: [
       { icon: Car, text: "Powerful 6.2L V8 Engine" },
-      { icon: Users, text: "max 7 passengers" },
+      { icon: Users, text: "max 6 passengers" },
       { icon: Gauge, text: "420 Horsepower" },
       { icon: Star, text: "Premium Entertainment System" },
       { icon: Shield, text: "Advanced Safety Features" },
@@ -79,7 +79,7 @@ const LuxuryTransport = () => {
     ],
     suburban: [
       { icon: Car, text: "Robust 5.3L V8 Engine" },
-      { icon: Users, text: "max 7 passengers" },
+      { icon: Users, text: "max 6 passengers" },
       { icon: Gauge, text: "355 Horsepower" },
       { icon: Star, text: "Premium Sound System" },
       { icon: Shield, text: "Enhanced Safety Suite" },
@@ -87,7 +87,7 @@ const LuxuryTransport = () => {
     ],
     bmw: [
       { icon: Car, text: "Twin-Turbo 4.4L V8" },
-      { icon: Users, text: "max 5 passengers" },
+      { icon: Users, text: "max 4 passengers" },
       { icon: Gauge, text: "523 Horsepower" },
       { icon: Star, text: "BMW Live Cockpit Pro" },
       { icon: Shield, text: "BMW Driving Assistant Pro" },

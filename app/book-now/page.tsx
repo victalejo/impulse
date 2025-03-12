@@ -14,12 +14,13 @@ import {
   CardDescription,
   CardFooter
 } from "@/components/ui/card"
-import { ChevronLeft, ChevronRight, Ship, Castle, Car, Music, CloudRain, Check, CreditCard, Calendar, Phone, Mail } from "lucide-react"
+import { ChevronLeft, ChevronRight, Ship, Castle, Car, Music, CloudRain, Check, CreditCard, Calendar, Phone, Mail, Sparkles } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import BookingSteps from "@/components/custom/booking-steps"
 import StripePaymentForm from "@/components/custom/stripe-payment-form"
 import StripeCheckout from '@/components/custom/stripe-payment-integration'
+import { useRouter } from 'next/navigation'
 
 // List of available services
 const services = [
@@ -84,21 +85,21 @@ const services = [
       { 
         name: "GMC Yukon AT4 XL", 
         packages: [
-          { name: "Hour", price: 7500 },
+          { name: "2 hours minimum", price: 15000 },
           { name: "Trip to the airport", price: 14900 }
         ]
       },
       { 
         name: "Chevrolet Suburban", 
         packages: [
-          { name: "Hour", price: 7500 },
+          { name: "2 hours minimum", price: 15000 },
           { name: "Trip to the airport", price: 14900 }
         ]
       },
       { 
         name: "BMW X7", 
         packages: [
-          { name: "Hour", price: 7500 },
+          { name: "2 hours minimum", price: 15000 },
           { name: "Trip to the airport", price: 14900 }
         ]
       }
@@ -140,10 +141,10 @@ const bookedDates = [
 
 // Simple calendar component
 const SimpleCalendar = ({
-                          onSelectDate,
-                          selectedDate,
-                          bookedDates
-                        }: {
+  onSelectDate,
+  selectedDate,
+  bookedDates
+}: {
   onSelectDate: (date: Date) => void,
   selectedDate: Date | null,
   bookedDates: Date[]
@@ -204,53 +205,53 @@ const SimpleCalendar = ({
     const isSelected = isDateSelected(date);
 
     days.push(
-        <div
-            key={`day-${day}`}
-            className={cn(
-                "w-14 h-14 flex items-center justify-center rounded-full text-lg font-medium cursor-pointer",
-                isBooked && "bg-gradient-to-br from-[#ff0054]/40 to-[#fbe40b]/40 text-[#060404]",
-                isSelected && "bg-[#ff0054] text-white",
-                !isBooked && !isSelected && "hover:bg-[#ff0054]/10"
-            )}
-            onClick={() => {
-              if (!isBooked) {
-                onSelectDate(date);
-              }
-            }}
-        >
-          {day}
-        </div>
+      <div
+        key={`day-${day}`}
+        className={cn(
+          "w-14 h-14 flex items-center justify-center rounded-full text-lg font-medium cursor-pointer",
+          isBooked && "bg-gradient-to-br from-[#ff0054]/40 to-[#fbe40b]/40 text-[#060404]",
+          isSelected && "bg-[#ff0054] text-white",
+          !isBooked && !isSelected && "hover:bg-[#ff0054]/10"
+        )}
+        onClick={() => {
+          if (!isBooked) {
+            onSelectDate(date);
+          }
+        }}
+      >
+        {day}
+      </div>
     );
   }
 
   return (
-      <div className="bg-white rounded-lg shadow-lg p-6">
-        <div className="flex justify-between items-center mb-6">
-          <button
-              onClick={handlePrevMonth}
-              className="p-2 rounded-full hover:bg-gray-100"
-          >
-            <ChevronLeft className="w-6 h-6" />
-          </button>
-          <h3 className="text-xl font-bold text-[#060404]">
-            {monthName} {year}
-          </h3>
-          <button
-              onClick={handleNextMonth}
-              className="p-2 rounded-full hover:bg-gray-100"
-          >
-            <ChevronRight className="w-6 h-6" />
-          </button>
-        </div>
-        <div className="grid grid-cols-7 gap-1 mb-2">
-          {dayNames.map(day => (
-              <div key={day} className="text-center font-semibold text-lg text-[#060404]">{day}</div>
-          ))}
-        </div>
-        <div className="grid grid-cols-7 gap-1">
-          {days}
-        </div>
+    <div className="bg-white rounded-lg shadow-lg p-6">
+      <div className="flex justify-between items-center mb-6">
+        <button
+          onClick={handlePrevMonth}
+          className="p-2 rounded-full hover:bg-gray-100"
+        >
+          <ChevronLeft className="w-6 h-6" />
+        </button>
+        <h3 className="text-xl font-bold text-[#060404]">
+          {monthName} {year}
+        </h3>
+        <button
+          onClick={handleNextMonth}
+          className="p-2 rounded-full hover:bg-gray-100"
+        >
+          <ChevronRight className="w-6 h-6" />
+        </button>
       </div>
+      <div className="grid grid-cols-7 gap-1 mb-2">
+        {dayNames.map(day => (
+          <div key={day} className="text-center font-semibold text-lg text-[#060404]">{day}</div>
+        ))}
+      </div>
+      <div className="grid grid-cols-7 gap-1">
+        {days}
+      </div>
+    </div>
   );
 };
 
@@ -262,6 +263,18 @@ interface BookingState {
   selectedOption: string;
   selectedPackage: string;
   selectedOptionPrice: number;
+  addOns: {
+    floatingMat: number;
+    tube: number;
+    inflatableToy: number;
+    pet: boolean;
+  };
+  // Nuevo campo para la oferta combinada
+  combinedOffer: {
+    enabled: boolean;
+    selectedOption: string;
+    price: number;
+  };
   date: Date | null;
   personalInfo: {
     firstName: string;
@@ -274,6 +287,8 @@ interface BookingState {
 }
 
 export default function BookNowPage() {
+  const router = useRouter();
+  
   // State to track the booking process
   const [booking, setBooking] = useState<BookingState>({
     step: 1,
@@ -282,6 +297,18 @@ export default function BookNowPage() {
     selectedOption: "",
     selectedPackage: "",
     selectedOptionPrice: 0,
+    addOns: {
+      floatingMat: 0,
+      tube: 0,
+      inflatableToy: 0,
+      pet: false
+    },
+    // Inicializar el nuevo campo
+    combinedOffer: {
+      enabled: false,
+      selectedOption: "",
+      price: 0
+    },
     date: null,
     personalInfo: {
       firstName: "",
@@ -294,6 +321,28 @@ export default function BookNowPage() {
   });
 
   const formRef = useRef<HTMLDivElement>(null);
+
+  // Interceptar navegación para manejar correctamente el retroceso
+  useEffect(() => {
+    const handlePopState = (e: PopStateEvent) => {
+      // Prevenir comportamiento predeterminado
+      e.preventDefault();
+      
+      // Si estamos en un paso mayor que 1, retroceder dentro de la aplicación
+      if (booking.step > 1) {
+        goToPreviousStep();
+      } else {
+        // Si estamos en el paso 1, dirigir a book-now
+        router.push('/book-now');
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, [booking.step, router]);
 
   // Efecto para manejar parámetros de URL al cargar la página
   useEffect(() => {
@@ -329,7 +378,19 @@ export default function BookNowPage() {
         serviceName: service?.name || "",
         selectedOption: "",
         selectedPackage: "",
-        selectedOptionPrice: 0
+        selectedOptionPrice: 0,
+        addOns: {
+          floatingMat: 0,
+          tube: 0,
+          inflatableToy: 0,
+          pet: false
+        },
+        // Resetear oferta combinada
+        combinedOffer: {
+          enabled: false,
+          selectedOption: "",
+          price: 0
+        }
       });
     }
 
@@ -346,7 +407,13 @@ export default function BookNowPage() {
       ...booking,
       selectedOption: optionName,
       selectedPackage: "",
-      selectedOptionPrice: 0
+      selectedOptionPrice: 0,
+      // Resetear oferta combinada al cambiar la opción principal
+      combinedOffer: {
+        enabled: false,
+        selectedOption: "",
+        price: 0
+      }
     });
   };
 
@@ -356,6 +423,41 @@ export default function BookNowPage() {
       ...booking,
       selectedPackage: packageName,
       selectedOptionPrice: price
+    });
+  };
+
+  // Función para manejar cambios en los add-ons
+  const handleAddOnChange = (type: string, value: number | boolean) => {
+    setBooking({
+      ...booking,
+      addOns: {
+        ...booking.addOns,
+        [type]: value
+      }
+    });
+  };
+
+  // Función para manejar la selección de la oferta combinada
+  const handleCombinedOfferSelection = (optionName: string, price: number) => {
+    setBooking({
+      ...booking,
+      combinedOffer: {
+        enabled: true,
+        selectedOption: optionName,
+        price: price
+      }
+    });
+  };
+
+  // Función para quitar la oferta combinada
+  const removeCombinedOffer = () => {
+    setBooking({
+      ...booking,
+      combinedOffer: {
+        enabled: false,
+        selectedOption: "",
+        price: 0
+      }
     });
   };
 
@@ -434,6 +536,27 @@ export default function BookNowPage() {
     }
   };
 
+  // Calcular el subtotal de add-ons
+  const calculateAddOnsTotal = () => {
+    return (booking.addOns.floatingMat * 2500) + 
+           (booking.addOns.tube * 1000) + 
+           (booking.addOns.inflatableToy * 1000) + 
+           (booking.addOns.pet ? 2500 : 0);
+  };
+
+  // Calcular el precio total incluyendo la oferta combinada
+  const calculateTotalWithCombinedOffer = () => {
+    const basePrice = booking.selectedOptionPrice;
+    const addOnsTotal = calculateAddOnsTotal();
+    
+    if (booking.combinedOffer.enabled) {
+      // Aplicar descuento de $25 (2500 centavos)
+      return basePrice + addOnsTotal + booking.combinedOffer.price - 2500;
+    } else {
+      return basePrice + addOnsTotal;
+    }
+  };
+
   // Finalize payment process
   const handlePaymentSuccess = async () => {
     // Get a valid MongoDB ID from the server
@@ -455,6 +578,16 @@ export default function BookNowPage() {
 
   // Get selected service
   const selectedService = services.find(s => s.id === booking.serviceId);
+
+  // Get complementary service for promo offers
+  const getComplementaryService = () => {
+    if (booking.serviceId === "foam") {
+      return services.find(s => s.id === "bounce");
+    } else if (booking.serviceId === "bounce") {
+      return services.find(s => s.id === "foam");
+    }
+    return null;
+  };
 
   // Get packages for selected option (for pontoons and transport)
   const getPackagesForSelectedOption = () => {
@@ -480,11 +613,18 @@ export default function BookNowPage() {
         })
         : 'Not selected';
 
+    const addOnsTotal = calculateAddOnsTotal();
+    const totalPrice = calculateTotalWithCombinedOffer();
+
     return {
       service: selectedService?.name || '',
       option: booking.selectedOption,
       package: booking.selectedPackage,
       price: booking.selectedOptionPrice,
+      combinedOffer: booking.combinedOffer,
+      addOns: booking.addOns,
+      addOnsTotal: addOnsTotal,
+      totalPrice: totalPrice,
       date: dateFormatted,
       customer: `${booking.personalInfo.firstName} ${booking.personalInfo.lastName}`,
       contact: `${booking.personalInfo.email} | ${booking.personalInfo.phone}`
@@ -494,527 +634,793 @@ export default function BookNowPage() {
   // For the final confirmation step
   const bookingSummary = getBookingSummary();
 
+  // Obtener el servicio complementario para oferta
+  const complementaryService = getComplementaryService();
+
   return (
-      <section className="relative min-h-screen bg-[#060404] overflow-hidden py-24">
-        {/* Background effects */}
-        <div className="absolute inset-0">
-          <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-[#ff0054] rounded-full mix-blend-multiply filter blur-[150px] animate-pulse opacity-20"></div>
-          <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-[#fbe40b] rounded-full mix-blend-multiply filter blur-[150px] animate-pulse delay-700 opacity-20"></div>
-        </div>
+    <section className="relative min-h-screen bg-[#060404] overflow-hidden py-24">
+      {/* Background effects */}
+      <div className="absolute inset-0">
+        <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-[#ff0054] rounded-full mix-blend-multiply filter blur-[150px] animate-pulse opacity-20"></div>
+        <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-[#fbe40b] rounded-full mix-blend-multiply filter blur-[150px] animate-pulse delay-700 opacity-20"></div>
+      </div>
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Main Header */}
-          <h1 className="text-center text-6xl md:text-8xl font-bebas mb-8 bg-gradient-to-r from-[#fbe40b] to-[#ff0054] text-transparent bg-clip-text">
-            Book Your Services
-          </h1>
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Main Header */}
+        <h1 className="text-center text-6xl md:text-8xl font-bebas mb-8 bg-gradient-to-r from-[#fbe40b] to-[#ff0054] text-transparent bg-clip-text">
+          Book Your Services
+        </h1>
 
-          {/* Step indicator */}
-          {booking.step > 1 && booking.step < 99 && (
-              <div className="mb-8">
-                <BookingSteps
-                    currentStep={booking.step}
-                    totalSteps={4}
-                />
-              </div>
-          )}
+        {/* Step indicator */}
+        {booking.step > 1 && booking.step < 99 && (
+          <div className="mb-8">
+            <BookingSteps
+              currentStep={booking.step}
+              totalSteps={4}
+            />
+          </div>
+        )}
 
-          {/* Step 1: Service Selection */}
-          {booking.step === 1 && (
-              <>
-                <h2 className="text-center text-4xl md:text-5xl font-bebas mb-12 text-[#fefefe]">
-                  Select the Service You Want to Book
-                </h2>
+        {/* Step 1: Service Selection */}
+        {booking.step === 1 && (
+          <>
+            <h2 className="text-center text-4xl md:text-5xl font-bebas mb-12 text-[#fefefe]">
+              Select the Service You Want to Book
+            </h2>
 
-                {/* Service Cards */}
-                <div className="grid grid-cols-1 md:grid-cols-12 gap-x-8 gap-y-24 mb-24 pt-16">
-                  {services.map((service) => (
-                      <Card
-                          key={service.id}
-                          className={cn(
-                              "overflow-visible cursor-pointer group relative h-[450px]",
-                              "bg-gradient-to-r from-[#fbe40b] to-[#ff0054]",
-                              "hover:shadow-xl hover:shadow-[#ff0054]/20 hover:-translate-y-2",
-                              "rounded-xl p-4",
-                              "transition-all duration-500",
-                              service.id === "transport" ? "md:col-span-6" : "md:col-span-4",
-                              booking.serviceId === service.id ? "ring-4 ring-[#ff0054]" : ""
-                          )}
-                          onClick={() => handleServiceSelection(service.id)}
-                      >
-                        {/* Image Container */}
-                        <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 w-[80%] h-[300px]
-                                group-hover:scale-105 transition-transform duration-500">
-                          <div className="relative w-full h-full">
-                            {/* Decorative border */}
-                            <div className="absolute -inset-0.5 bg-gradient-to-r from-[#fbe40b] to-[#ff0054]
-                                    rounded-xl blur opacity-75 group-hover:opacity-100 transition duration-500"></div>
-                            {/* Image */}
-                            <div className="relative w-full h-full rounded-xl overflow-hidden">
-                              <Image
-                                  src={service.image}
-                                  alt={service.name}
-                                  fill
-                                  className="object-cover"
-                              />
-                            </div>
+            {/* Service Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-x-8 gap-y-24 mb-24 pt-16">
+              {services.map((service) => (
+                <Card
+                  key={service.id}
+                  className={cn(
+                    "overflow-visible cursor-pointer group relative h-[450px]",
+                    "bg-gradient-to-r from-[#fbe40b] to-[#ff0054]",
+                    "hover:shadow-xl hover:shadow-[#ff0054]/20 hover:-translate-y-2",
+                    "rounded-xl p-4",
+                    "transition-all duration-500",
+                    service.id === "transport" ? "md:col-span-6" : "md:col-span-4",
+                    booking.serviceId === service.id ? "ring-4 ring-[#ff0054]" : ""
+                  )}
+                  onClick={() => handleServiceSelection(service.id)}
+                >
+                  {/* Image Container */}
+                  <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 w-[80%] h-[300px]
+                          group-hover:scale-105 transition-transform duration-500">
+                    <div className="relative w-full h-full">
+                      {/* Decorative border */}
+                      <div className="absolute -inset-0.5 bg-gradient-to-r from-[#fbe40b] to-[#ff0054]
+                              rounded-xl blur opacity-75 group-hover:opacity-100 transition duration-500"></div>
+                      {/* Image */}
+                      <div className="relative w-full h-full rounded-xl overflow-hidden">
+                        <Image
+                          src={service.image}
+                          alt={service.name}
+                          fill
+                          className="object-cover"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Content */}
+                  <div className="absolute bottom-8 left-0 right-0 text-center">
+                    <service.icon className="w-10 h-10 text-[#060404] mx-auto mb-3
+                                    group-hover:scale-110 group-hover:rotate-6 transition-all duration-300" />
+                    <h3 className="text-3xl font-bebas text-[#060404] tracking-wider
+                           group-hover:scale-110 transition-transform duration-300">
+                      {service.name}
+                    </h3>
+                  </div>
+                </Card>
+              ))}
+            </div>
+          </>
+        )}
+
+        {/* Step 2: Personal Details Form */}
+        {booking.step === 2 && selectedService && (
+          <div className="max-w-4xl mx-auto">
+            <Card className="border-none bg-gradient-to-r from-[#ff0054]/5 to-[#fbe40b]/5 backdrop-blur-sm mb-8">
+              <CardHeader>
+                <CardTitle className="text-4xl font-bebas text-center bg-gradient-to-r from-[#ff0054] to-[#fbe40b] text-transparent bg-clip-text">
+                  Booking Details
+                </CardTitle>
+                <CardDescription className="text-center text-[#060404] text-lg">
+                  You selected: {selectedService.name}
+                </CardDescription>
+              </CardHeader>
+
+              <CardContent className="space-y-8">
+                <div ref={formRef} className="space-y-6">
+                  {/* Package Selection */}
+                  <div className="space-y-6">
+                    {/* Para Pontoons y Transport: selección de dos niveles */}
+                    {(booking.serviceId === "pontoons" || booking.serviceId === "transport") && (
+                      <>
+                        <div className="space-y-2">
+                          <Label className="text-xl font-bebas bg-gradient-to-r from-[#ff0054] to-[#fbe40b] text-transparent bg-clip-text">
+                            Select Option
+                          </Label>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            {selectedService.options.map((option) => (
+                              <div
+                                key={option.name}
+                                className={cn(
+                                  "border-2 rounded-lg p-4 cursor-pointer transition-all duration-300",
+                                  booking.selectedOption === option.name
+                                    ? "border-[#ff0054] bg-[#ff0054]/10"
+                                    : "border-[#ff0054]/20 hover:border-[#fbe40b]/60"
+                                )}
+                                onClick={() => handleOptionSelection(option.name)}
+                              >
+                                <div className="flex justify-between items-center">
+                                  <h4 className="font-medium text-[#060404]">{option.name}</h4>
+                                </div>
+                              </div>
+                            ))}
                           </div>
                         </div>
 
-                        {/* Content */}
-                        <div className="absolute bottom-8 left-0 right-0 text-center">
-                          <service.icon className="w-10 h-10 text-[#060404] mx-auto mb-3
-                                          group-hover:scale-110 group-hover:rotate-6 transition-all duration-300" />
-                          <h3 className="text-3xl font-bebas text-[#060404] tracking-wider
-                                 group-hover:scale-110 transition-transform duration-300">
-                            {service.name}
-                          </h3>
-                        </div>
-                      </Card>
-                  ))}
-                </div>
-              </>
-          )}
-
-          {/* Step 2: Personal Details Form */}
-          {booking.step === 2 && selectedService && (
-              <div className="max-w-4xl mx-auto">
-                <Card className="border-none bg-gradient-to-r from-[#ff0054]/5 to-[#fbe40b]/5 backdrop-blur-sm mb-8">
-                  <CardHeader>
-                    <CardTitle className="text-4xl font-bebas text-center bg-gradient-to-r from-[#ff0054] to-[#fbe40b] text-transparent bg-clip-text">
-                      Booking Details
-                    </CardTitle>
-                    <CardDescription className="text-center text-[#060404] text-lg">
-                      You selected: {selectedService.name}
-                    </CardDescription>
-                  </CardHeader>
-
-                  <CardContent className="space-y-8">
-                    <div ref={formRef} className="space-y-6">
-                      {/* Package Selection */}
-                      <div className="space-y-6">
-                        {/* Para Pontoons y Transport: selección de dos niveles */}
-                        {(booking.serviceId === "pontoons" || booking.serviceId === "transport") && (
-                          <>
-                            <div className="space-y-2">
-                              <Label className="text-xl font-bebas bg-gradient-to-r from-[#ff0054] to-[#fbe40b] text-transparent bg-clip-text">
-                                Select Option
-                              </Label>
-                              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                {selectedService.options.map((option) => (
-                                  <div
-                                    key={option.name}
-                                    className={cn(
-                                      "border-2 rounded-lg p-4 cursor-pointer transition-all duration-300",
-                                      booking.selectedOption === option.name
-                                        ? "border-[#ff0054] bg-[#ff0054]/10"
-                                        : "border-[#ff0054]/20 hover:border-[#fbe40b]/60"
-                                    )}
-                                    onClick={() => handleOptionSelection(option.name)}
-                                  >
-                                    <div className="flex justify-between items-center">
-                                      <h4 className="font-medium text-[#060404]">{option.name}</h4>
-                                    </div>
-                                  </div>
-                                ))}
-                              </div>
-                            </div>
-
-                            {/* Packages para la opción seleccionada */}
-                            {booking.selectedOption && (
-                              <div className="space-y-2">
-                                <Label className="text-xl font-bebas bg-gradient-to-r from-[#ff0054] to-[#fbe40b] text-transparent bg-clip-text">
-                                  Select Package
-                                </Label>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                  {getPackagesForSelectedOption().map((pkg: any) => (
-                                    <div
-                                      key={pkg.name}
-                                      className={cn(
-                                        "border-2 rounded-lg p-4 cursor-pointer transition-all duration-300",
-                                        booking.selectedPackage === pkg.name
-                                          ? "border-[#ff0054] bg-[#ff0054]/10"
-                                          : "border-[#ff0054]/20 hover:border-[#fbe40b]/60"
-                                      )}
-                                      onClick={() => handlePackageSelection(pkg.name, pkg.price)}
-                                    >
-                                      <div className="flex justify-between items-center">
-                                        <h4 className="font-medium text-[#060404]">{pkg.name}</h4>
-                                        <span className="font-bold text-[#ff0054]">${(pkg.price/100).toFixed(2)}</span>
-                                      </div>
-                                    </div>
-                                  ))}
-                                </div>
-                              </div>
-                            )}
-                          </>
-                        )}
-                        
-                        {/* Para otros servicios (Bounce Houses, Foam Party): selección de un nivel */}
-                        {booking.serviceId !== "pontoons" && booking.serviceId !== "transport" && (
+                        {/* Packages para la opción seleccionada */}
+                        {booking.selectedOption && (
                           <div className="space-y-2">
                             <Label className="text-xl font-bebas bg-gradient-to-r from-[#ff0054] to-[#fbe40b] text-transparent bg-clip-text">
-                              Select a Package
+                              Select Package
                             </Label>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                              {selectedService.options.map((option) => (
+                              {getPackagesForSelectedOption().map((pkg: any) => (
                                 <div
-                                  key={option.name}
+                                  key={pkg.name}
                                   className={cn(
                                     "border-2 rounded-lg p-4 cursor-pointer transition-all duration-300",
-                                    booking.selectedOption === option.name
+                                    booking.selectedPackage === pkg.name
                                       ? "border-[#ff0054] bg-[#ff0054]/10"
                                       : "border-[#ff0054]/20 hover:border-[#fbe40b]/60"
                                   )}
-                                  onClick={() => {
-                                    handleOptionSelection(option.name);
-                                    setBooking(prev => ({
-                                      ...prev,
-                                      selectedOptionPrice: 'price' in option ? option.price : 0
-                                    }));
-                                  }}
+                                  onClick={() => handlePackageSelection(pkg.name, pkg.price)}
                                 >
                                   <div className="flex justify-between items-center">
-                                    <h4 className="font-medium text-[#060404]">{option.name}</h4>
-                                    <span className="font-bold text-[#ff0054]">
-                                    ${'price' in option ? (option.price/100).toFixed(2) : '0.00'}
-                                  </span>
+                                    <h4 className="font-medium text-[#060404]">{pkg.name}</h4>
+                                    <span className="font-bold text-[#ff0054]">${(pkg.price/100).toFixed(2)}</span>
                                   </div>
                                 </div>
                               ))}
                             </div>
                           </div>
                         )}
-                      </div>
 
-                      {/* Preview Image for selected option */}
-                      {booking.selectedOption && (
+                        {/* Add-ons solo para Pontoons */}
+                        {booking.serviceId === "pontoons" && booking.selectedOption && booking.selectedPackage && (
                           <div className="mt-6 space-y-2">
-                             <Label className="text-xl font-bebas bg-gradient-to-r from-[#ff0054] to-[#fbe40b] text-transparent bg-clip-text">Package Preview</Label>
-                            <div className="relative h-[300px] rounded-lg overflow-hidden border-2 border-[#ff0054]/30 shadow-lg">
-                              <Image
-                                  src={serviceImageMap[booking.selectedOption] || selectedService.image}
-                                  alt={booking.selectedOption}
-                                  fill
-                                  className="object-cover"
-                              />
+                            <Label className="text-xl font-bebas bg-gradient-to-r from-[#ff0054] to-[#fbe40b] text-transparent bg-clip-text">
+                              Add-ons (Optional)
+                            </Label>
+                            <div className="bg-[#fefefe] p-6 rounded-lg border-2 border-[#fbe40b] shadow-[0_0_15px_rgba(251,228,11,0.3)]">
+                              <div className="space-y-6">
+                                {/* Floating Mat */}
+                                <div className="flex items-center justify-between">
+                                  <div>
+                                    <p className="font-medium text-[#ff0054] text-lg">Floating Mat</p>
+                                    <p className="text-sm text-[#060404]">1 unit maximum</p>
+                                  </div>
+                                  <div className="flex items-center gap-3">
+                                    <Button
+                                      variant="outline"
+                                      size="sm"
+                                      className="h-9 w-9 rounded-full p-0 border-2 border-[#ff0054] hover:bg-[#ff0054]/10 shadow-md"
+                                      onClick={() => handleAddOnChange('floatingMat', Math.max(0, booking.addOns.floatingMat - 1))}
+                                      disabled={booking.addOns.floatingMat === 0}
+                                    >
+                                      <span className="text-lg font-bold">-</span>
+                                    </Button>
+                                    <span className="w-8 text-center text-[#060404] text-lg font-bold">{booking.addOns.floatingMat}</span>
+                                    <Button
+                                      variant="outline"
+                                      size="sm"
+                                      className="h-9 w-9 rounded-full p-0 border-2 border-[#ff0054] hover:bg-[#ff0054]/10 shadow-md"
+                                      onClick={() => handleAddOnChange('floatingMat', Math.min(1, booking.addOns.floatingMat + 1))}
+                                      disabled={booking.addOns.floatingMat >= 1}
+                                    >
+                                      <span className="text-lg font-bold">+</span>
+                                    </Button>
+                                    <span className="ml-4 font-bold text-[#ff0054] text-lg">$25.00</span>
+                                  </div>
+                                </div>
+                                
+                                {/* Tube */}
+                                <div className="flex items-center justify-between">
+                                  <div>
+                                    <p className="font-medium text-[#ff0054] text-lg">Tube</p>
+                                    <p className="text-sm text-[#060404]">2 units maximum</p>
+                                  </div>
+                                  <div className="flex items-center gap-3">
+                                    <Button
+                                      variant="outline"
+                                      size="sm"
+                                      className="h-9 w-9 rounded-full p-0 border-2 border-[#ff0054] hover:bg-[#ff0054]/10 shadow-md"
+                                      onClick={() => handleAddOnChange('tube', Math.max(0, booking.addOns.tube - 1))}
+                                      disabled={booking.addOns.tube === 0}
+                                    >
+                                      <span className="text-lg font-bold">-</span>
+                                    </Button>
+                                    <span className="w-8 text-center text-[#060404] text-lg font-bold">{booking.addOns.tube}</span>
+                                    <Button
+                                      variant="outline"
+                                      size="sm"
+                                      className="h-9 w-9 rounded-full p-0 border-2 border-[#ff0054] hover:bg-[#ff0054]/10 shadow-md"
+                                      onClick={() => handleAddOnChange('tube', Math.min(2, booking.addOns.tube + 1))}
+                                      disabled={booking.addOns.tube >= 2}
+                                    >
+                                      <span className="text-lg font-bold">+</span>
+                                    </Button>
+                                    <span className="ml-4 font-bold text-[#ff0054] text-lg">$10.00</span>
+                                  </div>
+                                </div>
+                                
+                                {/* Inflatable Toy */}
+                                <div className="flex items-center justify-between">
+                                  <div>
+                                    <p className="font-medium text-[#ff0054] text-lg">Inflatable Toy</p>
+                                    <p className="text-sm text-[#060404]">4 units maximum</p>
+                                  </div>
+                                  <div className="flex items-center gap-3">
+                                    <Button
+                                      variant="outline"
+                                      size="sm"
+                                      className="h-9 w-9 rounded-full p-0 border-2 border-[#ff0054] hover:bg-[#ff0054]/10 shadow-md"
+                                      onClick={() => handleAddOnChange('inflatableToy', Math.max(0, booking.addOns.inflatableToy - 1))}
+                                      disabled={booking.addOns.inflatableToy === 0}
+                                    >
+                                      <span className="text-lg font-bold">-</span>
+                                    </Button>
+                                    <span className="w-8 text-center text-[#060404] text-lg font-bold">{booking.addOns.inflatableToy}</span>
+                                    <Button
+                                      variant="outline"
+                                      size="sm"
+                                      className="h-9 w-9 rounded-full p-0 border-2 border-[#ff0054] hover:bg-[#ff0054]/10 shadow-md"
+                                      onClick={() => handleAddOnChange('inflatableToy', Math.min(4, booking.addOns.inflatableToy + 1))}
+                                      disabled={booking.addOns.inflatableToy >= 4}
+                                    >
+                                      <span className="text-lg font-bold">+</span>
+                                    </Button>
+                                    <span className="ml-4 font-bold text-[#ff0054] text-lg">$10.00</span>
+                                  </div>
+                                </div>
+                                
+                                {/* Bring a Pet */}
+                                <div className="flex items-center justify-between">
+                                  <div>
+                                    <p className="font-medium text-[#ff0054] text-lg">Bring a Pet</p>
+                                    <p className="text-sm text-[#060404]">1 per booking</p>
+                                  </div>
+                                  <div className="flex items-center gap-4">
+                                    <div className="flex items-center h-9">
+                                      <span className="mr-2 text-[#060404] text-base font-medium">Select</span>
+                                      <input
+                                        id="pet-checkbox"
+                                        type="checkbox"
+                                        checked={booking.addOns.pet}
+                                        onChange={(e) => handleAddOnChange('pet', e.target.checked)}
+                                        className="w-5 h-5 text-green-500 bg-gray-100 border-2 border-[#ff0054] rounded 
+                                                 focus:ring-[#ff0054] focus:ring-offset-2 cursor-pointer transition-colors duration-200"
+                                      />
+                                    </div>
+                                    <span className="ml-4 font-bold text-[#ff0054] text-lg">$25.00</span>
+                                  </div>
+                                </div>
+                                
+                                {/* Mostrar subtotal de add-ons */}
+                                {(booking.addOns.floatingMat > 0 || booking.addOns.tube > 0 || booking.addOns.inflatableToy > 0 || booking.addOns.pet) && (
+                                  <div className="mt-6 pt-4 border-t-2 border-[#ff0054]/30 flex justify-between items-center">
+                                    <p className="font-medium text-[#ff0054] text-lg">Add-ons Subtotal:</p>
+                                    <p className="font-bold text-[#ff0054] text-xl">
+                                      ${((booking.addOns.floatingMat * 25) + 
+                                         (booking.addOns.tube * 10) + 
+                                         (booking.addOns.inflatableToy * 10) + 
+                                         (booking.addOns.pet ? 25 : 0)).toFixed(2)}
+                                    </p>
+                                  </div>
+                                )}
+                              </div>
                             </div>
                           </div>
+                        )}
+                      </>
+                    )}
+                    
+                    {/* Para otros servicios (Bounce Houses, Foam Party): selección de un nivel */}
+                    {booking.serviceId !== "pontoons" && booking.serviceId !== "transport" && (
+                      <div className="space-y-2">
+                        <Label className="text-xl font-bebas bg-gradient-to-r from-[#ff0054] to-[#fbe40b] text-transparent bg-clip-text">
+                          Select a Package
+                        </Label>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          {selectedService.options.map((option) => (
+                            <div
+                              key={option.name}
+                              className={cn(
+                                "border-2 rounded-lg p-4 cursor-pointer transition-all duration-300",
+                                booking.selectedOption === option.name
+                                  ? "border-[#ff0054] bg-[#ff0054]/10"
+                                  : "border-[#ff0054]/20 hover:border-[#fbe40b]/60"
+                              )}
+                              onClick={() => {
+                                handleOptionSelection(option.name);
+                                setBooking(prev => ({
+                                  ...prev,
+                                  selectedOptionPrice: 'price' in option ? option.price : 0
+                                }));
+                              }}
+                            >
+                              <div className="flex justify-between items-center">
+                                <h4 className="font-medium text-[#060404]">{option.name}</h4>
+                                <span className="font-bold text-[#ff0054]">
+                                ${('price' in option ? (option.price/100).toFixed(2) : '0.00')}
+                              </span>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Sección para oferta combinada - Solo para Foam y Bounce Houses */}
+                  {(booking.serviceId === "foam" || booking.serviceId === "bounce") && booking.selectedOption && complementaryService && (
+                    <div className="mt-8 space-y-4 p-6 bg-[#fefefe] rounded-lg border-2 border-[#fbe40b] shadow-lg">
+                      <div className="flex items-center gap-3 mb-4">
+                        <Sparkles className="h-6 w-6 text-[#fbe40b]" />
+                        <h3 className="text-2xl font-bebas text-[#ff0054]">
+                        take our special offer 25$ off
+                        </h3>
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label className="text-xl font-bebas text-[#060404]">
+                          Add {complementaryService.name} to your booking
+                        </Label>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          {complementaryService.options.map((option: any) => (
+                            <div
+                              key={option.name}
+                              className={cn(
+                                "border-2 rounded-lg p-4 cursor-pointer transition-all duration-300",
+                                booking.combinedOffer.selectedOption === option.name
+                                  ? "border-[#ff0054] bg-[#ff0054]/10"
+                                  : "border-[#ff0054]/20 hover:border-[#fbe40b]/60"
+                              )}
+                              onClick={() => handleCombinedOfferSelection(option.name, option.price)}
+                            >
+                              <div className="flex justify-between items-center">
+                                <h4 className="font-medium text-[#060404]">{option.name}</h4>
+                                <span className="font-bold text-[#ff0054]">
+                                  ${(option.price/100).toFixed(2)}
+                                </span>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      {booking.combinedOffer.enabled && (
+                        <div className="mt-4 p-4 bg-[#ff0054]/10 rounded-lg">
+                          <div className="flex justify-between items-center">
+                            <div>
+                              <p className="font-medium text-[#060404]">Combined package:</p>
+                              <p className="text-sm text-[#060404]">{booking.selectedOption} + {booking.combinedOffer.selectedOption}</p>
+                            </div>
+                            <div className="text-right">
+                              <p className="text-sm text-[#060404] line-through">
+                                ${((booking.selectedOptionPrice + booking.combinedOffer.price)/100).toFixed(2)}
+                              </p>
+                              <p className="font-bold text-[#ff0054] text-xl">
+                                ${((booking.selectedOptionPrice + booking.combinedOffer.price - 2500)/100).toFixed(2)}
+                              </p>
+                              <p className="text-sm text-green-600">You save $25.00</p>
+                            </div>
+                          </div>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={removeCombinedOffer}
+                            className="mt-2 text-[#ff0054] border-[#ff0054] hover:bg-[#ff0054]/10"
+                          >
+                            Remove
+                          </Button>
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  {/* Preview Image for selected option */}
+                  {booking.selectedOption && (
+                    <div className="mt-6 space-y-2">
+                      <Label className="text-xl font-bebas bg-gradient-to-r from-[#ff0054] to-[#fbe40b] text-transparent bg-clip-text">Package Preview</Label>
+                      <div className="relative h-[300px] rounded-lg overflow-hidden border-2 border-[#ff0054]/30 shadow-lg">
+                        <Image
+                          src={serviceImageMap[booking.selectedOption] || selectedService.image}
+                          alt={booking.selectedOption}
+                          fill
+                          className="object-cover"
+                        />
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Personal Information */}
+                  <div className="pt-6 border-t border-[#fefefe]/10">
+                    <h3 className="text-[#ff0054] text-2xl font-bebas mb-4">Personal Information</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <Label className="text-[#060404]">First Name</Label>
+                        <Input
+                          name="firstName"
+                          value={booking.personalInfo.firstName}
+                          onChange={handlePersonalInfoChange}
+                          className="bg-[#fefefe] border-[#ff0054]/20 text-[#060404]"
+                          placeholder="Your first name"
+                          required
+                        />
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label className="text-[#060404]">Last Name</Label>
+                        <Input
+                          name="lastName"
+                          value={booking.personalInfo.lastName}
+                          onChange={handlePersonalInfoChange}
+                          className="bg-[#fefefe] border-[#ff0054]/20 text-[#060404]"
+                          placeholder="Your last name"
+                          required
+                        />
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label className="text-[#060404]">Email</Label>
+                        <Input
+                          name="email"
+                          type="email"
+                          value={booking.personalInfo.email}
+                          onChange={handlePersonalInfoChange}
+                          className="bg-[#fefefe] border-[#ff0054]/20 text-[#060404]"
+                          placeholder="your.email@example.com"
+                          required
+                        />
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label className="text-[#060404]">Phone</Label>
+                        <Input
+                          name="phone"
+                          type="tel"
+                          value={booking.personalInfo.phone}
+                          onChange={handlePersonalInfoChange}
+                          className="bg-[#fefefe] border-[#ff0054]/20 text-[#060404]"
+                          placeholder="Your phone number"
+                          required
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+
+              <CardFooter className="flex justify-between pt-6">
+                <Button
+                  onClick={() => router.push('/book-now')}
+                  variant="outline"
+                  className="border-[#fefefe]/50 text-[#fefefe] hover:bg-[#fefefe]/10"
+                >
+                  <ChevronLeft className="mr-2 h-4 w-4" />
+                  Back
+                </Button>
+
+                <Button
+                  onClick={goToNextStep}
+                  disabled={!canProceedToNextStep()}
+                  className="bg-gradient-to-r from-[#ff0054] to-[#fbe40b] hover:from-[#fbe40b] hover:to-[#ff0054] text-[#060404] font-medium"
+                >
+                  Continue
+                  <ChevronRight className="ml-2 h-4 w-4" />
+                </Button>
+              </CardFooter>
+            </Card>
+          </div>
+        )}
+
+        {/* Paso especial para DJ Services */}
+        {booking.step === 99 && (
+          <div className="max-w-4xl mx-auto">
+            <Card className="border-none bg-gradient-to-r from-[#ff0054]/5 to-[#fbe40b]/5 backdrop-blur-sm mb-8">
+              <CardHeader>
+                <CardTitle className="text-4xl font-bebas text-center bg-gradient-to-r from-[#ff0054] to-[#fbe40b] text-transparent bg-clip-text">
+                  DJ Services
+                </CardTitle>
+              </CardHeader>
+
+              <CardContent className="flex flex-col items-center space-y-8">
+                <div className="relative h-[300px] w-full rounded-lg overflow-hidden border-2 border-[#ff0054]/30 shadow-lg">
+                  <Image
+                    src="/images/dj-services.png"
+                    alt="DJ Services"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                
+                <div className="flex flex-col sm:flex-row gap-4 justify-center w-full">
+                  <Button 
+                    size="lg"
+                    className="bg-gradient-to-r from-[#ff0054] to-[#fbe40b] hover:from-[#fbe40b] hover:to-[#ff0054] text-[#060404] font-medium py-6 w-full"
+                    asChild
+                  >
+                    <a href="sms:8626865129">
+                      <Phone className="mr-2 h-4 w-4" />
+                      Message (862)686-5129
+                    </a>
+                  </Button>
+                  
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="bg-gradient-to-r from-[#ff0054] to-[#fbe40b] hover:from-[#fbe40b] hover:to-[#ff0054] text-[#060404] font-medium py-6 w-full"
+                    asChild
+                  >
+                    <Link href="/contact">
+                      <Mail className="mr-2 h-4 w-4" />
+                      Contact
+                    </Link>
+                  </Button>
+                </div>
+              </CardContent>
+
+              <CardFooter className="flex justify-between pt-6">
+                <Button
+                  onClick={() => router.push('/book-now')}
+                  variant="outline"
+                  className="border-[#fefefe]/50 text-[#fefefe] hover:bg-[#fefefe]/10"
+                >
+                  <ChevronLeft className="mr-2 h-4 w-4" />
+                  Back to Services
+                </Button>
+              </CardFooter>
+            </Card>
+          </div>
+        )}
+
+        {/* Step 3: Date Selection */}
+        {booking.step === 3 && (
+          <div className="max-w-4xl mx-auto">
+            <Card className="border-none bg-gradient-to-r from-[#ff0054]/5 to-[#fbe40b]/5 backdrop-blur-sm mb-8">
+              <CardHeader>
+                <CardTitle className="text-4xl font-bebas text-center bg-gradient-to-r from-[#ff0054] to-[#fbe40b] text-transparent bg-clip-text">
+                  <Calendar className="inline-block mr-2 h-8 w-8" />
+                  Choose a Date
+                </CardTitle>
+                <CardDescription className="text-center text-[#060404] text-lg">
+                  {booking.selectedOption} {booking.selectedPackage && `- ${booking.selectedPackage}`}
+                  {booking.combinedOffer.enabled && ` + ${booking.combinedOffer.selectedOption}`}
+                </CardDescription>
+              </CardHeader>
+
+              <CardContent>
+                <div className="flex flex-col items-center bg-[#fefefe] p-6 rounded-xl">
+                  <div className="w-full mx-auto">
+                    <SimpleCalendar
+                      onSelectDate={(date) => handleDateSelection(date)}
+                      selectedDate={booking.date}
+                      bookedDates={bookedDates}
+                    />
+                  </div>
+
+                  <div className="flex items-center justify-center space-x-6 p-4 mt-6 w-full">
+                    <div className="flex items-center gap-2">
+                      <div className="w-6 h-6 rounded-full bg-gradient-to-br from-[#ff0054]/40 to-[#fbe40b]/40"></div>
+                      <span className="text-lg text-[#060404]">Date Unavailable</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="w-6 h-6 rounded-full bg-[#ff0054]"></div>
+                      <span className="text-lg text-[#060404]">Selected Date</span>
+                    </div>
+                  </div>
+
+                  {booking.date && (
+                    <div className="mt-4 p-4 bg-[#ff0054]/10 rounded-lg w-full">
+                      <p className="text-center text-lg font-medium text-[#060404]">
+                        You selected: {booking.date.toLocaleDateString('en-US', {
+                          weekday: 'long',
+                          year: 'numeric',
+                          month: 'long',
+                          day: 'numeric'
+                        })}
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </CardContent>
+
+              <CardFooter className="flex justify-between pt-6">
+                <Button
+                  onClick={goToPreviousStep}
+                  variant="outline"
+                  className="border-[#fefefe]/50 text-[#fefefe] hover:bg-[#fefefe]/10"
+                >
+                  <ChevronLeft className="mr-2 h-4 w-4" />
+                  Back
+                </Button>
+
+                <Button
+                  onClick={goToNextStep}
+                  disabled={!canProceedToNextStep()}
+                  className="bg-gradient-to-r from-[#ff0054] to-[#fbe40b] hover:from-[#fbe40b] hover:to-[#ff0054] text-[#060404] font-medium"
+                >
+                  Proceed to Payment
+                  <CreditCard className="ml-2 h-4 w-4" />
+                </Button>
+              </CardFooter>
+            </Card>
+          </div>
+        )}
+
+        {/* Step 4: Stripe Payment */}
+        {booking.step === 4 && (
+          <div className="max-w-4xl mx-auto">
+            <Card className="border-none bg-gradient-to-r from-[#ff0054]/5 to-[#fbe40b]/5 backdrop-blur-sm mb-8">
+              <CardHeader>
+                <CardTitle className="text-4xl font-bebas text-center bg-gradient-to-r from-[#ff0054] to-[#fbe40b] text-transparent bg-clip-text">
+                  <CreditCard className="inline-block mr-2 h-8 w-8" />
+                  Complete Booking
+                </CardTitle>
+              </CardHeader>
+
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  {/* Booking Summary */}
+                  <div className="bg-[#060404]/80 p-6 rounded-xl border border-[#fefefe]/10">
+                    <h3 className="text-2xl font-bebas text-[#ff0054] mb-4">Booking Summary</h3>
+                    <dl className="space-y-4">
+                      <div className="flex justify-between">
+                        <dt className="text-[#fbe40b]/70">Service:</dt>
+                        <dd className="text-[#fefefe] font-medium">{bookingSummary.service}</dd>
+                      </div>
+                      <div className="flex justify-between">
+                        <dt className="text-[#fbe40b]/70">Option:</dt>
+                        <dd className="text-[#fefefe] font-medium">{bookingSummary.option}</dd>
+                      </div>
+                      {bookingSummary.package && (
+                        <div className="flex justify-between">
+                          <dt className="text-[#fbe40b]/70">Package:</dt>
+                          <dd className="text-[#fefefe] font-medium">{bookingSummary.package}</dd>
+                        </div>
                       )}
 
-                      {/* Personal Information */}
-                      <div className="pt-6 border-t border-[#fefefe]/10">
-                        <h3 className="text-[#ff0054] text-2xl font-bebas mb-4">Personal Information</h3>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                          <div className="space-y-2">
-                            <Label className="text-[#060404]">First Name</Label>
-                            <Input
-                                name="firstName"
-                                value={booking.personalInfo.firstName}
-                                onChange={handlePersonalInfoChange}
-                                className="bg-[#fefefe] border-[#ff0054]/20 text-[#060404]"
-                                placeholder="Your first name"
-                                required
-                            />
-                          </div>
-
-                          <div className="space-y-2">
-                            <Label className="text-[#060404]">Last Name</Label>
-                            <Input
-                                name="lastName"
-                                value={booking.personalInfo.lastName}
-                                onChange={handlePersonalInfoChange}
-                                className="bg-[#fefefe] border-[#ff0054]/20 text-[#060404]"
-                                placeholder="Your last name"
-                                required
-                            />
-                          </div>
-
-                          <div className="space-y-2">
-                            <Label className="text-[#060404]">Email</Label>
-                            <Input
-                                name="email"
-                                type="email"
-                                value={booking.personalInfo.email}
-                                onChange={handlePersonalInfoChange}
-                                className="bg-[#fefefe] border-[#ff0054]/20 text-[#060404]"
-                                placeholder="your.email@example.com"
-                                required
-                            />
-                          </div>
-
-                          <div className="space-y-2">
-                            <Label className="text-[#060404]">Phone</Label>
-                            <Input
-                                name="phone"
-                                type="tel"
-                                value={booking.personalInfo.phone}
-                                onChange={handlePersonalInfoChange}
-                                className="bg-[#fefefe] border-[#ff0054]/20 text-[#060404]"
-                                placeholder="Your phone number"
-                                required
-                            />
-                          </div>
+                      {/* Mostrar la oferta combinada si está habilitada */}
+                      {booking.combinedOffer.enabled && (
+                        <div className="flex justify-between">
+                          <dt className="text-[#fbe40b]/70">Combined with:</dt>
+                          <dd className="text-[#fefefe] font-medium">{booking.combinedOffer.selectedOption}</dd>
                         </div>
+                      )}
+
+                      {/* Mostrar Add-ons solo si hay alguno seleccionado */}
+                      {booking.serviceId === "pontoons" && (
+                        <div className="mt-2">
+                          <dt className="text-[#fbe40b]/70 mb-2">Add-ons:</dt>
+                          {booking.addOns.floatingMat > 0 && (
+                            <div className="flex justify-between ml-4">
+                              <dd className="text-[#fefefe]">Floating Mat (x{booking.addOns.floatingMat})</dd>
+                              <dd className="text-[#fefefe]">${(booking.addOns.floatingMat * 25).toFixed(2)}</dd>
+                            </div>
+                          )}
+                          {booking.addOns.tube > 0 && (
+                            <div className="flex justify-between ml-4">
+                              <dd className="text-[#fefefe]">Tube (x{booking.addOns.tube})</dd>
+                              <dd className="text-[#fefefe]">${(booking.addOns.tube * 10).toFixed(2)}</dd>
+                            </div>
+                          )}
+                          {booking.addOns.inflatableToy > 0 && (
+                            <div className="flex justify-between ml-4">
+                              <dd className="text-[#fefefe]">Inflatable Toy (x{booking.addOns.inflatableToy})</dd>
+                              <dd className="text-[#fefefe]">${(booking.addOns.inflatableToy * 10).toFixed(2)}</dd>
+                            </div>
+                          )}
+                          {booking.addOns.pet && (
+                            <div className="flex justify-between ml-4">
+                              <dd className="text-[#fefefe]">Pet Fee</dd>
+                              <dd className="text-[#fefefe]">$25.00</dd>
+                            </div>
+                          )}
+                          
+                          {/* Subtotal de Add-ons */}
+                          {(booking.addOns.floatingMat > 0 || booking.addOns.tube > 0 || booking.addOns.inflatableToy > 0 || booking.addOns.pet) && (
+                            <div className="flex justify-between mt-2 pt-2 border-t border-[#fefefe]/10">
+                              <dt className="text-[#fbe40b]/70">Add-ons Subtotal:</dt>
+                              <dd className="text-[#fefefe]">${(bookingSummary.addOnsTotal/100).toFixed(2)}</dd>
+                            </div>
+                          )}
                         </div>
-                    </div>
-                  </CardContent>
+                      )}
+                      
+                      {/* Mostrar descuento de la oferta combinada */}
+                      {booking.combinedOffer.enabled && (
+                        <div className="flex justify-between text-green-400">
+                          <dt>Combined Offer Discount:</dt>
+                          <dd>-$25.00</dd>
+                        </div>
+                      )}
+                      
+                      <div className="flex justify-between">
+                        <dt className="text-[#fbe40b]/70">Date:</dt>
+                        <dd className="text-[#fefefe] font-medium">{bookingSummary.date}</dd>
+                      </div>
+                      <div className="flex justify-between">
+                        <dt className="text-[#fbe40b]/70">Customer:</dt>
+                        <dd className="text-[#fefefe] font-medium">{bookingSummary.customer}</dd>
+                      </div>
+                      <div className="flex justify-between">
+                        <dt className="text-[#fbe40b]/70">Contact:</dt>
+                        <dd className="text-[#fefefe] font-medium">{bookingSummary.contact}</dd>
+                      </div>
 
-                  <CardFooter className="flex justify-between pt-6">
-                    <Button
-                        onClick={goToPreviousStep}
-                        variant="outline"
-                        className="border-[#fefefe]/50 text-[#fefefe] hover:bg-[#fefefe]/10"
-                    >
-                      <ChevronLeft className="mr-2 h-4 w-4" />
-                      Back
-                    </Button>
+                      <div className="pt-4 border-t border-[#fefefe]/10 flex justify-between">
+                        <dt className="text-xl text-[#ff0054]">Total:</dt>
+                        <dd className="text-xl text-[#fbe40b] font-bold">${(bookingSummary.totalPrice/100).toFixed(2)}</dd>
+                      </div>
+                    </dl>
+                  </div>
 
-                    <Button
-                        onClick={goToNextStep}
-                        disabled={!canProceedToNextStep()}
-                        className="bg-gradient-to-r from-[#ff0054] to-[#fbe40b] hover:from-[#fbe40b] hover:to-[#ff0054] text-[#060404] font-medium"
-                    >
-                      Continue
-                      <ChevronRight className="ml-2 h-4 w-4" />
-                    </Button>
-                  </CardFooter>
-                </Card>
-              </div>
-          )}
+                {/* Stripe Payment Form */}
+                <div>
+                    <StripeCheckout
+                      bookingData={{
+                        amount: bookingSummary.totalPrice,
+                        serviceId: booking.serviceId,
+                        serviceName: booking.serviceName,
+                        optionName: booking.selectedOption + (booking.selectedPackage ? ` - ${booking.selectedPackage}` : '') +
+                          (booking.combinedOffer.enabled ? ` + ${booking.combinedOffer.selectedOption}` : ''),
+                        date: booking.date as Date,
+                        customerInfo: booking.personalInfo,
+                        addOns: booking.addOns
+                      }}
+                      onSuccess={handlePaymentSuccess}
+                      onCancel={goToPreviousStep}
+                    />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        )}
 
-          {/* Paso especial para DJ Services */}
-          {booking.step === 99 && (
-            <div className="max-w-4xl mx-auto">
-              <Card className="border-none bg-gradient-to-r from-[#ff0054]/5 to-[#fbe40b]/5 backdrop-blur-sm mb-8">
-              <CardHeader>
-                 <CardTitle className="text-4xl font-bebas text-center bg-gradient-to-r from-[#ff0054] to-[#fbe40b] text-transparent bg-clip-text">
-                   DJ Services
-                 </CardTitle>
-               </CardHeader>
-
-               <CardContent className="flex flex-col items-center space-y-8">
-                 <div className="relative h-[300px] w-full rounded-lg overflow-hidden border-2 border-[#ff0054]/30 shadow-lg">
-                   <Image
-                     src="/images/dj-services.png"
-                     alt="DJ Services"
-                     fill
-                     className="object-cover"
-                   />
-                 </div>
-                 
-                 <div className="flex flex-col sm:flex-row gap-4 justify-center w-full">
-                   <Button 
-                     size="lg"
-                     className="bg-gradient-to-r from-[#ff0054] to-[#fbe40b] hover:from-[#fbe40b] hover:to-[#ff0054] text-[#060404] font-medium py-6 w-full"
-                     asChild
-                   >
-                     <a href="sms:8626865129">
-                       <Phone className="mr-2 h-4 w-4" />
-                       Message (862)686-5129
-                     </a>
-                   </Button>
-                   
-                   <Button
-                     size="lg"
-                     variant="outline"
-                     className="bg-gradient-to-r from-[#ff0054] to-[#fbe40b] hover:from-[#fbe40b] hover:to-[#ff0054] text-[#060404] font-medium py-6 w-full"
-                     asChild
-                   >
-                     <Link href="/contact">
-                       <Mail className="mr-2 h-4 w-4" />
-                       Contact
-                     </Link>
-                   </Button>
-                 </div>
-               </CardContent>
-
-               <CardFooter className="flex justify-between pt-6">
-                 <Button
-                   onClick={() => setBooking({ ...booking, step: 1 })}
-                   variant="outline"
-                   className="border-[#fefefe]/50 text-[#fefefe] hover:bg-[#fefefe]/10"
-                 >
-                   <ChevronLeft className="mr-2 h-4 w-4" />
-                   Back to Services
-                 </Button>
-               </CardFooter>
-             </Card>
-           </div>
-         )}
-
-         {/* Step 3: Date Selection */}
-         {booking.step === 3 && (
-             <div className="max-w-4xl mx-auto">
-               <Card className="border-none bg-gradient-to-r from-[#ff0054]/5 to-[#fbe40b]/5 backdrop-blur-sm mb-8">
-                 <CardHeader>
-                   <CardTitle className="text-4xl font-bebas text-center bg-gradient-to-r from-[#ff0054] to-[#fbe40b] text-transparent bg-clip-text">
-                     <Calendar className="inline-block mr-2 h-8 w-8" />
-                     Choose a Date
-                   </CardTitle>
-                   <CardDescription className="text-center text-[#060404] text-lg">
-                     {booking.selectedOption} {booking.selectedPackage && `- ${booking.selectedPackage}`}
-                   </CardDescription>
-                 </CardHeader>
-
-                 <CardContent>
-                   <div className="flex flex-col items-center bg-[#fefefe] p-6 rounded-xl">
-                     <div className="w-full mx-auto">
-                       <SimpleCalendar
-                           onSelectDate={(date) => handleDateSelection(date)}
-                           selectedDate={booking.date}
-                           bookedDates={bookedDates}
-                       />
-                     </div>
-
-                     <div className="flex items-center justify-center space-x-6 p-4 mt-6 w-full">
-                       <div className="flex items-center gap-2">
-                         <div className="w-6 h-6 rounded-full bg-gradient-to-br from-[#ff0054]/40 to-[#fbe40b]/40"></div>
-                         <span className="text-lg text-[#060404]">Date Unavailable</span>
-                       </div>
-                       <div className="flex items-center gap-2">
-                         <div className="w-6 h-6 rounded-full bg-[#ff0054]"></div>
-                         <span className="text-lg text-[#060404]">Selected Date</span>
-                       </div>
-                     </div>
-
-                     {booking.date && (
-                         <div className="mt-4 p-4 bg-[#ff0054]/10 rounded-lg w-full">
-                           <p className="text-center text-lg font-medium text-[#060404]">
-                             You selected: {booking.date.toLocaleDateString('en-US', {
-                             weekday: 'long',
-                             year: 'numeric',
-                             month: 'long',
-                             day: 'numeric'
-                           })}
-                           </p>
-                         </div>
-                     )}
-                   </div>
-                 </CardContent>
-
-                 <CardFooter className="flex justify-between pt-6">
-                   <Button
-                       onClick={goToPreviousStep}
-                       variant="outline"
-                       className="border-[#fefefe]/50 text-[#fefefe] hover:bg-[#fefefe]/10"
-                   >
-                     <ChevronLeft className="mr-2 h-4 w-4" />
-                     Back
-                   </Button>
-
-                   <Button
-                       onClick={goToNextStep}
-                       disabled={!canProceedToNextStep()}
-                       className="bg-gradient-to-r from-[#ff0054] to-[#fbe40b] hover:from-[#fbe40b] hover:to-[#ff0054] text-[#060404] font-medium"
-                   >
-                     Proceed to Payment
-                     <CreditCard className="ml-2 h-4 w-4" />
-                   </Button>
-                 </CardFooter>
-               </Card>
-             </div>
-         )}
-
-         {/* Step 4: Stripe Payment */}
-         {booking.step === 4 && (
-             <div className="max-w-4xl mx-auto">
-               <Card className="border-none bg-gradient-to-r from-[#ff0054]/5 to-[#fbe40b]/5 backdrop-blur-sm mb-8">
-                 <CardHeader>
-                   <CardTitle className="text-4xl font-bebas text-center bg-gradient-to-r from-[#ff0054] to-[#fbe40b] text-transparent bg-clip-text">
-                     <CreditCard className="inline-block mr-2 h-8 w-8" />
-                     Complete Booking
-                   </CardTitle>
-                 </CardHeader>
-
-                 <CardContent>
-                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                     {/* Booking Summary */}
-                     <div className="bg-[#060404]/80 p-6 rounded-xl border border-[#fefefe]/10">
-                       <h3 className="text-2xl font-bebas text-[#ff0054] mb-4">Booking Summary</h3>
-                       <dl className="space-y-4">
-                         <div className="flex justify-between">
-                           <dt className="text-[#fbe40b]/70">Service:</dt>
-                           <dd className="text-[#fefefe] font-medium">{bookingSummary.service}</dd>
-                         </div>
-                         <div className="flex justify-between">
-                           <dt className="text-[#fbe40b]/70">Option:</dt>
-                           <dd className="text-[#fefefe] font-medium">{bookingSummary.option}</dd>
-                         </div>
-                         {bookingSummary.package && (
-                           <div className="flex justify-between">
-                             <dt className="text-[#fbe40b]/70">Package:</dt>
-                             <dd className="text-[#fefefe] font-medium">{bookingSummary.package}</dd>
-                           </div>
-                         )}
-                         <div className="flex justify-between">
-                           <dt className="text-[#fbe40b]/70">Date:</dt>
-                           <dd className="text-[#fefefe] font-medium">{bookingSummary.date}</dd>
-                         </div>
-                         <div className="flex justify-between">
-                           <dt className="text-[#fbe40b]/70">Customer:</dt>
-                           <dd className="text-[#fefefe] font-medium">{bookingSummary.customer}</dd>
-                         </div>
-                         <div className="flex justify-between">
-                           <dt className="text-[#fbe40b]/70">Contact:</dt>
-                           <dd className="text-[#fefefe] font-medium">{bookingSummary.contact}</dd>
-                         </div>
-
-                         <div className="pt-4 border-t border-[#fefefe]/10 flex justify-between">
-                           <dt className="text-xl text-[#ff0054]">Total:</dt>
-                           <dd className="text-xl text-[#fbe40b] font-bold">${(bookingSummary.price/100).toFixed(2)}</dd>
-                         </div>
-                       </dl>
-                     </div>
-
-                     {/* Stripe Payment Form */}
-                     <div>
-                       <StripeCheckout
-                           bookingData={{
-                             amount: booking.selectedOptionPrice,
-                             serviceId: booking.serviceId,
-                             serviceName: booking.serviceName,
-                             optionName: booking.selectedOption + (booking.selectedPackage ? ` - ${booking.selectedPackage}` : ''),
-                             date: booking.date as Date,
-                             customerInfo: booking.personalInfo
-                           }}
-                           onSuccess={handlePaymentSuccess}
-                           onCancel={goToPreviousStep}
-                       />
-                     </div>
-                   </div>
-                 </CardContent>
-               </Card>
-             </div>
-         )}
-
-         {/* Final Confirmation */}
-         {booking.paymentComplete && (
-             <div className="max-w-2xl mx-auto text-center">
-               <Card className="border-none bg-gradient-to-r from-[#ff0054]/5 to-[#fbe40b]/5 backdrop-blur-sm mb-8">
-                 <CardContent className="p-12">
-                   <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                     <Check className="w-10 h-10 text-green-500" />
-                   </div>
-                   <h2 className="text-4xl font-bebas text-[#ff0054] mb-4">Booking Completed!</h2>
-                   <p className="text-[#fefefe]/80 text-xl mb-8">
-                     Thank you for your booking #{booking.bookingId}. We've sent a confirmation email to {booking.personalInfo.email}.
-                   </p>
-                   <p className="text-[#fefefe]/80 text-lg mb-8">
-                     You will be redirected to the confirmation page momentarily...
-                   </p>
-                   <Button
-                       className="bg-gradient-to-r from-[#ff0054] to-[#fbe40b] hover:from-[#fbe40b] hover:to-[#ff0054] text-[#060404] font-medium text-xl px-8 py-6"
-                       asChild
-                   >
-                     <Link href="/">
-                       Return to Home
-                     </Link>
-                   </Button>
-                 </CardContent>
-               </Card>
-             </div>
-         )}
-       </div>
-     </section>
- )
+        {/* Final Confirmation */}
+        {booking.paymentComplete && (
+          <div className="max-w-2xl mx-auto text-center">
+            <Card className="border-none bg-gradient-to-r from-[#ff0054]/5 to-[#fbe40b]/5 backdrop-blur-sm mb-8">
+              <CardContent className="p-12">
+                <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <Check className="w-10 h-10 text-green-500" />
+                </div>
+                <h2 className="text-4xl font-bebas text-[#ff0054] mb-4">Booking Completed!</h2>
+                <p className="text-[#fefefe]/80 text-xl mb-8">
+                  Thank you for your booking #{booking.bookingId}. We've sent a confirmation email to {booking.personalInfo.email}.
+                </p>
+                <p className="text-[#fefefe]/80 text-lg mb-8">
+                  You will be redirected to the confirmation page momentarily...
+                </p>
+                <Button
+                  className="bg-gradient-to-r from-[#ff0054] to-[#fbe40b] hover:from-[#fbe40b] hover:to-[#ff0054] text-[#060404] font-medium text-xl px-8 py-6"
+                  asChild
+                >
+                  <Link href="/">
+                    Return to Home
+                  </Link>
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
+        )}
+      </div>
+    </section>
+  );
 }
