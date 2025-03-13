@@ -30,6 +30,7 @@ interface StripeCheckoutProps {
             email: string;
             phone: string;
         };
+        addOns?: any;
     };
     onSuccess: (bookingId: string) => void;
     onCancel: () => void;
