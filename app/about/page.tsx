@@ -34,7 +34,7 @@ const teamMembers: TeamMember[] = [
     id: 2,
     name: "Valentina Holguin",
     bio: "Valentina is our boat expert, with nautical safety certification and unparalleled knowledge of our pontoons.",
-    useIcon: true
+    imageUrl: "/images/about3.png"
   },
   {
     id: 3,
